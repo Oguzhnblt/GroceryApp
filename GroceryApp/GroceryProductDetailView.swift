@@ -39,7 +39,7 @@ struct GroceryProductDetailView: View {
                             .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
                         
                         Text("1kg, Price")
-                            .font(Font.custom("Gilroy", size: 16).weight(.semibold))
+                            .font(Font.custom("Gilroy-Medium", size: 16).weight(.semibold))
                             .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
                     }
                     
