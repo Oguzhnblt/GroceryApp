@@ -19,9 +19,6 @@ struct GroceryProducts: Identifiable {
 struct GroceryHomeView: View {
     
     @State private var searchText = ""
-    @State private var Oguz = ""
-    
-    
     @State private var products = [
         GroceryProducts(name: "Organic Bananas", title: "7pcs, Priceg", imageName: "banana", price: "$4.99"),
         GroceryProducts(name: "Red Apple", title: "1kg, Priceg", imageName: "apple", price: "$4.99"),

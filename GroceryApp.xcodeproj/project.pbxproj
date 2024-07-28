@@ -35,6 +35,7 @@
 		12D17EC32C56E5A1001C3978 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D17EC22C56E5A1001C3978 /* SearchField.swift */; };
 		12D17EC52C56E5F6001C3978 /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D17EC42C56E5F6001C3978 /* ExploreView.swift */; };
 		12D17EC72C56E633001C3978 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D17EC62C56E633001C3978 /* CategoryCell.swift */; };
+		12D17EC92C56EC17001C3978 /* TabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D17EC82C56EC17001C3978 /* TabbarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,7 @@
 		12D17EC22C56E5A1001C3978 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		12D17EC42C56E5F6001C3978 /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		12D17EC62C56E633001C3978 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		12D17EC82C56EC17001C3978 /* TabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +155,7 @@
 			children = (
 				12D17EC22C56E5A1001C3978 /* SearchField.swift */,
 				12D17EC62C56E633001C3978 /* CategoryCell.swift */,
+				12D17EC82C56EC17001C3978 /* TabbarView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				127217652C56D8360036D420 /* GroceryAppApp.swift in Sources */,
+				12D17EC92C56EC17001C3978 /* TabbarView.swift in Sources */,
 				127217752C56DC020036D420 /* GroceryProductDetailView.swift in Sources */,
 				12D17EC32C56E5A1001C3978 /* SearchField.swift in Sources */,
 				127217732C56D8470036D420 /* GroceryHomeView.swift in Sources */,

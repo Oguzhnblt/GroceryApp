@@ -20,10 +20,9 @@ struct ExploreView: View {
 
         ]
         
-    
     var body: some View {
-        SearchField(searchText: $searchText, placeholder: "Search categories")
         ScrollView {
+            SearchField(searchText: $searchText, placeholder: "Search categories")
                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
                        ForEach(categories, id: \.0) { category in
                            CategoryCell(
