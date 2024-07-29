@@ -28,51 +28,51 @@ struct GroceryHomeView: View {
     }
     
     var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack(alignment: .leading) {
-                    // Search field
-                    SearchField(searchText: $searchText, placeholder: "Search products")
-                    
-                    // Banner
-                    CarouselView()
-                    
-                    // Exclusive Offer section
-                    SectionHeaderView(title: "Exclusive Offer")
-                    
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(exclusiveOfferProducts) { product in
-                                NavigationLink(destination: GroceryProductDetailView(product: product)) {
-                                    ProductCardView(product: product, updateProduct: self.updateProduct)
+            NavigationView {
+                ScrollView {
+                    VStack(alignment: .leading) {
+                        // Search field
+                        SearchField(searchText: $searchText, placeholder: "Search products")
+                        
+                        // Banner
+                        CarouselView()
+                        
+                        // Exclusive Offer section
+                        SectionHeaderView(title: "Exclusive Offer")
+                        
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack {
+                                ForEach(exclusiveOfferProducts) { product in
+                                    NavigationLink(destination: GroceryProductDetailView(product: product)) {
+                                        ProductCardView(product: product, updateProduct: self.updateProduct)
+                                    }
                                 }
                             }
+                            .padding(.leading)
                         }
-                        .padding(.leading)
-                    }
-                    
-                    // Best Selling section
-                    SectionHeaderView(title: "Best Selling")
-                    
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(bestSellingProducts) { product in
-                                NavigationLink(destination: GroceryProductDetailView(product: product)) {
-                                    ProductCardView(product: product, updateProduct: self.updateProduct)
+                        
+                        // Best Selling section
+                        SectionHeaderView(title: "Best Selling")
+                        
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack {
+                                ForEach(bestSellingProducts) { product in
+                                    NavigationLink(destination: GroceryProductDetailView(product: product)) {
+                                        ProductCardView(product: product, updateProduct: self.updateProduct)
+                                    }
                                 }
                             }
+                            .padding(.leading)
                         }
-                        .padding(.leading)
                     }
                 }
+                .padding(.bottom, 30)
+                .background(Color.clear)
+                .onAppear {
+                    dataManager.fetchProducts()
+                }
             }
-            .navigationBarHidden(true)
-            .background(Color.white)
-            .onAppear {
-                dataManager.fetchProducts()
-            }
-        }
-        .navigationViewStyle(StackNavigationViewStyle())
+            .navigationViewStyle(StackNavigationViewStyle())
     }
     
     private func updateProduct(_ updatedProduct: GroceryProducts) {
@@ -84,4 +84,5 @@ struct GroceryHomeView: View {
 
 #Preview {
     GroceryHomeView()
+        .ignoresSafeArea()
 }

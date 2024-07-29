@@ -6,72 +6,7 @@
 ////
 //
 //import Foundation
-//
-//// Fruits and Vegetables
-//let fruitAndVegetableProducts: [GroceryProducts] = [
-//
-//    GroceryProducts(
-//        name: "Red Pepper",
-//        title: "1kg, Priceg",
-//        imageName: "pepper",
-//        price: "$3.99",
-//        details: "Red peppers are high in vitamin C, and are a good source of vitamin A and potassium.",
-//        nutrition: [
-//            NutritionInfo(label: "Calories:", value: "31 kcal"),
-//            NutritionInfo(label: "Carbohydrates:", value: "6 g"),
-//            NutritionInfo(label: "Protein:", value: "1 g"),
-//            NutritionInfo(label: "Fat:", value: "0.3 g"),
-//            NutritionInfo(label: "Fiber:", value: "2.1 g"),
-//            NutritionInfo(label: "Sugar:", value: "4.2 g")
-//        ]
-//    ),
-//    GroceryProducts(
-//        name: "Broccoli",
-//        title: "1kg, Priceg",
-//        imageName: "broccoli",
-//        price: "$2.99",
-//        details: "Broccoli is a good source of fiber and protein, and contains iron, potassium, calcium, selenium, and magnesium.",
-//        nutrition: [
-//            NutritionInfo(label: "Calories:", value: "55 kcal"),
-//            NutritionInfo(label: "Carbohydrates:", value: "11 g"),
-//            NutritionInfo(label: "Protein:", value: "3.7 g"),
-//            NutritionInfo(label: "Fat:", value: "0.6 g"),
-//            NutritionInfo(label: "Fiber:", value: "2.4 g"),
-//            NutritionInfo(label: "Sugar:", value: "2.2 g")
-//        ]
-//    ),
-//    GroceryProducts(
-//        name: "Carrots",
-//        title: "1kg, Priceg",
-//        imageName: "carrots",
-//        price: "$2.49",
-//        details: "Carrots are rich in beta-carotene, fiber, vitamin K1, potassium, and antioxidants.",
-//        nutrition: [
-//            NutritionInfo(label: "Calories:", value: "41 kcal"),
-//            NutritionInfo(label: "Carbohydrates:", value: "10 g"),
-//            NutritionInfo(label: "Protein:", value: "0.9 g"),
-//            NutritionInfo(label: "Fat:", value: "0.2 g"),
-//            NutritionInfo(label: "Fiber:", value: "2.8 g"),
-//            NutritionInfo(label: "Sugar:", value: "4.7 g")
-//        ]
-//    ),
-//    GroceryProducts(
-//        name: "Cherry Tomatoes",
-//        title: "500g, Priceg",
-//        imageName: "cherry_tomatoes",
-//        price: "$3.49",
-//        details: "Cherry tomatoes are sweet, juicy, and rich in antioxidants, vitamins, and minerals.",
-//        nutrition: [
-//            NutritionInfo(label: "Calories:", value: "18 kcal"),
-//            NutritionInfo(label: "Carbohydrates:", value: "3.9 g"),
-//            NutritionInfo(label: "Protein:", value: "0.9 g"),
-//            NutritionInfo(label: "Fat:", value: "0.2 g"),
-//            NutritionInfo(label: "Fiber:", value: "1.2 g"),
-//            NutritionInfo(label: "Sugar:", value: "2.6 g")
-//        ]
-//    )
-//]
-//
+
 //// Dairy and Eggs
 //let dairyAndEggsProducts: [GroceryProducts] = [
 //    GroceryProducts(

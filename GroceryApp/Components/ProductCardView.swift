@@ -10,7 +10,8 @@ import SwiftUI
 struct ProductCardView: View {
     var product: GroceryProducts
     var updateProduct: (GroceryProducts) -> Void
-    
+    @State private var imageURL: URL?
+
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
@@ -20,9 +21,34 @@ struct ProductCardView: View {
                     .frame(width: 173.32, height: 248.51)
                 
                 VStack(alignment: .leading) {
-                    Image(product.imageName!)
-                        .resizable()
+                    if let imageURL = imageURL {
+                        AsyncImage(url: imageURL) { phase in
+                            switch phase {
+                            case .empty:
+                                ProgressView()
+                                    .frame(width: 99.89, height: 79.43)
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 99.89, height: 79.43)
+                            case .failure:
+                                Image(systemName: "photo")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 99.89, height: 79.43)
+                            @unknown default:
+                                EmptyView()
+                            }
+                        }
                         .frame(width: 99.89, height: 79.43)
+                    } else {
+                        ProgressView()
+                            .frame(width: 99.89, height: 79.43)
+                            .onAppear {
+                                fetchImageURL(imageName: product.imageName ?? "")
+                            }
+                    }
                     
                     Text(product.name)
                         .font(Font.custom("Gilroy-Bold", size: 16))
@@ -70,11 +96,32 @@ struct ProductCardView: View {
         .frame(width: 173, height: 249)
         .background(Color.white)
     }
+
+    private func fetchImageURL(imageName: String) {
+        FetchImageHelper.fetchImageURL(imageName: imageName) { url, error in
+            if let error = error {
+                print("Error getting image URL: \(error.localizedDescription)")
+                return
+            }
+            
+            if let url = url {
+                FetchImageHelper.fetchImageWithCache(url: url) { image in
+                    if image != nil {
+                        DispatchQueue.main.async {
+                            self.imageURL = url
+                        }
+                    } else {
+                        print("Failed to fetch image with cache.")
+                    }
+                }
+            }
+        }
+    }
 }
 
+#Preview {
+    ProductCardView(
+        product: GroceryProducts(name: "Sample Product", title: "1kg, Priceg", imageName: "sampleImage", price: "$4.99", details: "", nutrition: [:]),
+            updateProduct: { _ in }
+        )}
 
-//#Preview {
-//    ProductCardView(
-//        product: GroceryProducts(name: "Sample Product", title: "1kg, Priceg", imageName: "sampleImage", price: "$4.99", details: "", nutrition: []),
-//            updateProduct: { _ in }
-//        )}

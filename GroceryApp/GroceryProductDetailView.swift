@@ -29,18 +29,27 @@ struct GroceryProductDetailView: View {
                             switch phase {
                             case .empty:
                                 ProgressView()
-                                    .frame(width: 413.60, height: 371.44)
+                                    .frame(width: 414, height: 371)
                             case .success(let image):
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 330, height: 200)
-                                    .cornerRadius(25)
+                                ZStack {
+                                    Rectangle()
+                                        .foregroundColor(.clear)
+                                        .frame(width: 413.60, height: 371.44)
+                                        .background(Color(red: 0.95, green: 0.95, blue: 0.95))
+                                        .cornerRadius(25)
+                                    image
+                                        .resizable()
+                                        .foregroundStyle(.clear)
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 330, height: 200)
+
+                                }
+                                
                             case .failure:
                                 Image(systemName: "photo")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 413.60, height: 371.44)
+                                    .frame(width: 414, height: 371)
                                     .cornerRadius(25)
                             @unknown default:
                                 EmptyView()
@@ -123,9 +132,9 @@ struct GroceryProductDetailView: View {
                             .font(.body)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
-
-
-                            
+                        
+                        
+                        
                     } label: {
                         Text("Product Detail")
                             .font(.headline)
@@ -162,7 +171,7 @@ struct GroceryProductDetailView: View {
                     }
                 }
                 .padding([.leading, .trailing], 25)
-
+                
                 
                 Button(action: {
                     // Sepete ekleme işlemi
@@ -238,5 +247,6 @@ struct GroceryProductDetailView_Previews: PreviewProvider {
         GroceryProductDetailView(product: sampleProduct)
             .previewLayout(.sizeThatFits)
             .padding()
+            .ignoresSafeArea()
     }
 }
