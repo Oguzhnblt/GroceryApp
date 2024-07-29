@@ -6,46 +6,75 @@
 //
 
 import SwiftUI
+import FirebaseStorage
 
 struct GroceryProductDetailView: View {
+    var product: GroceryProducts
     @State private var quantity = 1
-    private var pricePerUnit: Double = 4.99  // Mock data düzeltilecek
-
+    @State private var imageURL: URL?
+    @State private var isImageLoaded = false
+    private var pricePerUnit: Double
+    
+    init(product: GroceryProducts) {
+        self.product = product
+        self.pricePerUnit = Double(product.price.dropFirst()) ?? 0.0
+    }
     
     var body: some View {
         ScrollView {
             VStack(spacing: 10) {
-                // Üst görsel
-                Rectangle()
-                    .foregroundColor(.clear)
-                    .frame(width: 413.60, height: 371.44)
-                    .background(Color(red: 0.95, green: 0.95, blue: 0.95))
-                    .cornerRadius(25)
-                    .overlay(
-                        Image("banana")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
+                Group {
+                    if let imageURL = imageURL {
+                        AsyncImage(url: imageURL) { phase in
+                            switch phase {
+                            case .empty:
+                                ProgressView()
+                                    .frame(width: 413.60, height: 371.44)
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 330, height: 200)
+                                    .cornerRadius(25)
+                            case .failure:
+                                Image(systemName: "photo")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 413.60, height: 371.44)
+                                    .cornerRadius(25)
+                            @unknown default:
+                                EmptyView()
+                            }
+                        }
+                        .frame(width: 413.60, height: 371.44)
+                        .cornerRadius(25)
+                    } else {
+                        ProgressView()
                             .frame(width: 413.60, height: 371.44)
+                            .background(Color(red: 0.95, green: 0.95, blue: 0.95))
                             .cornerRadius(25)
-                    )
+                            .onAppear {
+                                if !isImageLoaded {
+                                    fetchImageURL(imageName: product.imageName!)
+                                }
+                            }
+                    }
+                }
                 
-                // Ürün
                 VStack(alignment: .leading, spacing: 25) {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Organic Bananas")
+                        Text(product.name)
                             .font(Font.custom("Gilroy-Bold", size: 24))
                             .tracking(0.10)
                             .lineSpacing(18)
                             .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
                         
-                        Text("1kg, Price")
+                        Text(product.title)
                             .font(Font.custom("Gilroy-Medium", size: 16).weight(.semibold))
                             .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
                     }
                     
-                    // Miktar ve Fiyat
                     HStack {
-                        // Miktar butonları
                         HStack(spacing: 20) {
                             Button(action: { if quantity > 1 { quantity -= 1 } }) {
                                 Image(systemName: "minus")
@@ -77,7 +106,6 @@ struct GroceryProductDetailView: View {
                         
                         Spacer()
                         
-                        // Fiyat
                         Text("$\(String(format: "%.2f", pricePerUnit * Double(quantity)))")
                             .font(.title)
                             .fontWeight(.bold)
@@ -86,14 +114,18 @@ struct GroceryProductDetailView: View {
                 }
                 .padding([.leading, .trailing, .top], 25)
                 
-                // Ürün detayları ve besin değerleri
-                VStack(spacing: 20) {
+                VStack(alignment: .leading, spacing: 20) {
                     Divider()
                     
                     DisclosureGroup {
-                        Text("Apples Are Nutritious. Apples May Be Good For Weight Loss. Apples May Be Good For Your Heart. As Part Of A Healthful And Varied Diet.")
+                        Text(product.details)
                             .padding(.top, 5)
                             .font(.body)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
+
+
+                            
                     } label: {
                         Text("Product Detail")
                             .font(.headline)
@@ -103,17 +135,17 @@ struct GroceryProductDetailView: View {
                     Divider()
                     
                     DisclosureGroup {
-                        VStack(alignment: .leading, spacing: 5) {
-                            NutritionRow(label: "Calories:", value: "52 kcal")
-                            NutritionRow(label: "Carbohydrates:", value: "14 g")
-                            NutritionRow(label: "Protein:", value: "0.3 g")
-                            NutritionRow(label: "Fat:", value: "0.2 g")
-                            NutritionRow(label: "Fiber:", value: "2.4 g")
-                            NutritionRow(label: "Sugar:", value: "10 g")
+                        if let nutrition = product.nutrition {
+                            VStack(alignment: .leading, spacing: 5) {
+                                ForEach(nutrition.keys.sorted(), id: \.self) { key in
+                                    NutritionRow(label: key, value: nutrition[key]!)
+                                }
+                            }
+                            .padding(.top, 10)
+                        } else {
+                            Text("Besin değerleri bulunamadı")
                         }
-                        .padding(.top, 5)
-                        .padding()
-                        .font(.body)
+                        
                     } label: {
                         HStack {
                             Text("Nutritions")
@@ -129,9 +161,9 @@ struct GroceryProductDetailView: View {
                         }
                     }
                 }
-                .padding(25)
+                .padding([.leading, .trailing], 25)
+
                 
-                // Sepete ekle butonu
                 Button(action: {
                     // Sepete ekleme işlemi
                 }) {
@@ -147,6 +179,28 @@ struct GroceryProductDetailView: View {
                 .padding(.bottom, 35)
             }
             .padding([.leading, .trailing])
+        }
+    }
+    
+    func fetchImageURL(imageName: String) {
+        FetchImageHelper.fetchImageURL(imageName: imageName) { url, error in
+            if let error = error {
+                print("Error getting image URL: \(error.localizedDescription)")
+                return
+            }
+            
+            if let url = url {
+                FetchImageHelper.fetchImageWithCache(url: url) { image in
+                    if image != nil {
+                        DispatchQueue.main.async {
+                            self.imageURL = url
+                            self.isImageLoaded = true
+                        }
+                    } else {
+                        print("Failed to fetch image with cache.")
+                    }
+                }
+            }
         }
     }
 }
@@ -165,7 +219,24 @@ struct NutritionRow: View {
     }
 }
 
-#Preview {
-    GroceryProductDetailView()
-        .ignoresSafeArea()
+struct GroceryProductDetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        let sampleProduct = GroceryProducts(
+            id: "1",
+            name: "Sample Product",
+            title: "This is a sample product description",
+            imageName: "sample_image", price: "$9.99",
+            details: "This is a detailed description of the sample product.",
+            nutrition: [
+                "Calories": "200 kcal",
+                "Protein": "10 g",
+                "Fat": "5 g",
+                "Carbohydrates": "30 g"
+            ]
+        )
+        
+        GroceryProductDetailView(product: sampleProduct)
+            .previewLayout(.sizeThatFits)
+            .padding()
+    }
 }

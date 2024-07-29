@@ -20,10 +20,10 @@ struct TabbarView: View {
                     Label("Explore", image: "explore")
                 }
             
-            GroceryProductDetailView()
-                .tabItem {
-                    Label("Profile", systemImage: "person")
-                }
+//            GroceryProductDetailView()
+//                .tabItem {
+//                    Label("Profile", systemImage: "person")
+//                }
         }
     }
 }
