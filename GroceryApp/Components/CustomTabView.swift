@@ -18,17 +18,18 @@ struct CustomTabView: View {
                 ExploreView()
                     .tag("explore")
                 // FIXME: Düzeltilecek
-//                CartView()
-//                    .tag("cart")
-//                OrderHistoryView()
-//                    .tag("orderHistory")
-//                AccountView()
-//                    .tag("account")
+                //                CartView()
+                //                    .tag("cart")
+                //                OrderHistoryView()
+                //                    .tag("orderHistory")
+                //                AccountView()
+                //                    .tag("account")
             }
+            .ignoresSafeArea(.all, edges: .bottom)
             
             HStack(spacing: 0) {
                 ForEach(tabs, id: \.self) { image in
-                
+                    
                     TabButon(image: image, selectedTab: $selectedTab)
                     if image != tabs.last {
                         Spacer(minLength: 0)
@@ -50,13 +51,13 @@ struct CustomTabView: View {
 struct TabButon: View {
     var image : String
     @Binding var selectedTab: String
-
+    
     var body: some View {
         Button(action: {selectedTab = image}) {
             Image(image)
                 .renderingMode(.template)
                 .foregroundStyle(selectedTab == image ? (Color(red: 0.33, green: 0.69, blue: 0.46))
- : Color.black.opacity(0.4))
+                                 : Color.black.opacity(0.4))
                 .padding()
         }
     }

@@ -5,8 +5,69 @@
 //  Created by Oğuzhan Bolat on 29.07.2024.
 //
 
-import UIKit
+import SwiftUI
 import FirebaseStorage
+
+class ImageCache {
+    static let shared = ImageCache()
+    private init() {}
+
+    private var cache: NSCache<NSString, UIImage> = NSCache()
+
+    func getImage(forKey key: String) -> UIImage? {
+        return cache.object(forKey: key as NSString)
+    }
+
+    func setImage(_ image: UIImage, forKey key: String) {
+        cache.setObject(image, forKey: key as NSString)
+    }
+}
+
+
+struct AsyncImageView: View {
+    @State private var uiImage: UIImage?
+    let url: URL?
+    let placeholder: Image
+    let imageCache = ImageCache.shared
+
+    var body: some View {
+        Group {
+            if let uiImage = uiImage {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+            } else {
+                placeholder
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .onAppear {
+                        loadImage()
+                    }
+            }
+        }
+    }
+
+    private func loadImage() {
+        guard let url = url else { return }
+        
+        if let cachedImage = imageCache.getImage(forKey: url.absoluteString) {
+            self.uiImage = cachedImage
+            return
+        }
+
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, let image = UIImage(data: data) else { return }
+            
+            imageCache.setImage(image, forKey: url.absoluteString)
+            
+            DispatchQueue.main.async {
+                self.uiImage = image
+            }
+        }.resume()
+    }
+}
+
+
 
 class FetchImageHelper {
     
@@ -21,21 +82,19 @@ class FetchImageHelper {
     }
     
     static func fetchImageWithCache(url: URL, completion: @escaping (UIImage?) -> Void) {
-        let cache = URLCache.shared
-        let request = URLRequest(url: url)
-        
-        if let data = cache.cachedResponse(for: request)?.data, let image = UIImage(data: data) {
-            completion(image)
-        } else {
-            URLSession.shared.dataTask(with: request) { data, response, error in
-                if let data = data, let response = response, let image = UIImage(data: data) {
-                    let cachedData = CachedURLResponse(response: response, data: data)
-                    cache.storeCachedResponse(cachedData, for: request)
-                    completion(image)
-                } else {
+            if let cachedImage = ImageCache.shared.getImage(forKey: url.absoluteString) {
+                completion(cachedImage)
+                return
+            }
+
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                guard let data = data, let image = UIImage(data: data) else {
                     completion(nil)
+                    return
                 }
+
+                ImageCache.shared.setImage(image, forKey: url.absoluteString)
+                completion(image)
             }.resume()
         }
-    }
 }

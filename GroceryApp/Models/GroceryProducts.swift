@@ -23,4 +23,5 @@ struct GroceryProducts: Identifiable, Codable {
     }
 
     let nutrition: [String: String]?
+    let category: String
 }

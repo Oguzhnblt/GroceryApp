@@ -69,7 +69,7 @@ struct GroceryHomeView: View {
                 .padding(.bottom, 30)
                 .background(Color.clear)
                 .onAppear {
-                    dataManager.fetchProducts()
+                    dataManager.fetchAllProducts()
                 }
             }
             .navigationViewStyle(StackNavigationViewStyle())

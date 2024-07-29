@@ -4,7 +4,6 @@
 //
 //  Created by Oğuzhan Bolat on 29.07.2024.
 //
-
 import SwiftUI
 
 struct ProductCardView: View {
@@ -22,26 +21,9 @@ struct ProductCardView: View {
                 
                 VStack(alignment: .leading) {
                     if let imageURL = imageURL {
-                        AsyncImage(url: imageURL) { phase in
-                            switch phase {
-                            case .empty:
-                                ProgressView()
-                                    .frame(width: 99.89, height: 79.43)
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 99.89, height: 79.43)
-                            case .failure:
-                                Image(systemName: "photo")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 99.89, height: 79.43)
-                            @unknown default:
-                                EmptyView()
-                            }
-                        }
-                        .frame(width: 99.89, height: 79.43)
+                        AsyncImageView(url: imageURL, placeholder: Image(systemName: "photo"))
+                            .frame(width: 99.89, height: 79.43)
+                            .foregroundStyle(.green)
                     } else {
                         ProgressView()
                             .frame(width: 99.89, height: 79.43)
@@ -105,14 +87,8 @@ struct ProductCardView: View {
             }
             
             if let url = url {
-                FetchImageHelper.fetchImageWithCache(url: url) { image in
-                    if image != nil {
-                        DispatchQueue.main.async {
-                            self.imageURL = url
-                        }
-                    } else {
-                        print("Failed to fetch image with cache.")
-                    }
+                DispatchQueue.main.async {
+                    self.imageURL = url
                 }
             }
         }
@@ -121,7 +97,7 @@ struct ProductCardView: View {
 
 #Preview {
     ProductCardView(
-        product: GroceryProducts(name: "Sample Product", title: "1kg, Priceg", imageName: "sampleImage", price: "$4.99", details: "", nutrition: [:]),
-            updateProduct: { _ in }
-        )}
-
+        product: GroceryProducts(name: "Sample Product", title: "1kg, Priceg", imageName: "sampleImage", price: "$4.99", details: "", nutrition: [:], category: "fresh"),
+        updateProduct: { _ in }
+    )
+}

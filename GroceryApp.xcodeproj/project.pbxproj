@@ -11,7 +11,6 @@
 		1236C2D12C578A4400226525 /* GroceryProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236C2D02C578A4400226525 /* GroceryProducts.swift */; };
 		1236C2D32C578A6500226525 /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236C2D22C578A6500226525 /* CarouselView.swift */; };
 		1236C2D52C578F2600226525 /* ProductCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236C2D42C578F2600226525 /* ProductCardView.swift */; };
-		1236C2D72C5797C000226525 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236C2D62C5797C000226525 /* MockData.swift */; };
 		1236C2D92C579E2A00226525 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1236C2D82C579E2A00226525 /* GoogleService-Info.plist */; };
 		1236C2DD2C57A05C00226525 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 1236C2DC2C57A05C00226525 /* FirebaseAnalytics */; };
 		1236C2DF2C57A05C00226525 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 1236C2DE2C57A05C00226525 /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -37,6 +36,7 @@
 		1236C3172C57A75000226525 /* GroceryDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236C3162C57A75000226525 /* GroceryDataManager.swift */; };
 		1236C31A2C57D91100226525 /* FetchImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236C3192C57D91100226525 /* FetchImageHelper.swift */; };
 		1236C3242C58011E00226525 /* CustomTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236C3232C58011E00226525 /* CustomTabView.swift */; };
+		1236C3292C5846C700226525 /* GroceryCategoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236C3282C5846C700226525 /* GroceryCategoryDetailView.swift */; };
 		127217652C56D8360036D420 /* GroceryAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127217642C56D8360036D420 /* GroceryAppApp.swift */; };
 		127217692C56D8370036D420 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 127217682C56D8370036D420 /* Assets.xcassets */; };
 		1272176C2C56D8370036D420 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1272176B2C56D8370036D420 /* Preview Assets.xcassets */; };
@@ -72,11 +72,11 @@
 		1236C2D02C578A4400226525 /* GroceryProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryProducts.swift; sourceTree = "<group>"; };
 		1236C2D22C578A6500226525 /* CarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
 		1236C2D42C578F2600226525 /* ProductCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCardView.swift; sourceTree = "<group>"; };
-		1236C2D62C5797C000226525 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		1236C2D82C579E2A00226525 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1236C3162C57A75000226525 /* GroceryDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryDataManager.swift; sourceTree = "<group>"; };
 		1236C3192C57D91100226525 /* FetchImageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchImageHelper.swift; sourceTree = "<group>"; };
 		1236C3232C58011E00226525 /* CustomTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabView.swift; sourceTree = "<group>"; };
+		1236C3282C5846C700226525 /* GroceryCategoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryCategoryDetailView.swift; sourceTree = "<group>"; };
 		127217612C56D8360036D420 /* GroceryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GroceryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		127217642C56D8360036D420 /* GroceryAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryAppApp.swift; sourceTree = "<group>"; };
 		127217682C56D8370036D420 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -145,7 +145,6 @@
 			isa = PBXGroup;
 			children = (
 				1236C2D02C578A4400226525 /* GroceryProducts.swift */,
-				1236C2D62C5797C000226525 /* MockData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -164,6 +163,18 @@
 				1236C3192C57D91100226525 /* FetchImageHelper.swift */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		1236C3272C5846A800226525 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				127217642C56D8360036D420 /* GroceryAppApp.swift */,
+				127217722C56D8470036D420 /* GroceryHomeView.swift */,
+				127217742C56DC020036D420 /* GroceryProductDetailView.swift */,
+				12D17EC42C56E5F6001C3978 /* ExploreView.swift */,
+				1236C3282C5846C700226525 /* GroceryCategoryDetailView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		127217582C56D8360036D420 = {
@@ -186,14 +197,11 @@
 		127217632C56D8360036D420 /* GroceryApp */ = {
 			isa = PBXGroup;
 			children = (
+				1236C3272C5846A800226525 /* Views */,
+				12D17E972C56E4C2001C3978 /* Fonts */,
 				1236C3182C57C2A500226525 /* Core */,
 				1236C2CF2C578A3400226525 /* Models */,
 				12D17EC12C56E590001C3978 /* Components */,
-				12D17E972C56E4C2001C3978 /* Fonts */,
-				127217642C56D8360036D420 /* GroceryAppApp.swift */,
-				127217722C56D8470036D420 /* GroceryHomeView.swift */,
-				127217742C56DC020036D420 /* GroceryProductDetailView.swift */,
-				12D17EC42C56E5F6001C3978 /* ExploreView.swift */,
 				127217682C56D8370036D420 /* Assets.xcassets */,
 				12D17EC02C56E4EB001C3978 /* Info.plist */,
 				1236C2D82C579E2A00226525 /* GoogleService-Info.plist */,
@@ -368,11 +376,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1236C2D32C578A6500226525 /* CarouselView.swift in Sources */,
-				1236C2D72C5797C000226525 /* MockData.swift in Sources */,
 				127217652C56D8360036D420 /* GroceryAppApp.swift in Sources */,
 				127217752C56DC020036D420 /* GroceryProductDetailView.swift in Sources */,
 				1236C3242C58011E00226525 /* CustomTabView.swift in Sources */,
 				1236C2CE2C5789FA00226525 /* SectionHeaderView.swift in Sources */,
+				1236C3292C5846C700226525 /* GroceryCategoryDetailView.swift in Sources */,
 				12D17EC32C56E5A1001C3978 /* SearchField.swift in Sources */,
 				1236C3172C57A75000226525 /* GroceryDataManager.swift in Sources */,
 				127217732C56D8470036D420 /* GroceryHomeView.swift in Sources */,

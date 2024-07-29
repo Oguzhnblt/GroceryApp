@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct CarouselView: View {
-    let banners = ["freshveg", "freshveg2", "freshveg3"]
+    let banners = ["grocerybanner1", "grocerybanner2", "grocerybanner3"]
     
     var body: some View {
         TabView {

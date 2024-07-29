@@ -172,6 +172,9 @@ struct GroceryProductDetailView: View {
                 }
                 .padding([.leading, .trailing], 25)
                 
+                Divider()
+                    .padding([.leading, .trailing], 20)
+                    .padding(.bottom)
                 
                 Button(action: {
                     // Sepete ekleme işlemi
@@ -241,7 +244,9 @@ struct GroceryProductDetailView_Previews: PreviewProvider {
                 "Protein": "10 g",
                 "Fat": "5 g",
                 "Carbohydrates": "30 g"
-            ]
+            ],
+            
+            category: "fresh"
         )
         
         GroceryProductDetailView(product: sampleProduct)
