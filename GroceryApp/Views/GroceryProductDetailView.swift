@@ -84,35 +84,7 @@ struct GroceryProductDetailView: View {
                     }
                     
                     HStack {
-                        HStack(spacing: 20) {
-                            Button(action: { if quantity > 1 { quantity -= 1 } }) {
-                                Image(systemName: "minus")
-                                    .foregroundColor(Color(red: 0.7, green: 0.7, blue: 0.7))
-                                    .frame(width: 17, height: 17)
-                            }
-                            
-                            Rectangle()
-                                .foregroundColor(.clear)
-                                .frame(width: 45, height: 45)
-                                .cornerRadius(17)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 17)
-                                        .inset(by: 0.50)
-                                        .stroke(Color(red: 0.89, green: 0.89, blue: 0.89), lineWidth: 0.50)
-                                )
-                                .overlay(
-                                    Text("\(quantity)")
-                                        .font(Font.custom("Gilroy", size: 18).weight(.semibold))
-                                        .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
-                                )
-                            
-                            Button(action: { quantity += 1 }) {
-                                Image(systemName: "plus")
-                                    .foregroundColor(Color(red: 0.33, green: 0.69, blue: 0.46))
-                                    .frame(width: 17, height: 17)
-                            }
-                        }
-                        
+                        ItemCounter(quantity: $quantity, minQuantity: 1, maxQuantity: 9)
                         Spacer()
                         
                         Text("$\(String(format: "%.2f", pricePerUnit * Double(quantity)))")
