@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+
 struct ItemCounter: View {
     @Binding var quantity: Int
     let minQuantity: Int
@@ -15,7 +16,7 @@ struct ItemCounter: View {
         HStack(spacing: 20) {
             Rectangle()
                 .foregroundColor(.clear)
-                .frame(width: 40, height: 40)
+                .frame(width: 30, height: 30)
                 .cornerRadius(17)
                 .overlay(
                     RoundedRectangle(cornerRadius: 17)
@@ -30,12 +31,12 @@ struct ItemCounter: View {
                     }
                 )
             Text("\(quantity)")
-                .font(Font.custom("Gilroy", size: 14).weight(.semibold))
+                .font(Font.custom("Gilroy", size: 16).weight(.semibold))
                 .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
             
             Rectangle()
                 .foregroundColor(.clear)
-                .frame(width: 40, height: 40)
+                .frame(width: 30, height: 30)
                 .cornerRadius(17)
                 .overlay(
                     RoundedRectangle(cornerRadius: 17)

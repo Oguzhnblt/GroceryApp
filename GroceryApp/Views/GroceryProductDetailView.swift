@@ -15,6 +15,9 @@ struct GroceryProductDetailView: View {
     @State private var isImageLoaded = false
     private var pricePerUnit: Double
     
+    @StateObject private var dataManager = GroceryDataManager()
+
+    
     init(product: GroceryProducts) {
         self.product = product
         self.pricePerUnit = Double(product.price.dropFirst()) ?? 0.0
@@ -84,7 +87,7 @@ struct GroceryProductDetailView: View {
                     }
                     
                     HStack {
-                        ItemCounter(quantity: $quantity, minQuantity: 1, maxQuantity: 9)
+                        ItemCounter(quantity: $quantity, minQuantity: 1, maxQuantity: 5)
                         Spacer()
                         
                         Text("$\(String(format: "%.2f", pricePerUnit * Double(quantity)))")
@@ -150,6 +153,7 @@ struct GroceryProductDetailView: View {
                 
                 Button(action: {
                     // Sepete ekleme işlemi
+                    dataManager.addToCart(product: product, quantity: quantity)
                 }) {
                     Text("Add To Cart")
                         .foregroundColor(.white)
@@ -211,7 +215,7 @@ struct GroceryProductDetailView_Previews: PreviewProvider {
             title: "This is a sample product description",
             imageName: "sample_image", price: "$9.99",
             details: "This is a detailed description of the sample product.",
-            nutrition: [
+            quantity: 12, nutrition: [
                 "Calories": "200 kcal",
                 "Protein": "10 g",
                 "Fat": "5 g",

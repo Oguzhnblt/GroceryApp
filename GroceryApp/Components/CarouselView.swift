@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct CarouselView: View {
     let banners = ["grocerybanner1", "grocerybanner2", "grocerybanner3"]
     

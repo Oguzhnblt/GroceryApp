@@ -28,51 +28,64 @@ struct GroceryHomeView: View {
     }
     
     var body: some View {
-            NavigationView {
-                ScrollView {
-                    VStack(alignment: .leading) {
-                        // Search field
-                        SearchField(searchText: $searchText, placeholder: "Search products")
-                        
-                        // Banner
-                        CarouselView()
-                        
-                        // Exclusive Offer section
-                        SectionHeaderView(title: "Exclusive Offer")
-                        
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack {
-                                ForEach(exclusiveOfferProducts) { product in
-                                    NavigationLink(destination: GroceryProductDetailView(product: product)) {
-                                        ProductCardView(product: product, updateProduct: self.updateProduct)
+        NavigationView {
+            ScrollView {
+                VStack(alignment: .leading) {
+                    // Search field
+                    SearchField(searchText: $searchText, placeholder: "Search products")
+                    
+                    // Banner
+                    CarouselView()
+                    
+                    if filteredProducts.isEmpty {
+                        // Show EmptyCartView if no products are found
+                        EmptyCardView(
+                            title: "No Products Found",
+                            message: "Try adjusting your search or browsing our categories."
+                        )
+                    } else {
+                        // Show sections only if there are products in the respective categories
+                        if !exclusiveOfferProducts.isEmpty {
+                            // Exclusive Offer section
+                            SectionHeaderView(title: "Exclusive Offer")
+                            
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack {
+                                    ForEach(exclusiveOfferProducts) { product in
+                                        NavigationLink(destination: GroceryProductDetailView(product: product)) {
+                                            ProductCardView(product: product, updateProduct: self.updateProduct)
+                                        }
                                     }
                                 }
+                                .padding(.leading)
                             }
-                            .padding(.leading)
                         }
                         
-                        // Best Selling section
-                        SectionHeaderView(title: "Best Selling")
-                        
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack {
-                                ForEach(bestSellingProducts) { product in
-                                    NavigationLink(destination: GroceryProductDetailView(product: product)) {
-                                        ProductCardView(product: product, updateProduct: self.updateProduct)
+                        if !bestSellingProducts.isEmpty {
+                            // Best Selling section
+                            SectionHeaderView(title: "Best Selling")
+                            
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack {
+                                    ForEach(bestSellingProducts) { product in
+                                        NavigationLink(destination: GroceryProductDetailView(product: product)) {
+                                            ProductCardView(product: product, updateProduct: self.updateProduct)
+                                        }
                                     }
                                 }
+                                .padding(.leading)
                             }
-                            .padding(.leading)
                         }
                     }
                 }
-                .padding(.bottom, 30)
-                .background(Color.clear)
-                .onAppear {
-                    dataManager.fetchAllProducts()
-                }
             }
-            .navigationViewStyle(StackNavigationViewStyle())
+            .padding(.bottom, 30)
+            .background(Color.clear)
+            .onAppear {
+                dataManager.fetchAllProducts()
+            }
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
     
     private func updateProduct(_ updatedProduct: GroceryProducts) {

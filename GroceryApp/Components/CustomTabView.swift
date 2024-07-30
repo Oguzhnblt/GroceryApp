@@ -17,9 +17,10 @@ struct CustomTabView: View {
                     .tag("home")
                 ExploreView()
                     .tag("explore")
+                GroceryCartView()
+                    .tag("cart")
                 // FIXME: Düzeltilecek
-                //                CartView()
-                //                    .tag("cart")
+                
                 //                OrderHistoryView()
                 //                    .tag("orderHistory")
                 //                AccountView()

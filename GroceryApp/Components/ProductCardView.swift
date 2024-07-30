@@ -77,6 +77,7 @@ struct ProductCardView: View {
         }
         .frame(width: 173, height: 249)
         .background(Color.white)
+       
     }
 
     private func fetchImageURL(imageName: String) {
@@ -97,7 +98,7 @@ struct ProductCardView: View {
 
 #Preview {
     ProductCardView(
-        product: GroceryProducts(name: "Sample Product", title: "1kg, Priceg", imageName: "sampleImage", price: "$4.99", details: "", nutrition: [:], category: "fresh"),
+        product: GroceryProducts(name: "Sample Product", title: "1kg, Priceg", imageName: "sampleImage", price: "$4.99", details: "", quantity: 1, nutrition: [:], category: "fresh"),
         updateProduct: { _ in }
     )
 }

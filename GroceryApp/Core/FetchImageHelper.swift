@@ -68,7 +68,6 @@ struct AsyncImageView: View {
 }
 
 
-
 class FetchImageHelper {
     
     static func fetchImageURL(imageName: String, completion: @escaping (URL?, Error?) -> Void) {

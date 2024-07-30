@@ -16,6 +16,7 @@ struct GroceryProducts: Identifiable, Codable {
     let price: String
     let details: String
     var isAdded: Bool = false
+    var quantity: Int
 
     struct NutritionInfo: Codable {
         let label: String

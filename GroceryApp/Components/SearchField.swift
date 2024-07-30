@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct SearchField: View {
     @Binding var searchText: String
     var placeholder: String = "Search"

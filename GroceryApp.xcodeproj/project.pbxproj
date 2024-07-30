@@ -44,6 +44,8 @@
 		127217752C56DC020036D420 /* GroceryProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127217742C56DC020036D420 /* GroceryProductDetailView.swift */; };
 		12B1E8112C58D4B900E24323 /* CartItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E8102C58D4B900E24323 /* CartItemView.swift */; };
 		12B1E8132C58F3CC00E24323 /* ItemCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E8122C58F3CC00E24323 /* ItemCounter.swift */; };
+		12B1E81D2C59392700E24323 /* GroceryCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E81C2C59392700E24323 /* GroceryCartView.swift */; };
+		12B1E81F2C59994500E24323 /* EmptyCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E81E2C59994500E24323 /* EmptyCardView.swift */; };
 		12D17EAC2C56E4D7001C3978 /* Gilroy-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17E982C56E4D6001C3978 /* Gilroy-ExtraBoldItalic.ttf */; };
 		12D17EAD2C56E4D7001C3978 /* Gilroy-HeavyItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17E992C56E4D6001C3978 /* Gilroy-HeavyItalic.ttf */; };
 		12D17EAE2C56E4D7001C3978 /* Gilroy-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17E9A2C56E4D6001C3978 /* Gilroy-Thin.ttf */; };
@@ -87,6 +89,8 @@
 		127217742C56DC020036D420 /* GroceryProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryProductDetailView.swift; sourceTree = "<group>"; };
 		12B1E8102C58D4B900E24323 /* CartItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartItemView.swift; sourceTree = "<group>"; };
 		12B1E8122C58F3CC00E24323 /* ItemCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCounter.swift; sourceTree = "<group>"; };
+		12B1E81C2C59392700E24323 /* GroceryCartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryCartView.swift; sourceTree = "<group>"; };
+		12B1E81E2C59994500E24323 /* EmptyCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCardView.swift; sourceTree = "<group>"; };
 		12D17E982C56E4D6001C3978 /* Gilroy-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
 		12D17E992C56E4D6001C3978 /* Gilroy-HeavyItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-HeavyItalic.ttf"; sourceTree = "<group>"; };
 		12D17E9A2C56E4D6001C3978 /* Gilroy-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Thin.ttf"; sourceTree = "<group>"; };
@@ -177,6 +181,7 @@
 				127217742C56DC020036D420 /* GroceryProductDetailView.swift */,
 				12D17EC42C56E5F6001C3978 /* ExploreView.swift */,
 				1236C3282C5846C700226525 /* GroceryCategoryDetailView.swift */,
+				12B1E81C2C59392700E24323 /* GroceryCartView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -260,6 +265,7 @@
 				1236C3232C58011E00226525 /* CustomTabView.swift */,
 				12B1E8102C58D4B900E24323 /* CartItemView.swift */,
 				12B1E8122C58F3CC00E24323 /* ItemCounter.swift */,
+				12B1E81E2C59994500E24323 /* EmptyCardView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -384,12 +390,14 @@
 				1236C2D32C578A6500226525 /* CarouselView.swift in Sources */,
 				127217652C56D8360036D420 /* GroceryAppApp.swift in Sources */,
 				127217752C56DC020036D420 /* GroceryProductDetailView.swift in Sources */,
+				12B1E81D2C59392700E24323 /* GroceryCartView.swift in Sources */,
 				12B1E8112C58D4B900E24323 /* CartItemView.swift in Sources */,
 				1236C3242C58011E00226525 /* CustomTabView.swift in Sources */,
 				1236C2CE2C5789FA00226525 /* SectionHeaderView.swift in Sources */,
 				1236C3292C5846C700226525 /* GroceryCategoryDetailView.swift in Sources */,
 				12D17EC32C56E5A1001C3978 /* SearchField.swift in Sources */,
 				1236C3172C57A75000226525 /* GroceryDataManager.swift in Sources */,
+				12B1E81F2C59994500E24323 /* EmptyCardView.swift in Sources */,
 				127217732C56D8470036D420 /* GroceryHomeView.swift in Sources */,
 				1236C2D12C578A4400226525 /* GroceryProducts.swift in Sources */,
 				12B1E8132C58F3CC00E24323 /* ItemCounter.swift in Sources */,
