@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GroceryHomeView: View {
-    @StateObject private var dataManager = GroceryDataManager()
+    @StateObject var dataManager = GroceryDataManager()
     @State private var searchText = ""
     
     var filteredProducts: [GroceryProducts] {
@@ -38,15 +38,12 @@ struct GroceryHomeView: View {
                     CarouselView()
                     
                     if filteredProducts.isEmpty {
-                        // Show EmptyCartView if no products are found
                         EmptyCardView(
                             title: "No Products Found",
                             message: "Try adjusting your search or browsing our categories."
                         )
                     } else {
-                        // Show sections only if there are products in the respective categories
                         if !exclusiveOfferProducts.isEmpty {
-                            // Exclusive Offer section
                             SectionHeaderView(title: "Exclusive Offer")
                             
                             ScrollView(.horizontal, showsIndicators: false) {
@@ -62,7 +59,6 @@ struct GroceryHomeView: View {
                         }
                         
                         if !bestSellingProducts.isEmpty {
-                            // Best Selling section
                             SectionHeaderView(title: "Best Selling")
                             
                             ScrollView(.horizontal, showsIndicators: false) {

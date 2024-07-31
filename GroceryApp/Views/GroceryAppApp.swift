@@ -18,11 +18,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct GroceryAppApp: App {
+    @StateObject private var dataManager = GroceryDataManager()
 
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
         WindowGroup {
             CustomTabView()
+                .environmentObject(dataManager)
 
         }
     }

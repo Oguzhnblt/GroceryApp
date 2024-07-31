@@ -15,8 +15,9 @@ struct GroceryProductDetailView: View {
     @State private var isImageLoaded = false
     private var pricePerUnit: Double
     
-    @StateObject private var dataManager = GroceryDataManager()
-
+    @EnvironmentObject private var dataManager: GroceryDataManager
+    
+    @State private var isProductInCart: Bool = false
     
     init(product: GroceryProducts) {
         self.product = product
@@ -45,7 +46,7 @@ struct GroceryProductDetailView: View {
                                         .foregroundStyle(.clear)
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 330, height: 200)
-
+                                    
                                 }
                                 
                             case .failure:
@@ -88,6 +89,18 @@ struct GroceryProductDetailView: View {
                     
                     HStack {
                         ItemCounter(quantity: $quantity, minQuantity: 1, maxQuantity: 5)
+                            .onAppear() {
+                                if let cartProduct = dataManager.cartProducts.first(where: {$0.id == product.id}) {
+                                    quantity = cartProduct.quantity
+                                    isProductInCart = true
+                                } else {
+                                    isProductInCart = false
+                                }
+                            }
+                            .onChange(of: quantity) { _,newQuantity in
+                                dataManager.updateCartProductQuantity(productId: product.id!, newQuantity: newQuantity)
+                            }
+
                         Spacer()
                         
                         Text("$\(String(format: "%.2f", pricePerUnit * Double(quantity)))")
@@ -152,19 +165,23 @@ struct GroceryProductDetailView: View {
                     .padding(.bottom)
                 
                 Button(action: {
-                    // Sepete ekleme işlemi
-                    dataManager.addToCart(product: product, quantity: quantity)
+                    if !isProductInCart {
+                        // Sepete ekleme işlemi
+                        dataManager.addToCart(product: product, quantity: quantity)
+                        isProductInCart = true
+                    }
                 }) {
-                    Text("Add To Cart")
+                    Text(isProductInCart ? "Added To Cart" : "Add To Cart")
                         .foregroundColor(.white)
                         .font(.title2)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.green)
+                        .background(isProductInCart ? Color.gray : Color.green)
                         .cornerRadius(10)
                 }
                 .padding([.leading, .trailing], 25)
                 .padding(.bottom, 35)
+                .disabled(isProductInCart) 
             }
             .padding([.leading, .trailing])
         }
@@ -221,7 +238,6 @@ struct GroceryProductDetailView_Previews: PreviewProvider {
                 "Fat": "5 g",
                 "Carbohydrates": "30 g"
             ],
-            
             category: "fresh"
         )
         
@@ -229,5 +245,6 @@ struct GroceryProductDetailView_Previews: PreviewProvider {
             .previewLayout(.sizeThatFits)
             .padding()
             .ignoresSafeArea()
+            .environmentObject(GroceryDataManager())
     }
 }

@@ -51,9 +51,10 @@ struct ProductCardView: View {
                             .padding(.top, 10)
                         
                         Button(action: {
-                            var newProduct = product
-                            newProduct.isAdded.toggle()
-                            updateProduct(newProduct)
+                            // FIXME: Ana sayfa ekleme işlemi
+//                            var newProduct = product
+//                            newProduct.isAdded.toggle()
+//                            updateProduct(newProduct)
                         }) {
                             ZStack {
                                 Rectangle()

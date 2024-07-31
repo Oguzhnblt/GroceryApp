@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GroceryCategoryDetailView: View {
     let category: (String, String, Color)
-    @StateObject private var dataManager = GroceryDataManager()
+    @EnvironmentObject private var dataManager: GroceryDataManager
     
     var body: some View {
         ZStack {
