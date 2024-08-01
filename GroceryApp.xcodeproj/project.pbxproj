@@ -40,6 +40,7 @@
 		1250E84D2C5BA17400F23B64 /* CreditCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1250E84C2C5BA17400F23B64 /* CreditCard.swift */; };
 		1250E8512C5BEC8200F23B64 /* CheckoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1250E8502C5BEC8200F23B64 /* CheckoutView.swift */; };
 		1250E8532C5C158C00F23B64 /* DeliveryAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1250E8522C5C158C00F23B64 /* DeliveryAddressView.swift */; };
+		1250E8552C5C2BCC00F23B64 /* PaymentCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1250E8542C5C2BCC00F23B64 /* PaymentCardView.swift */; };
 		127217652C56D8360036D420 /* GroceryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127217642C56D8360036D420 /* GroceryApp.swift */; };
 		127217692C56D8370036D420 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 127217682C56D8370036D420 /* Assets.xcassets */; };
 		1272176C2C56D8370036D420 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1272176B2C56D8370036D420 /* Preview Assets.xcassets */; };
@@ -90,6 +91,7 @@
 		1250E84C2C5BA17400F23B64 /* CreditCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCard.swift; sourceTree = "<group>"; };
 		1250E8502C5BEC8200F23B64 /* CheckoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutView.swift; sourceTree = "<group>"; };
 		1250E8522C5C158C00F23B64 /* DeliveryAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryAddressView.swift; sourceTree = "<group>"; };
+		1250E8542C5C2BCC00F23B64 /* PaymentCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardView.swift; sourceTree = "<group>"; };
 		127217612C56D8360036D420 /* GroceryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GroceryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		127217642C56D8360036D420 /* GroceryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryApp.swift; sourceTree = "<group>"; };
 		127217682C56D8370036D420 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 				127217742C56DC020036D420 /* GroceryProductDetailView.swift */,
 				1236C3282C5846C700226525 /* GroceryCategoryDetailView.swift */,
 				12B1E81C2C59392700E24323 /* GroceryCartView.swift */,
+				1250E8542C5C2BCC00F23B64 /* PaymentCardView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -424,6 +427,7 @@
 				127217732C56D8470036D420 /* GroceryHomeView.swift in Sources */,
 				1236C2D12C578A4400226525 /* GroceryProducts.swift in Sources */,
 				12B1E8132C58F3CC00E24323 /* ItemCounter.swift in Sources */,
+				1250E8552C5C2BCC00F23B64 /* PaymentCardView.swift in Sources */,
 				1236C31A2C57D91100226525 /* FetchImageHelper.swift in Sources */,
 				12D17EC52C56E5F6001C3978 /* ExploreView.swift in Sources */,
 				129797262C5AAB9F0061EC92 /* CustomBackButton.swift in Sources */,

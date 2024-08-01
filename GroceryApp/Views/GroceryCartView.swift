@@ -54,7 +54,8 @@ struct GroceryCartView: View {
                 }
         }
         .sheet(isPresented: $isCheckoutPresented) {
-            CheckoutView()
+            CheckoutView(totalPrice: totalPrice)
+                .presentationDetents([.medium])
 
         }
     }
@@ -66,7 +67,7 @@ struct GroceryCartView: View {
     
     private var checkoutSection: some View {
         Button(action: {
-            isCheckoutPresented = true // Present the checkout sheet
+            isCheckoutPresented = true
         }) {
             ZStack {
                 Rectangle()

@@ -1,30 +1,43 @@
 //
-//  DeliveryAddressView.swift
+//  PaymentCardView.swift
 //  GroceryApp
 //
 //  Created by Oğuzhan Bolat on 1.08.2024.
 //
-
 import SwiftUI
 
-import SwiftUI
-
-struct DeliveryAddressView: View {
+struct PaymentCardView: View {
     @Environment(\.presentationMode) var presentationMode
-    @Binding var selectedAddress: String?
-    @Binding var addresses: [String]
+    @Binding var selectedCard: String?
+    @Binding var cards: [String]
     
-    @State private var newAddress: String = ""
-    @State private var city: String = ""
-    @State private var state: String = ""
-    @State private var zipCode: String = ""
-    @State private var isAddingNewAddress: Bool = false
-
+    @State private var cardNumber: String = ""
+    @State private var cardholderName: String = ""
+    @State private var expirationDate: String = ""
+    @State private var cvv: String = ""
+    @State private var isAddingNewCard: Bool = false
+    
+    private func formatCardNumber(_ number: String) -> String {
+        let digits = number.filter { $0.isNumber }
+        let formatted = digits.chunked(into: 4).joined(separator: " ")
+        return formatted
+    }
+    
+    private func formatExpirationDate(_ date: String) -> String {
+        let digits = date.filter { $0.isNumber }
+        let formatted = digits.chunked(into: 2).joined(separator: "/")
+        return formatted
+    }
+    
+    private func formatInput(_ input: String, maxLength: Int) -> String {
+        return String(input.prefix(maxLength))
+    }
+    
     var body: some View {
         VStack(spacing: 16) {
             // Header
             HStack {
-                Text("Delivery Address")
+                Text("Card Information")
                     .font(.system(size: 18, weight: .semibold))
                     .foregroundColor(.primary)
                 Spacer()
@@ -35,16 +48,16 @@ struct DeliveryAddressView: View {
                 .foregroundColor(Color(red: 0.33, green: 0.69, blue: 0.46))
             }
             .padding(.top)
-
+            
             Divider()
-
-            // Address List or Warning
-            if addresses.isEmpty {
+            
+            // Card List or Warning
+            if cards.isEmpty {
                 VStack {
-                    Image(systemName: "location.slash")
+                    Image(systemName: "creditcard.trianglebadge.exclamationmark")
                         .font(.system(size: 30))
                         .foregroundColor(.gray)
-                    Text("No addresses available")
+                    Text("No cards available")
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(.gray)
                         .padding(.top, 8)
@@ -53,11 +66,11 @@ struct DeliveryAddressView: View {
             } else {
                 ScrollView {
                     VStack(spacing: 8) {
-                        ForEach(addresses, id: \.self) { address in
+                        ForEach(cards.indices, id: \.self) { index in
                             HStack {
-                                if selectedAddress == address {
+                                if selectedCard == cards[index] {
                                     HStack {
-                                        Text(address)
+                                        Text(cards[index])
                                             .font(.system(size: 16))
                                             .foregroundColor(.primary)
                                             .padding(.vertical, 12)
@@ -69,9 +82,10 @@ struct DeliveryAddressView: View {
                                     }
                                     .background(Color(red: 0.33, green: 0.69, blue: 0.46).opacity(0.2))
                                     .cornerRadius(8)
-                                } else {
+                                }
+                                else {
                                     HStack {
-                                        Text(address)
+                                        Text(cards[index])
                                             .font(.system(size: 16))
                                             .foregroundColor(.primary)
                                             .padding(.vertical, 12)
@@ -84,14 +98,15 @@ struct DeliveryAddressView: View {
                                     }
                                     .background(Color.white)
                                     .cornerRadius(8)
+                                    
                                 }
                                 Button(action: {
-                                    // Remove the address
-                                    if let index = addresses.firstIndex(of: address) {
-                                        addresses.remove(at: index)
-                                        // Deselect the address if it was removed
-                                        if selectedAddress == address {
-                                            selectedAddress = nil
+                                    // Remove the card safely
+                                    if cards.indices.contains(index) {
+                                        let cardToRemove = cards[index]
+                                        cards.remove(at: index)
+                                        if selectedCard == cardToRemove {
+                                            selectedCard = nil
                                         }
                                     }
                                 }) {
@@ -101,22 +116,22 @@ struct DeliveryAddressView: View {
                                 }
                             }
                             .onTapGesture {
-                                selectedAddress = address
+                                selectedCard = cards[index]
                             }
                         }
                     }
                 }
             }
-
+            
             Divider()
-
-            // New Address Section
+            
+            // New Card Section
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
                     Button(action: {
-                        isAddingNewAddress.toggle()
+                        isAddingNewCard.toggle()
                     }) {
-                        Text(isAddingNewAddress ? "Cancel" : "Add New Address")
+                        Text(isAddingNewCard ? "Cancel" : "Add New Card")
                             .font(.system(size: 16, weight: .semibold))
                             .foregroundColor(Color(red: 0.33, green: 0.69, blue: 0.46))
                             .padding()
@@ -124,20 +139,22 @@ struct DeliveryAddressView: View {
                     }
                     .background(Color.white)
                     
-                    if isAddingNewAddress {
+                    if isAddingNewCard {
                         Button(action: {
-                            if !newAddress.isEmpty && !city.isEmpty && !state.isEmpty && !zipCode.isEmpty {
-                                let fullAddress = "\(newAddress), \(city), \(state) \(zipCode)"
-                                addresses.append(fullAddress)
-                                selectedAddress = fullAddress
-                                newAddress = ""
-                                city = ""
-                                state = ""
-                                zipCode = ""
-                                isAddingNewAddress = false
+                            if !cardNumber.isEmpty && !cardholderName.isEmpty && !expirationDate.isEmpty && !cvv.isEmpty {
+                                // Handle adding new card logic here
+                                let formattedCardNumber = formatCardNumber(cardNumber)
+                                let newCard = "**** **** **** \(formattedCardNumber.suffix(4))"
+                                cards.append(newCard)
+                                selectedCard = newCard
+                                cardNumber = ""
+                                cardholderName = ""
+                                expirationDate = ""
+                                cvv = ""
+                                isAddingNewCard = false
                             }
                         }) {
-                            Text("Add Address")
+                            Text("Save Card")
                                 .font(.system(size: 16, weight: .semibold))
                                 .foregroundColor(.white)
                                 .padding()
@@ -150,28 +167,46 @@ struct DeliveryAddressView: View {
                 }
                 .padding(.horizontal)
                 
-                if isAddingNewAddress {
+                if isAddingNewCard {
                     VStack(alignment: .leading, spacing: 8) {
-                        TextField("Street Address", text: $newAddress)
+                        TextField("Card number", text: $cardNumber)
                             .padding(10)
                             .background(Color(.systemGray6))
                             .cornerRadius(8)
-
-                        TextField("City", text: $city)
+                            .keyboardType(.numberPad)
+                            .onChange(of: cardNumber) { _,newValue in
+                                cardNumber = formatInput(newValue, maxLength: 19)
+                                cardNumber = formatCardNumber(cardNumber)
+                            }
+                        
+                        TextField("Cardholder name", text: $cardholderName)
                             .padding(10)
                             .background(Color(.systemGray6))
                             .cornerRadius(8)
-
+                        
                         HStack(spacing: 8) {
-                            TextField("State", text: $state)
+                            TextField("MM/YY", text: $expirationDate)
                                 .padding(10)
                                 .background(Color(.systemGray6))
                                 .cornerRadius(8)
-
-                            TextField("ZIP Code", text: $zipCode)
+                                .frame(width: 150)
+                                .keyboardType(.numberPad)
+                                .onChange(of: expirationDate) { _,newValue in
+                                    expirationDate = formatInput(newValue, maxLength: 5)
+                                    expirationDate = formatExpirationDate(expirationDate)
+                                }
+                            
+                            Spacer()
+                            
+                            TextField("CVV", text: $cvv)
                                 .padding(10)
                                 .background(Color(.systemGray6))
                                 .cornerRadius(8)
+                                .frame(width: 150)
+                                .keyboardType(.numberPad)
+                                .onChange(of: cvv) { _,newValue in
+                                    cvv = formatInput(newValue, maxLength: 3)
+                                }
                         }
                     }
                     .padding(.horizontal)
@@ -181,5 +216,27 @@ struct DeliveryAddressView: View {
         }
         .padding(.horizontal)
         .padding(.top, 20)
+    }
+}
+
+extension String {
+    func chunked(into size: Int) -> [String] {
+        guard size > 0 else { return [] }
+        return stride(from: 0, to: count, by: size).map {
+            let start = index(startIndex, offsetBy: $0)
+            let end = index(start, offsetBy: size, limitedBy: endIndex) ?? endIndex
+            return String(self[start..<end])
+        }
+    }
+}
+
+
+struct PaymentCardView_Previews: PreviewProvider {
+    @State static var selectedCard: String? = nil
+    @State static var cards: [String] = ["1234 1234 1234 1234", "5678 5678 5678 5678"]
+    
+    static var previews: some View {
+        PaymentCardView(selectedCard: $selectedCard, cards: $cards)
+            .previewLayout(.sizeThatFits)
     }
 }
