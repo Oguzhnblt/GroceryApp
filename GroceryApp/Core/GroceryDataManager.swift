@@ -13,6 +13,7 @@ class GroceryDataManager: ObservableObject {
     
     @Published var products: [GroceryProducts] = []
     @Published var cartProducts: [GroceryProducts] = []
+
     
     var db = Firestore.firestore()
     
@@ -113,6 +114,7 @@ class GroceryDataManager: ObservableObject {
         fetchProducts(from: "Orders")
     }
     
+   
     //    func addOrder(order: Order) {
     //        guard let orderId = order.id else { return }
     //        let orderRef = db.collection("Orders").document(orderId)

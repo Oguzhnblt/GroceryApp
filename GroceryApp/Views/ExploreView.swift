@@ -33,15 +33,15 @@ struct ExploreView: View {
                         }
                     }
                 }
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        Text("Explore")
+                            .font(.custom("Gilroy-SemiBold", size: 20))
+                    }
+                }
                 .padding()
             }
             .scrollIndicators(.hidden)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("Explore")
-                        .font(.custom("Gilroy-Bold", size: 20))
-                }
-            }
         }
     }
 }

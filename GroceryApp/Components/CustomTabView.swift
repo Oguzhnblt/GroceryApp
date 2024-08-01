@@ -23,8 +23,8 @@ struct CustomTabView: View {
                 
                 //                OrderHistoryView()
                 //                    .tag("orderHistory")
-                //                AccountView()
-                //                    .tag("account")
+//                                CreditCardView()
+                                    .tag("account")
             }
             .ignoresSafeArea(.all, edges: .bottom)
             
