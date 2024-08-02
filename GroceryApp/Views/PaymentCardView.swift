@@ -4,6 +4,7 @@
 //
 //  Created by Oğuzhan Bolat on 1.08.2024.
 //
+
 import SwiftUI
 
 struct PaymentCardView: View {
@@ -16,6 +17,8 @@ struct PaymentCardView: View {
     @State private var expirationDate: String = ""
     @State private var cvv: String = ""
     @State private var isAddingNewCard: Bool = false
+    @State private var isEditingCard: Bool = false
+    @State private var editingCardIndex: Int? = nil
     
     private func formatCardNumber(_ number: String) -> String {
         let digits = number.filter { $0.isNumber }
@@ -31,6 +34,14 @@ struct PaymentCardView: View {
     
     private func formatInput(_ input: String, maxLength: Int) -> String {
         return String(input.prefix(maxLength))
+    }
+    
+    private func loadCardDetails(for index: Int) {
+        let maskedCardNumber = cards[index]
+        cardNumber = "**** **** **** \(maskedCardNumber.suffix(4))"
+        cardholderName = "John Doe"
+        expirationDate = "12/24"
+        cvv = "123"
     }
     
     var body: some View {
@@ -51,7 +62,7 @@ struct PaymentCardView: View {
             
             Divider()
             
-            // Card List or Warning
+            // Card List
             if cards.isEmpty {
                 VStack {
                     Image(systemName: "creditcard.trianglebadge.exclamationmark")
@@ -64,72 +75,71 @@ struct PaymentCardView: View {
                 }
                 .padding()
             } else {
-                ScrollView {
-                    VStack(spacing: 8) {
-                        ForEach(cards.indices, id: \.self) { index in
-                            HStack {
-                                if selectedCard == cards[index] {
-                                    HStack {
-                                        Text(cards[index])
-                                            .font(.system(size: 16))
-                                            .foregroundColor(.primary)
-                                            .padding(.vertical, 12)
-                                            .padding(.leading, 8)
-                                        Spacer()
-                                        Image(systemName: "checkmark.circle.fill")
-                                            .foregroundColor(Color(red: 0.33, green: 0.69, blue: 0.46))
-                                            .padding(.trailing)
-                                    }
-                                    .background(Color(red: 0.33, green: 0.69, blue: 0.46).opacity(0.2))
-                                    .cornerRadius(8)
-                                }
-                                else {
-                                    HStack {
-                                        Text(cards[index])
-                                            .font(.system(size: 16))
-                                            .foregroundColor(.primary)
-                                            .padding(.vertical, 12)
-                                            .padding(.leading, 8)
-                                        Spacer()
-                                        Circle()
-                                            .stroke(Color.gray, lineWidth: 1)
-                                            .frame(width: 15, height: 15)
-                                            .padding(.trailing, 18)
-                                    }
-                                    .background(Color.white)
-                                    .cornerRadius(8)
-                                    
-                                }
-                                Button(action: {
-                                    // Remove the card safely
-                                    if cards.indices.contains(index) {
-                                        let cardToRemove = cards[index]
-                                        cards.remove(at: index)
-                                        if selectedCard == cardToRemove {
-                                            selectedCard = nil
-                                        }
-                                    }
-                                }) {
-                                    Image(systemName: "trash")
-                                        .foregroundColor(.black)
-                                        .padding(.trailing)
-                                }
+                List {
+                    ForEach(cards.indices, id: \.self) { index in
+                        HStack {
+                            Image("card")
+                            Text(cards[index])
+                                .font(.system(size: 16))
+                                .foregroundColor(.primary)
+                                .padding(.vertical, 12)
+                                .padding(.leading, 8)
+                            Spacer()
+                            if selectedCard == cards[index] {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundColor(Color(red: 0.33, green: 0.69, blue: 0.46))
+                                    .padding(.trailing)
                             }
-                            .onTapGesture {
-                                selectedCard = cards[index]
+                        }
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            selectedCard = cards[index]
+                        }
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button(role: .destructive) {
+                                // Delete the card
+                                let cardToRemove = cards[index]
+                                cards.remove(at: index)
+                                if selectedCard == cardToRemove {
+                                    selectedCard = nil
+                                }
+                            } label: {
+                                Label("Delete", systemImage: "trash")
                             }
+                            
+                            Button {
+                                // Edit card details
+                                isEditingCard = true
+                                isAddingNewCard = true
+                                editingCardIndex = index
+                                loadCardDetails(for: index)
+                            } label: {
+                                Label("Edit", systemImage: "pencil")
+                            }
+                            .tint(Color(red: 0.33, green: 0.69, blue: 0.46))
+
                         }
                     }
                 }
+                .listStyle(PlainListStyle())
             }
             
             Divider()
             
-            // New Card Section
+            // New/Edit Card Section
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
                     Button(action: {
-                        isAddingNewCard.toggle()
+                        if isEditingCard {
+                            isEditingCard = false
+                            isAddingNewCard = false
+                            cardNumber = ""
+                            cardholderName = ""
+                            expirationDate = ""
+                            cvv = ""
+                        } else {
+                            isAddingNewCard.toggle()
+                        }
                     }) {
                         Text(isAddingNewCard ? "Cancel" : "Add New Card")
                             .font(.system(size: 16, weight: .semibold))
@@ -142,11 +152,18 @@ struct PaymentCardView: View {
                     if isAddingNewCard {
                         Button(action: {
                             if !cardNumber.isEmpty && !cardholderName.isEmpty && !expirationDate.isEmpty && !cvv.isEmpty {
-                                // Handle adding new card logic here
                                 let formattedCardNumber = formatCardNumber(cardNumber)
                                 let newCard = "**** **** **** \(formattedCardNumber.suffix(4))"
-                                cards.append(newCard)
-                                selectedCard = newCard
+                                
+                                if isEditingCard, let index = editingCardIndex {
+                                    cards[index] = newCard
+                                    selectedCard = newCard
+                                    isEditingCard = false
+                                } else {
+                                    cards.append(newCard)
+                                    selectedCard = newCard
+                                }
+                                
                                 cardNumber = ""
                                 cardholderName = ""
                                 expirationDate = ""
@@ -154,7 +171,7 @@ struct PaymentCardView: View {
                                 isAddingNewCard = false
                             }
                         }) {
-                            Text("Save Card")
+                            Text(isEditingCard ? "Save Changes" : "Save Card")
                                 .font(.system(size: 16, weight: .semibold))
                                 .foregroundColor(.white)
                                 .padding()
@@ -174,7 +191,7 @@ struct PaymentCardView: View {
                             .background(Color(.systemGray6))
                             .cornerRadius(8)
                             .keyboardType(.numberPad)
-                            .onChange(of: cardNumber) { _,newValue in
+                            .onChange(of: cardNumber) { _, newValue in
                                 cardNumber = formatInput(newValue, maxLength: 19)
                                 cardNumber = formatCardNumber(cardNumber)
                             }
@@ -191,7 +208,7 @@ struct PaymentCardView: View {
                                 .cornerRadius(8)
                                 .frame(width: 150)
                                 .keyboardType(.numberPad)
-                                .onChange(of: expirationDate) { _,newValue in
+                                .onChange(of: expirationDate) { _, newValue in
                                     expirationDate = formatInput(newValue, maxLength: 5)
                                     expirationDate = formatExpirationDate(expirationDate)
                                 }
@@ -204,7 +221,7 @@ struct PaymentCardView: View {
                                 .cornerRadius(8)
                                 .frame(width: 150)
                                 .keyboardType(.numberPad)
-                                .onChange(of: cvv) { _,newValue in
+                                .onChange(of: cvv) { _, newValue in
                                     cvv = formatInput(newValue, maxLength: 3)
                                 }
                         }
@@ -229,7 +246,6 @@ extension String {
         }
     }
 }
-
 
 struct PaymentCardView_Previews: PreviewProvider {
     @State static var selectedCard: String? = nil

@@ -55,7 +55,7 @@ struct GroceryCartView: View {
         }
         .sheet(isPresented: $isCheckoutPresented) {
             CheckoutView(totalPrice: totalPrice)
-                .presentationDetents([.medium])
+                .presentationDetents([.fraction(0.7)])
 
         }
     }

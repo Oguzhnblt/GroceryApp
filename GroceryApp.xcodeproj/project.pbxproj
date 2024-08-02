@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1230D1862C5D1C79000D33B0 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1230D1852C5D1C79000D33B0 /* SplashView.swift */; };
+		1230D1882C5D33E4000D33B0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1230D1872C5D33E4000D33B0 /* LoginView.swift */; };
+		1230D18A2C5D3E05000D33B0 /* GroceryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1230D1892C5D3E05000D33B0 /* GroceryButton.swift */; };
+		1230D18E2C5D40FD000D33B0 /* GroceryAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1230D18D2C5D40FD000D33B0 /* GroceryAuthManager.swift */; };
+		1230D1922C5D5C80000D33B0 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1230D1912C5D5C80000D33B0 /* SignupView.swift */; };
 		1236C2CE2C5789FA00226525 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236C2CD2C5789FA00226525 /* SectionHeaderView.swift */; };
 		1236C2D12C578A4400226525 /* GroceryProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236C2D02C578A4400226525 /* GroceryProducts.swift */; };
 		1236C2D32C578A6500226525 /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236C2D22C578A6500226525 /* CarouselView.swift */; };
@@ -79,6 +84,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1230D1852C5D1C79000D33B0 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		1230D1872C5D33E4000D33B0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		1230D1892C5D3E05000D33B0 /* GroceryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryButton.swift; sourceTree = "<group>"; };
+		1230D18D2C5D40FD000D33B0 /* GroceryAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryAuthManager.swift; sourceTree = "<group>"; };
+		1230D1912C5D5C80000D33B0 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		1236C2CD2C5789FA00226525 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		1236C2D02C578A4400226525 /* GroceryProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryProducts.swift; sourceTree = "<group>"; };
 		1236C2D22C578A6500226525 /* CarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
@@ -184,6 +194,7 @@
 			children = (
 				1236C3162C57A75000226525 /* GroceryDataManager.swift */,
 				1236C3192C57D91100226525 /* FetchImageHelper.swift */,
+				1230D18D2C5D40FD000D33B0 /* GroceryAuthManager.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -200,6 +211,9 @@
 				1236C3282C5846C700226525 /* GroceryCategoryDetailView.swift */,
 				12B1E81C2C59392700E24323 /* GroceryCartView.swift */,
 				1250E8542C5C2BCC00F23B64 /* PaymentCardView.swift */,
+				1230D1852C5D1C79000D33B0 /* SplashView.swift */,
+				1230D1872C5D33E4000D33B0 /* LoginView.swift */,
+				1230D1912C5D5C80000D33B0 /* SignupView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -287,6 +301,7 @@
 				129797212C5A6D560061EC92 /* OrderAcceptedView.swift */,
 				129797252C5AAB9F0061EC92 /* CustomBackButton.swift */,
 				129797292C5AB16C0061EC92 /* CreditCardView.swift */,
+				1230D1892C5D3E05000D33B0 /* GroceryButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -420,6 +435,8 @@
 				1250E8532C5C158C00F23B64 /* DeliveryAddressView.swift in Sources */,
 				1297972A2C5AB16C0061EC92 /* CreditCardView.swift in Sources */,
 				1236C3292C5846C700226525 /* GroceryCategoryDetailView.swift in Sources */,
+				1230D1882C5D33E4000D33B0 /* LoginView.swift in Sources */,
+				1230D18A2C5D3E05000D33B0 /* GroceryButton.swift in Sources */,
 				12D17EC32C56E5A1001C3978 /* SearchField.swift in Sources */,
 				1236C3172C57A75000226525 /* GroceryDataManager.swift in Sources */,
 				12B1E81F2C59994500E24323 /* EmptyCardView.swift in Sources */,
@@ -429,8 +446,11 @@
 				12B1E8132C58F3CC00E24323 /* ItemCounter.swift in Sources */,
 				1250E8552C5C2BCC00F23B64 /* PaymentCardView.swift in Sources */,
 				1236C31A2C57D91100226525 /* FetchImageHelper.swift in Sources */,
+				1230D1862C5D1C79000D33B0 /* SplashView.swift in Sources */,
+				1230D1922C5D5C80000D33B0 /* SignupView.swift in Sources */,
 				12D17EC52C56E5F6001C3978 /* ExploreView.swift in Sources */,
 				129797262C5AAB9F0061EC92 /* CustomBackButton.swift in Sources */,
+				1230D18E2C5D40FD000D33B0 /* GroceryAuthManager.swift in Sources */,
 				1236C2D52C578F2600226525 /* ProductCardView.swift in Sources */,
 				12D17EC72C56E633001C3978 /* CategoryCell.swift in Sources */,
 			);

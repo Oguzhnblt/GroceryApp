@@ -18,15 +18,25 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct GroceryApp: App {
-    
+    @State private var isSplashActive = true
     @StateObject private var dataManager = GroceryDataManager()
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
         WindowGroup {
-            CustomTabView()
-                .environmentObject(dataManager)
-            
+            if isSplashActive {
+                SplashView()
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            withAnimation {
+                                isSplashActive = false
+                            }
+                        }
+                    }
+            } else {
+                LoginView()
+                    .environmentObject(GroceryDataManager())
+            }
         }
     }
 }

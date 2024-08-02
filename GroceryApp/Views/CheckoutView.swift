@@ -16,19 +16,17 @@ struct CheckoutView: View {
     @State private var cards: [String] = ["**** **** **** 1234", "**** **** **** 5678"]
     var totalPrice: Double
     
-    
-    var formattedCardNumber: String {
+    private var formattedCardNumber: String {
         guard let card = selectedCard else { return "Select Card" }
         let lastFourDigits = card.suffix(4)
-        let maskedCardNumber = String(repeating: "*", count: 4) + " " + lastFourDigits
+        let maskedCardNumber = "**** **** **** \(lastFourDigits)"
         return maskedCardNumber
     }
     
     var body: some View {
         VStack(alignment: .leading) {
-            
             Text("Checkout")
-                .font(Font.custom("Gilroy-SemiBold", size: 24))
+                .font(.custom("Gilroy-SemiBold", size: 24))
                 .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
                 .padding([.leading, .bottom])
             
@@ -49,7 +47,7 @@ struct CheckoutView: View {
                             .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
                             .lineLimit(1)
                         Image(systemName: "chevron.right")
-                            .foregroundStyle(.black)
+                            .foregroundColor(.black)
                     }
                 }
             }
@@ -73,7 +71,7 @@ struct CheckoutView: View {
                             .lineLimit(1)
                         Image("card")
                         Image(systemName: "chevron.right")
-                            .foregroundStyle(.black)
+                            .foregroundColor(.black)
                     }
                 }
             }
@@ -83,18 +81,20 @@ struct CheckoutView: View {
             
             // Promo Code Section
             HStack {
-                Button(action: {}, label: {
+                Button(action: {
+                    // Promo code action
+                }) {
                     HStack {
                         Text("Promo Code")
                             .font(.system(size: 18, weight: .semibold))
                             .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
                         Spacer()
                         Image(systemName: "barcode")
-                            .foregroundStyle(.black)
+                            .foregroundColor(.black)
                         Image(systemName: "chevron.right")
-                            .foregroundStyle(.black)
+                            .foregroundColor(.black)
                     }
-                })
+                }
             }
             .padding()
             
@@ -110,23 +110,40 @@ struct CheckoutView: View {
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
             }
-            .padding()
+            .padding(25)
+
+            Divider()
+            
+            // Place Order button
+            Button(action: {
+                // Place order action
+            }) {
+                ZStack {
+                    Rectangle()
+                        .foregroundColor(Color(red: 0.33, green: 0.69, blue: 0.46))
+                        .frame(width: 364, height: 67)
+                        .cornerRadius(19)
+                    
+                    Text("Place Order")
+                        .font(.custom("Gilroy-SemiBold", size: 18))
+                        .foregroundColor(Color(red: 1, green: 0.98, blue: 1))
+                }
+            }
+            .frame(width: 364, height: 67)
+            .padding(.top, 15)
         }
         .padding([.leading, .trailing])
         .sheet(isPresented: $showAddressSheet) {
             DeliveryAddressView(selectedAddress: $selectedAddress, addresses: $addresses)
-                .presentationDetents([.fraction(0.6)])
+                .presentationDetents([.fraction(0.7)])
         }
         .sheet(isPresented: $showCardSheet) {
             PaymentCardView(selectedCard: $selectedCard, cards: $cards)
-                .presentationDetents([.fraction(0.6)])
+                .presentationDetents([.fraction(0.7)])
         }
     }
 }
 
-
-
 #Preview {
     CheckoutView(totalPrice: 1)
 }
-

@@ -103,6 +103,7 @@ struct DeliveryAddressView: View {
                             .onTapGesture {
                                 selectedAddress = address
                             }
+                            Divider()
                         }
                     }
                 }
