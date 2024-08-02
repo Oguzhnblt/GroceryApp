@@ -1,5 +1,5 @@
 //
-//  GroceryAuthManager.swift
+//  GroceryAuthViewModel.swift
 //  GroceryApp
 //
 //  Created by Oğuzhan Bolat on 2.08.2024.
@@ -7,35 +7,66 @@
 
 import FirebaseAuth
 
-func signUp(email: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
-    Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-        if let error = error {
-            completion(.failure(error))
-        } else if let user = result?.user {
-            completion(.success(user))
+class GroceryAuthManager: ObservableObject {
+    @Published var email: String = ""
+    @Published var password: String = ""
+    @Published var username: String = ""
+    @Published var errorMessage: String?
+    @Published var successMessage: String?
+    @Published var isAuthenticated: Bool = false
+
+    init() {
+        checkUserStatus()
+    }
+
+    func signUp(completion: @escaping () -> Void) {
+        guard !email.isEmpty, !password.isEmpty, password.count >= 6 else {
+            errorMessage = "Please provide a valid email and password (at least 6 characters)."
+            return
+        }
+        
+        Auth.auth().createUser(withEmail: email, password: password) { [weak self] result, error in
+            if let error = error {
+                self?.errorMessage = error.localizedDescription
+            } else {
+                self?.isAuthenticated = true
+                self?.successMessage = "Account successfully created!"
+                completion()
+            }
+        }
+    }
+
+    func login(completion: @escaping () -> Void) {
+        guard !email.isEmpty, !password.isEmpty else {
+            errorMessage = "Please provide email and password."
+            return
+        }
+        
+        Auth.auth().signIn(withEmail: email, password: password) { [weak self] result, error in
+            if let error = error {
+                self?.errorMessage = error.localizedDescription
+            } else {
+                self?.isAuthenticated = true
+                completion()
+            }
+        }
+    }
+
+    func logout(completion: @escaping () -> Void) {
+        do {
+            try Auth.auth().signOut()
+            isAuthenticated = false
+            completion()
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+    
+    func checkUserStatus() {
+        if Auth.auth().currentUser != nil {
+            isAuthenticated = true
+        } else {
+            isAuthenticated = false
         }
     }
 }
-
-func login(email: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
-    Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
-        if let error = error {
-            completion(.failure(error))
-        } else if let user = result?.user {
-            completion(.success(user))
-        }
-    }
-}
-
-func logout() {
-    do {
-        try Auth.auth().signOut()
-    } catch let signOutError as NSError {
-        print("Error signing out: %@", signOutError)
-    }
-}
-
-func checkUserStatus() -> User? {
-    return Auth.auth().currentUser
-}
-

@@ -7,26 +7,19 @@
 
 import SwiftUI
 
-struct CustomBackButton: ViewModifier {
-    @Environment(\.presentationMode) var presentationMode
+struct CustomBackButton: View {
+    var action: () -> Void
 
-    func body(content: Content) -> some View {
-        content
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Image(systemName: "chevron.left")
-                            .foregroundColor(.black)
-                    }
-                }
+    var body: some View {
+        Button(action: action) {
+            HStack {
+                Image(systemName: "chevron.left")
+                    .font(.system(size: 18, weight: .medium))
+                Text("Back")
+                    .font(Font.custom("Gilroy", size: 16))
             }
+            .foregroundColor(.blue) // Customize the color here
+        }
     }
 }
 
-extension View {
-    func groceryBackButton() -> some View {
-        self.modifier(CustomBackButton())
-    }
-}

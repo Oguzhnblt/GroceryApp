@@ -19,7 +19,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct GroceryApp: App {
     @State private var isSplashActive = true
-    @StateObject private var dataManager = GroceryDataManager()
+    
+    @EnvironmentObject private var authManager: GroceryAuthManager
+    
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
@@ -35,7 +37,7 @@ struct GroceryApp: App {
                     }
             } else {
                 LoginView()
-                    .environmentObject(GroceryDataManager())
+                    .environmentObject(GroceryAuthManager())
             }
         }
     }

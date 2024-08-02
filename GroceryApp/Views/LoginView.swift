@@ -8,47 +8,68 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State private var password: String = ""
-    @State private var email: String = ""
-
+    @State private var showSignupView: Bool = false
+    @State private var isLoggedIn: Bool = false
+    
+    @StateObject private var authManager = GroceryAuthManager()
+    @Environment(\.dismiss) private var dismiss
+    
     var body: some View {
-        ZStack(alignment: .top) {
-            Rectangle()
-                .foregroundColor(.clear)
-                .background(Image("blur").ignoresSafeArea(.all))
-                .opacity(0.06)
-                .frame(height: 200)
-
+        NavigationStack {
             VStack {
-                Image("login_icon")
+                ZStack(alignment: .top) {
+                    Rectangle()
+                        .foregroundColor(.clear)
+                        .background(Image("blur").ignoresSafeArea(.all))
+                        .opacity(0.06)
+                        .frame(height: 200)
+                    
+                    VStack {
+                        Image("login_icon")
+                        
+                        Text("Get your groceries\nwith nectar")
+                            .font(Font.custom("Gilroy-Medium", size: 16))
+                            .foregroundColor(Color(red: 0.01, green: 0.01, blue: 0.01))
+                            .padding(.bottom, 15)
+                        
+                        if let errorMessage = authManager.errorMessage {
+                            errorMessageView(message: errorMessage)
+                        }
+                    }
+                }
                 
-                Text("Get your groceries\nwith nectar")
-                    .font(Font.custom("Gilroy-Medium", size: 16))
-                    .foregroundColor(Color(red: 0.01, green: 0.01, blue: 0.01))
+                VStack(alignment: .leading, spacing: 30) {
+                    headerSection
+                    
+                    emailSection
+                    
+                    passwordSection
+                    
+                    forgotPasswordButton
+                    
+                    actionButtons
+                }
+                .padding([.leading, .trailing], 25)
+            }
+            .fullScreenCover(isPresented: $isLoggedIn) {
+                CustomTabView()
+                    .environmentObject(GroceryDataManager())
+            }
+            .onChange(of: authManager.isAuthenticated) { _, newValue in
+                if newValue {
+                    isLoggedIn = true
+                }
             }
         }
-
-        VStack(alignment: .leading, spacing: 30) {
-            headerSection
-            
-            emailSection
-            
-            passwordSection
-            
-            forgotPasswordButton
-            
-            actionButtons
-        }
-        .padding([.leading, .trailing], 25)
     }
     
     private var headerSection: some View {
         VStack(alignment: .leading, spacing: 15) {
-            Text("Loging")
+            Text("Login")
                 .font(Font.custom("Gilroy-SemiBold", size: 26))
                 .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
             
-            Text("Enter your emails and password")
+            Text("Enter your email and password")
                 .font(Font.custom("Gilroy-Medium", size: 16))
                 .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
         }
@@ -60,9 +81,12 @@ struct LoginView: View {
                 .font(Font.custom("Gilroy-SemiBold", size: 16))
                 .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
             
-            TextField("Enter your email", text: $email)
+            TextField("Enter your email", text: $authManager.email)
                 .font(Font.custom("Gilroy-SemiBold", size: 16))
                 .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
+                .onChange(of: authManager.email) {
+                    authManager.errorMessage = nil
+                }
             
             Divider()
         }
@@ -74,9 +98,13 @@ struct LoginView: View {
                 .font(Font.custom("Gilroy-SemiBold", size: 16))
                 .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
             
-            SecureField("Password", text: $password)
+            SecureField("Password", text: $authManager.password)
                 .font(Font.custom("Gilroy-Medium", size: 18))
                 .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
+                .onChange(of: authManager.password) {
+                    
+                    authManager.errorMessage = nil
+                }
             
             Divider()
         }
@@ -86,7 +114,7 @@ struct LoginView: View {
         HStack {
             Spacer()
             Button(action: {
-                // Forgot password
+                // Forgot password action
             }) {
                 Text("Forgot Password?")
                     .font(Font.custom("Gilroy-Medium", size: 14))
@@ -98,7 +126,9 @@ struct LoginView: View {
     private var actionButtons: some View {
         VStack(alignment: .center, spacing: 20) {
             Button(action: {
-                // Log in
+                authManager.login {
+                    self.isLoggedIn = true
+                }
             }) {
                 GroceryButton(text: "Log In")
             }
@@ -109,17 +139,31 @@ struct LoginView: View {
                     .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
                 
                 Button(action: {
-                    // Signup
+                    self.showSignupView = true
                 }) {
                     Text("Signup")
                         .font(Font.custom("Gilroy", size: 14).weight(.semibold))
                         .foregroundColor(Color(red: 0.33, green: 0.69, blue: 0.46))
                 }
+                .sheet(isPresented: $showSignupView) {
+                    SignupView()
+                        .environmentObject(authManager)
+                }
+                
             }
         }
+    }
+    
+    private func errorMessageView(message: String) -> some View {
+        Text(message)
+            .font(Font.custom("Gilroy-Medium", size: 14))
+            .foregroundColor(.red)
+            .padding()
+            .cornerRadius(8)
     }
 }
 
 #Preview {
     LoginView()
+        .environmentObject(GroceryAuthManager())
 }
