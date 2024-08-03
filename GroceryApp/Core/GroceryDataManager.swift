@@ -10,22 +10,22 @@ import FirebaseFirestoreSwift
 import FirebaseAuth
 
 class GroceryDataManager: ObservableObject {
-    
-    var db = Firestore.firestore()
+    private var db = Firestore.firestore()
     
     @Published var products: [GroceryProducts] = []
     @Published var cartProducts: [GroceryProducts] = []
     @Published var userCards: [CreditCard] = []
     @Published var userAddresses: [DeliveryAddress] = []
     
-    
     private var userId: String? {
         Auth.auth().currentUser?.uid
     }
     
+    // MARK: - Product Functions
     
     func fetchProducts(from collection: String, withField field: String? = nil, equalTo value: String? = nil) {
         var query: Query = db.collection(collection)
+        
         if let field = field, let value = value {
             query = query.whereField(field, isEqualTo: value)
         }
@@ -43,33 +43,49 @@ class GroceryDataManager: ObservableObject {
                 return
             }
             
+            let fetchedProducts = documents.compactMap { document in
+                try? document.data(as: GroceryProducts.self)
+            }
+            
             if collection == "Cart" {
-                self.cartProducts = documents.compactMap { document in
-                    try? document.data(as: GroceryProducts.self)
-                }
+                self.cartProducts = fetchedProducts
             } else {
-                self.products = documents.compactMap { document in
-                    try? document.data(as: GroceryProducts.self)
-                }
+                self.products = fetchedProducts
             }
         }
     }
-    
+
+    func fetchCartProducts() {
+        guard let userId = userId else { return }
+        
+        let cartRef = db.collection("Users").document(userId).collection("Cart")
+        
+        cartRef.getDocuments { [weak self] snapshot, error in
+            if let error = error {
+                print("Error fetching cart products: \(error.localizedDescription)")
+                return
+            }
+            
+            let fetchedCartProducts = snapshot?.documents.compactMap { document in
+                try? document.data(as: GroceryProducts.self)
+            } ?? []
+            
+            self?.cartProducts = fetchedCartProducts
+        }
+    }
+
     func fetchAllProducts() {
         fetchProducts(from: "GroceryProducts")
     }
-    
-    func fetchCartProducts() {
-        fetchProducts(from: "Cart")
-    }
+
     
     func fetchProducts(forCategory category: String) {
         fetchProducts(from: "GroceryProducts", withField: "category", equalTo: category)
     }
     
     func addToCart(product: GroceryProducts, quantity: Int) {
-        guard let productId = product.id else { return }
-        let cartRef = db.collection("Cart").document(productId)
+        guard let userId = userId, let productId = product.id else { return }
+        let cartRef = db.collection("Users").document(userId).collection("Cart").document(productId)
         
         cartRef.setData([
             "name": product.name,
@@ -91,7 +107,8 @@ class GroceryDataManager: ObservableObject {
     }
     
     func removeFromCart(productId: String) {
-        let cartRef = db.collection("Cart").document(productId)
+        guard let userId = userId else { return }
+        let cartRef = db.collection("Users").document(userId).collection("Cart").document(productId)
         
         cartRef.delete { [weak self] error in
             if let error = error {
@@ -104,7 +121,8 @@ class GroceryDataManager: ObservableObject {
     }
     
     func updateCartProductQuantity(productId: String, newQuantity: Int) {
-        let cartRef = db.collection("Cart").document(productId)
+        guard let userId = userId else { return }
+        let cartRef = db.collection("Users").document(userId).collection("Cart").document(productId)
         
         cartRef.updateData(["quantity": newQuantity]) { [weak self] error in
             if let error = error {
@@ -169,9 +187,6 @@ class GroceryDataManager: ObservableObject {
             }
         }
     }
-
-    
-    
     
     func fetchUserCards() {
         guard let userId = userId else { return }
@@ -187,7 +202,6 @@ class GroceryDataManager: ObservableObject {
             } ?? []
         }
     }
-    
     
     // MARK: - Address Functions
     
@@ -242,8 +256,6 @@ class GroceryDataManager: ObservableObject {
             }
         }
     }
-
-    
     
     func fetchUserAddresses() {
         guard let userId = userId else { return }
@@ -253,22 +265,12 @@ class GroceryDataManager: ObservableObject {
             if let error = error {
                 print("Error fetching addresses: \(error.localizedDescription)")
             } else {
-                guard let documents = snapshot?.documents else {
-                    print("No addresses found.")
-                    return
-                }
-                self?.userAddresses = documents.compactMap { document in
-                    do {
-                        return try document.data(as: DeliveryAddress.self)
-                    } catch {
-                        print("Error decoding address: \(error)")
-                        return nil
-                    }
-                }
+                self?.userAddresses = snapshot?.documents.compactMap { document in
+                    try? document.data(as: DeliveryAddress.self)
+                } ?? []
             }
         }
     }
-    
     
     func fetchOrderHistory() {
         fetchProducts(from: "Orders")

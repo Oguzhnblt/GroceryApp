@@ -50,8 +50,10 @@ struct GroceryCartView: View {
                     }
                 }
                 .onAppear {
+                    print("GroceryCartView appeared")
                     dataManager.fetchCartProducts()
                 }
+
         }
         .sheet(isPresented: $isCheckoutPresented) {
             CheckoutView(totalPrice: totalPrice)

@@ -9,11 +9,11 @@ import FirebaseFirestoreSwift
 
 struct GroceryProducts: Identifiable, Codable, Equatable {
     @DocumentID var id: String?
-    let name: String
-    let title: String
+    var name: String
+    var title: String
     var imageName: String?
-    let price: String
-    let details: String
+    var price: String
+    var details: String
     var isAdded: Bool = false
     var quantity: Int
 
