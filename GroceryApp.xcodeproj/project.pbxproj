@@ -42,7 +42,8 @@
 		1236C3242C58011E00226525 /* CustomTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236C3232C58011E00226525 /* CustomTabView.swift */; };
 		1236C3292C5846C700226525 /* GroceryCategoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236C3282C5846C700226525 /* GroceryCategoryDetailView.swift */; };
 		12433ACD2C5D74B300E49ED4 /* GroceryAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12433ACC2C5D74B300E49ED4 /* GroceryAuthManager.swift */; };
-		1250E84D2C5BA17400F23B64 /* CreditCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1250E84C2C5BA17400F23B64 /* CreditCard.swift */; };
+		12433ACF2C5DA3BB00E49ED4 /* CreditCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12433ACE2C5DA3BB00E49ED4 /* CreditCard.swift */; };
+		12433AD12C5DA3FD00E49ED4 /* DeliveryAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12433AD02C5DA3FD00E49ED4 /* DeliveryAddress.swift */; };
 		1250E8512C5BEC8200F23B64 /* CheckoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1250E8502C5BEC8200F23B64 /* CheckoutView.swift */; };
 		1250E8532C5C158C00F23B64 /* DeliveryAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1250E8522C5C158C00F23B64 /* DeliveryAddressView.swift */; };
 		1250E8552C5C2BCC00F23B64 /* PaymentCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1250E8542C5C2BCC00F23B64 /* PaymentCardView.swift */; };
@@ -51,9 +52,7 @@
 		1272176C2C56D8370036D420 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1272176B2C56D8370036D420 /* Preview Assets.xcassets */; };
 		127217732C56D8470036D420 /* GroceryHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127217722C56D8470036D420 /* GroceryHomeView.swift */; };
 		127217752C56DC020036D420 /* GroceryProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127217742C56DC020036D420 /* GroceryProductDetailView.swift */; };
-		129797222C5A6D560061EC92 /* OrderAcceptedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129797212C5A6D560061EC92 /* OrderAcceptedView.swift */; };
 		129797262C5AAB9F0061EC92 /* CustomBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129797252C5AAB9F0061EC92 /* CustomBackButton.swift */; };
-		1297972A2C5AB16C0061EC92 /* CreditCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129797292C5AB16C0061EC92 /* CreditCardView.swift */; };
 		12B1E8112C58D4B900E24323 /* CartItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E8102C58D4B900E24323 /* CartItemView.swift */; };
 		12B1E8132C58F3CC00E24323 /* ItemCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E8122C58F3CC00E24323 /* ItemCounter.swift */; };
 		12B1E81D2C59392700E24323 /* GroceryCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E81C2C59392700E24323 /* GroceryCartView.swift */; };
@@ -98,7 +97,8 @@
 		1236C3232C58011E00226525 /* CustomTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabView.swift; sourceTree = "<group>"; };
 		1236C3282C5846C700226525 /* GroceryCategoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryCategoryDetailView.swift; sourceTree = "<group>"; };
 		12433ACC2C5D74B300E49ED4 /* GroceryAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryAuthManager.swift; sourceTree = "<group>"; };
-		1250E84C2C5BA17400F23B64 /* CreditCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCard.swift; sourceTree = "<group>"; };
+		12433ACE2C5DA3BB00E49ED4 /* CreditCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCard.swift; sourceTree = "<group>"; };
+		12433AD02C5DA3FD00E49ED4 /* DeliveryAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryAddress.swift; sourceTree = "<group>"; };
 		1250E8502C5BEC8200F23B64 /* CheckoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutView.swift; sourceTree = "<group>"; };
 		1250E8522C5C158C00F23B64 /* DeliveryAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryAddressView.swift; sourceTree = "<group>"; };
 		1250E8542C5C2BCC00F23B64 /* PaymentCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardView.swift; sourceTree = "<group>"; };
@@ -108,9 +108,7 @@
 		1272176B2C56D8370036D420 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		127217722C56D8470036D420 /* GroceryHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryHomeView.swift; sourceTree = "<group>"; };
 		127217742C56DC020036D420 /* GroceryProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryProductDetailView.swift; sourceTree = "<group>"; };
-		129797212C5A6D560061EC92 /* OrderAcceptedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAcceptedView.swift; sourceTree = "<group>"; };
 		129797252C5AAB9F0061EC92 /* CustomBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBackButton.swift; sourceTree = "<group>"; };
-		129797292C5AB16C0061EC92 /* CreditCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardView.swift; sourceTree = "<group>"; };
 		12B1E8102C58D4B900E24323 /* CartItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartItemView.swift; sourceTree = "<group>"; };
 		12B1E8122C58F3CC00E24323 /* ItemCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCounter.swift; sourceTree = "<group>"; };
 		12B1E81C2C59392700E24323 /* GroceryCartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryCartView.swift; sourceTree = "<group>"; };
@@ -177,7 +175,8 @@
 			isa = PBXGroup;
 			children = (
 				1236C2D02C578A4400226525 /* GroceryProducts.swift */,
-				1250E84C2C5BA17400F23B64 /* CreditCard.swift */,
+				12433ACE2C5DA3BB00E49ED4 /* CreditCard.swift */,
+				12433AD02C5DA3FD00E49ED4 /* DeliveryAddress.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -298,9 +297,7 @@
 				12B1E8102C58D4B900E24323 /* CartItemView.swift */,
 				12B1E8122C58F3CC00E24323 /* ItemCounter.swift */,
 				12B1E81E2C59994500E24323 /* EmptyCardView.swift */,
-				129797212C5A6D560061EC92 /* OrderAcceptedView.swift */,
 				129797252C5AAB9F0061EC92 /* CustomBackButton.swift */,
-				129797292C5AB16C0061EC92 /* CreditCardView.swift */,
 				1230D1892C5D3E05000D33B0 /* GroceryButton.swift */,
 			);
 			path = Components;
@@ -423,17 +420,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1250E84D2C5BA17400F23B64 /* CreditCard.swift in Sources */,
-				129797222C5A6D560061EC92 /* OrderAcceptedView.swift in Sources */,
 				1236C2D32C578A6500226525 /* CarouselView.swift in Sources */,
 				127217652C56D8360036D420 /* GroceryApp.swift in Sources */,
 				127217752C56DC020036D420 /* GroceryProductDetailView.swift in Sources */,
 				12B1E81D2C59392700E24323 /* GroceryCartView.swift in Sources */,
 				12B1E8112C58D4B900E24323 /* CartItemView.swift in Sources */,
+				12433ACF2C5DA3BB00E49ED4 /* CreditCard.swift in Sources */,
 				1236C3242C58011E00226525 /* CustomTabView.swift in Sources */,
 				1236C2CE2C5789FA00226525 /* SectionHeaderView.swift in Sources */,
 				1250E8532C5C158C00F23B64 /* DeliveryAddressView.swift in Sources */,
-				1297972A2C5AB16C0061EC92 /* CreditCardView.swift in Sources */,
 				1236C3292C5846C700226525 /* GroceryCategoryDetailView.swift in Sources */,
 				1230D1882C5D33E4000D33B0 /* LoginView.swift in Sources */,
 				1230D18A2C5D3E05000D33B0 /* GroceryButton.swift in Sources */,
@@ -447,6 +442,7 @@
 				12B1E8132C58F3CC00E24323 /* ItemCounter.swift in Sources */,
 				1250E8552C5C2BCC00F23B64 /* PaymentCardView.swift in Sources */,
 				1236C31A2C57D91100226525 /* FetchImageHelper.swift in Sources */,
+				12433AD12C5DA3FD00E49ED4 /* DeliveryAddress.swift in Sources */,
 				1230D1862C5D1C79000D33B0 /* SplashView.swift in Sources */,
 				1230D1922C5D5C80000D33B0 /* SignupView.swift in Sources */,
 				12D17EC52C56E5F6001C3978 /* ExploreView.swift in Sources */,

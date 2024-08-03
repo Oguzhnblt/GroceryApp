@@ -5,7 +5,6 @@
 //  Created by Oğuzhan Bolat on 29.07.2024.
 //
 
-import Foundation
 import FirebaseFirestoreSwift
 
 struct GroceryProducts: Identifiable, Codable, Equatable {

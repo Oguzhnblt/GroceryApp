@@ -7,14 +7,21 @@
 
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import FirebaseAuth
 
 class GroceryDataManager: ObservableObject {
     
+    var db = Firestore.firestore()
+    
     @Published var products: [GroceryProducts] = []
     @Published var cartProducts: [GroceryProducts] = []
+    @Published var userCards: [CreditCard] = []
+    @Published var userAddresses: [DeliveryAddress] = []
     
     
-    var db = Firestore.firestore()
+    private var userId: String? {
+        Auth.auth().currentUser?.uid
+    }
     
     
     func fetchProducts(from collection: String, withField field: String? = nil, equalTo value: String? = nil) {
@@ -109,32 +116,161 @@ class GroceryDataManager: ObservableObject {
         }
     }
     
-    func fetchOrderHistory() {
-        fetchProducts(from: "Orders")
+    // MARK: - Card Functions
+    
+    func addCard(cardNumber: String, cardholderName: String, expirationDate: String, cvv: String) {
+        guard let userId = userId else { return }
+        let cardRef = db.collection("Users").document(userId).collection("cards").document()
+        
+        cardRef.setData([
+            "cardNumber": cardNumber,
+            "cardholderName": cardholderName,
+            "expirationDate": expirationDate,
+            "cvv": cvv
+        ]) { [weak self] error in
+            if let error = error {
+                print("Error adding card: \(error.localizedDescription)")
+            } else {
+                print("Card added successfully.")
+                self?.fetchUserCards()
+            }
+        }
+    }
+    
+    func removeCard(cardId: String) {
+        guard let userId = userId else { return }
+        let cardRef = db.collection("Users").document(userId).collection("cards").document(cardId)
+        
+        cardRef.delete { [weak self] error in
+            if let error = error {
+                print("Error removing card: \(error.localizedDescription)")
+            } else {
+                print("Card removed successfully.")
+                self?.fetchUserCards()
+            }
+        }
+    }
+    
+    func updateCard(cardId: String, cardNumber: String, cardholderName: String, expirationDate: String, cvv: String) {
+        guard let userId = userId else { return }
+        let cardRef = db.collection("Users").document(userId).collection("cards").document(cardId)
+        
+        cardRef.updateData([
+            "cardNumber": cardNumber,
+            "cardholderName": cardholderName,
+            "expirationDate": expirationDate,
+            "cvv": cvv
+        ]) { [weak self] error in
+            if let error = error {
+                print("Error updating card: \(error.localizedDescription)")
+            } else {
+                print("Card updated successfully.")
+                self?.fetchUserCards()
+            }
+        }
+    }
+
+    
+    
+    
+    func fetchUserCards() {
+        guard let userId = userId else { return }
+        let cardsRef = db.collection("Users").document(userId).collection("cards")
+        
+        cardsRef.getDocuments { [weak self] snapshot, error in
+            if let error = error {
+                print("Error fetching cards: \(error.localizedDescription)")
+                return
+            }
+            self?.userCards = snapshot?.documents.compactMap { document in
+                try? document.data(as: CreditCard.self)
+            } ?? []
+        }
     }
     
     
-    //    func addOrder(order: Order) {
-    //        guard let orderId = order.id else { return }
-    //        let orderRef = db.collection("Orders").document(orderId)
-    //
-    //        orderRef.setData([
-    //            "customerName": order.customerName,
-    //            "orderDate": order.orderDate,
-    //            "products": order.products.map { product in
-    //                [
-    //                    "id": product.id ?? "",
-    //                    "name": product.name,
-    //                    "quantity": product.quantity
-    //                ]
-    //            }
-    //        ]) { [weak self] error in
-    //            if let error = error {
-    //                print("Error adding order to history: \(error.localizedDescription)")
-    //            } else {
-    //                print("Order added to history successfully.")
-    //                self?.fetchOrderHistory() // Update order history
-    //            }
-    //        }
-    //    }
+    // MARK: - Address Functions
+    
+    func addAddress(_ address: DeliveryAddress) {
+        guard let userId = userId else { return }
+        let addressRef = db.collection("Users").document(userId).collection("addresses").document()
+        
+        addressRef.setData([
+            "newAddress": address.newAddress,
+            "city": address.city,
+            "state": address.state,
+            "zip": address.zip
+        ]) { [weak self] error in
+            if let error = error {
+                print("Error adding address: \(error.localizedDescription)")
+            } else {
+                print("Address added successfully.")
+                self?.fetchUserAddresses()
+            }
+        }
+    }
+    
+    func removeAddress(addressId: String) {
+        guard let userId = userId else { return }
+        let addressRef = db.collection("Users").document(userId).collection("addresses").document(addressId)
+        
+        addressRef.delete { [weak self] error in
+            if let error = error {
+                print("Error removing address: \(error.localizedDescription)")
+            } else {
+                print("Address removed successfully.")
+                self?.fetchUserAddresses()
+            }
+        }
+    }
+    
+    func updateAddress(addressId: String, newAddress: String, city: String, state: String, zip: String) {
+        guard let userId = userId else { return }
+        let addressRef = db.collection("Users").document(userId).collection("addresses").document(addressId)
+        
+        addressRef.updateData([
+            "newAddress": newAddress,
+            "city": city,
+            "state": state,
+            "zip": zip
+        ]) { [weak self] error in
+            if let error = error {
+                print("Error updating address: \(error.localizedDescription)")
+            } else {
+                print("Address updated successfully.")
+                self?.fetchUserAddresses()
+            }
+        }
+    }
+
+    
+    
+    func fetchUserAddresses() {
+        guard let userId = userId else { return }
+        let addressesRef = db.collection("Users").document(userId).collection("addresses")
+        
+        addressesRef.getDocuments { [weak self] snapshot, error in
+            if let error = error {
+                print("Error fetching addresses: \(error.localizedDescription)")
+            } else {
+                guard let documents = snapshot?.documents else {
+                    print("No addresses found.")
+                    return
+                }
+                self?.userAddresses = documents.compactMap { document in
+                    do {
+                        return try document.data(as: DeliveryAddress.self)
+                    } catch {
+                        print("Error decoding address: \(error)")
+                        return nil
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    func fetchOrderHistory() {
+        fetchProducts(from: "Orders")
+    }
 }

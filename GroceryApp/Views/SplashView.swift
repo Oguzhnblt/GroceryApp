@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import FirebaseCore
 
 struct SplashView: View {
+    @Binding var isSplashActive: Bool
+    
     var body: some View {
         ZStack {
             Color(red: 0.33, green: 0.69, blue: 0.46)
@@ -29,9 +32,16 @@ struct SplashView: View {
                 }
             }
         }
+        .onAppear() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                withAnimation {
+                    isSplashActive = false
+                }
+            }
+        }
     }
 }
 
 #Preview {
-    SplashView()
+    SplashView(isSplashActive: .constant(true))
 }

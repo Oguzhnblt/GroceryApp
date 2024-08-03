@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct CheckoutView: View {
+    
     @State private var showAddressSheet = false
     @State private var showCardSheet = false
-    @State private var selectedAddress: String? = nil
-    @State private var selectedCard: String? = nil
-    @State private var addresses: [String] = ["123 Main St", "456 Elm St"]
-    @State private var cards: [String] = ["**** **** **** 1234", "**** **** **** 5678"]
+    @State private var selectedAddress: DeliveryAddress? = nil
+    @State private var selectedCard: CreditCard? = nil
+    
     var totalPrice: Double
     
     private var formattedCardNumber: String {
         guard let card = selectedCard else { return "Select Card" }
-        let lastFourDigits = card.suffix(4)
+        let lastFourDigits = card.cardNumber.suffix(4)
         let maskedCardNumber = "**** **** **** \(lastFourDigits)"
         return maskedCardNumber
     }
@@ -42,7 +42,7 @@ struct CheckoutView: View {
                             .font(.system(size: 18, weight: .semibold))
                             .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
                         Spacer()
-                        Text(selectedAddress ?? "Select")
+                        Text(selectedAddress?.newAddress ?? "Select address")
                             .font(.system(size: 16, weight: .semibold))
                             .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
                             .lineLimit(1)
@@ -107,43 +107,30 @@ struct CheckoutView: View {
                     .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
                 Spacer()
                 Text("$\(String(format: "%.2f", totalPrice))")
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundColor(Color(red: 0.33, green: 0.69, blue: 0.46))
             }
-            .padding(25)
-
-            Divider()
+            .padding()
             
-            // Place Order button
             Button(action: {
                 // Place order action
             }) {
-                ZStack {
-                    Rectangle()
-                        .foregroundColor(Color(red: 0.33, green: 0.69, blue: 0.46))
-                        .frame(width: 364, height: 67)
-                        .cornerRadius(19)
-                    
-                    Text("Place Order")
-                        .font(.custom("Gilroy-SemiBold", size: 18))
-                        .foregroundColor(Color(red: 1, green: 0.98, blue: 1))
-                }
+                Text("Place Order")
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color(red: 0.33, green: 0.69, blue: 0.46))
+                    .cornerRadius(8)
             }
-            .frame(width: 364, height: 67)
-            .padding(.top, 15)
+            .padding()
+            
         }
-        .padding([.leading, .trailing])
         .sheet(isPresented: $showAddressSheet) {
-            DeliveryAddressView(selectedAddress: $selectedAddress, addresses: $addresses)
-                .presentationDetents([.fraction(0.7)])
+            DeliveryAddressView(selectedAddress: $selectedAddress)
         }
         .sheet(isPresented: $showCardSheet) {
-            PaymentCardView(selectedCard: $selectedCard, cards: $cards)
-                .presentationDetents([.fraction(0.7)])
+            PaymentCardView(selectedCard: $selectedCard)
         }
     }
-}
-
-#Preview {
-    CheckoutView(totalPrice: 1)
 }

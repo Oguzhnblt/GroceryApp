@@ -6,6 +6,8 @@
 //
 
 import FirebaseAuth
+import FirebaseFirestore
+
 
 class GroceryAuthManager: ObservableObject {
     @Published var email: String = ""
@@ -15,9 +17,14 @@ class GroceryAuthManager: ObservableObject {
     @Published var successMessage: String?
     @Published var isAuthenticated: Bool = false
 
-    init() {
-        checkUserStatus()
-    }
+    private var db = Firestore.firestore()
+        private var userId: String? {
+            Auth.auth().currentUser?.uid
+        }
+
+        init() {
+            checkUserStatus()
+        }
 
     func signUp(completion: @escaping () -> Void) {
         guard !email.isEmpty, !password.isEmpty, password.count >= 6 else {
@@ -69,4 +76,6 @@ class GroceryAuthManager: ObservableObject {
             isAuthenticated = false
         }
     }
+    
+    
 }

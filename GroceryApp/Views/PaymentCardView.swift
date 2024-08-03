@@ -9,8 +9,9 @@ import SwiftUI
 
 struct PaymentCardView: View {
     @Environment(\.presentationMode) var presentationMode
-    @Binding var selectedCard: String?
-    @Binding var cards: [String]
+    @EnvironmentObject var dataManager: GroceryDataManager
+    
+    @Binding var selectedCard: CreditCard?
     
     @State private var cardNumber: String = ""
     @State private var cardholderName: String = ""
@@ -18,7 +19,9 @@ struct PaymentCardView: View {
     @State private var cvv: String = ""
     @State private var isAddingNewCard: Bool = false
     @State private var isEditingCard: Bool = false
-    @State private var editingCardIndex: Int? = nil
+    @State private var editingCardId: String? = nil
+    @State private var showAlert: Bool = false
+    @State private var alertMessage: String = ""
     
     private func formatCardNumber(_ number: String) -> String {
         let digits = number.filter { $0.isNumber }
@@ -32,16 +35,45 @@ struct PaymentCardView: View {
         return formatted
     }
     
+    private func formatCvv(_ date: String) -> String {
+        let digits = date.filter { $0.isNumber }
+        return digits
+    }
+    
     private func formatInput(_ input: String, maxLength: Int) -> String {
         return String(input.prefix(maxLength))
     }
     
-    private func loadCardDetails(for index: Int) {
-        let maskedCardNumber = cards[index]
-        cardNumber = "**** **** **** \(maskedCardNumber.suffix(4))"
-        cardholderName = "John Doe"
-        expirationDate = "12/24"
-        cvv = "123"
+    private func loadCardDetails(for card: CreditCard) {
+        cardNumber = card.cardNumber // Display full card number for editing
+        cardholderName = card.cardholderName
+        expirationDate = card.expirationDate
+        cvv = card.cvv
+    }
+    
+    private func handleCardAction() {
+        guard !cardNumber.isEmpty, !cardholderName.isEmpty, !expirationDate.isEmpty, !cvv.isEmpty else {
+            alertMessage = "All fields are required."
+            showAlert = true
+            return
+        }
+        
+        if isEditingCard, let editingCardId = editingCardId {
+            // Update card logic
+            dataManager.updateCard(cardId: editingCardId, cardNumber: cardNumber, cardholderName: cardholderName, expirationDate: expirationDate, cvv: cvv)
+        } else {
+            // Add new card
+            dataManager.addCard(cardNumber: cardNumber, cardholderName: cardholderName, expirationDate: expirationDate, cvv: cvv)
+        }
+        
+        // Reset form and state
+        cardNumber = ""
+        cardholderName = ""
+        expirationDate = ""
+        cvv = ""
+        isAddingNewCard = false
+        isEditingCard = false
+        editingCardId = nil
     }
     
     var body: some View {
@@ -63,7 +95,7 @@ struct PaymentCardView: View {
             Divider()
             
             // Card List
-            if cards.isEmpty {
+            if dataManager.userCards.isEmpty {
                 VStack {
                     Image(systemName: "creditcard.trianglebadge.exclamationmark")
                         .font(.system(size: 30))
@@ -76,16 +108,16 @@ struct PaymentCardView: View {
                 .padding()
             } else {
                 List {
-                    ForEach(cards.indices, id: \.self) { index in
+                    ForEach(dataManager.userCards) { card in
                         HStack {
                             Image("card")
-                            Text(cards[index])
+                            Text(card.cardNumber)
                                 .font(.system(size: 16))
                                 .foregroundColor(.primary)
                                 .padding(.vertical, 12)
                                 .padding(.leading, 8)
                             Spacer()
-                            if selectedCard == cards[index] {
+                            if selectedCard?.id == card.id {
                                 Image(systemName: "checkmark.circle.fill")
                                     .foregroundColor(Color(red: 0.33, green: 0.69, blue: 0.46))
                                     .padding(.trailing)
@@ -93,31 +125,24 @@ struct PaymentCardView: View {
                         }
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            selectedCard = cards[index]
+                            selectedCard = card
                         }
                         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                             Button(role: .destructive) {
-                                // Delete the card
-                                let cardToRemove = cards[index]
-                                cards.remove(at: index)
-                                if selectedCard == cardToRemove {
-                                    selectedCard = nil
-                                }
+                                dataManager.removeCard(cardId: card.id!)
                             } label: {
                                 Label("Delete", systemImage: "trash")
                             }
                             
                             Button {
-                                // Edit card details
                                 isEditingCard = true
                                 isAddingNewCard = true
-                                editingCardIndex = index
-                                loadCardDetails(for: index)
+                                editingCardId = card.id
+                                loadCardDetails(for: card)
                             } label: {
                                 Label("Edit", systemImage: "pencil")
                             }
                             .tint(Color(red: 0.33, green: 0.69, blue: 0.46))
-
                         }
                     }
                 }
@@ -150,27 +175,7 @@ struct PaymentCardView: View {
                     .background(Color.white)
                     
                     if isAddingNewCard {
-                        Button(action: {
-                            if !cardNumber.isEmpty && !cardholderName.isEmpty && !expirationDate.isEmpty && !cvv.isEmpty {
-                                let formattedCardNumber = formatCardNumber(cardNumber)
-                                let newCard = "**** **** **** \(formattedCardNumber.suffix(4))"
-                                
-                                if isEditingCard, let index = editingCardIndex {
-                                    cards[index] = newCard
-                                    selectedCard = newCard
-                                    isEditingCard = false
-                                } else {
-                                    cards.append(newCard)
-                                    selectedCard = newCard
-                                }
-                                
-                                cardNumber = ""
-                                cardholderName = ""
-                                expirationDate = ""
-                                cvv = ""
-                                isAddingNewCard = false
-                            }
-                        }) {
+                        Button(action: handleCardAction) {
                             Text(isEditingCard ? "Save Changes" : "Save Card")
                                 .font(.system(size: 16, weight: .semibold))
                                 .foregroundColor(.white)
@@ -191,7 +196,7 @@ struct PaymentCardView: View {
                             .background(Color(.systemGray6))
                             .cornerRadius(8)
                             .keyboardType(.numberPad)
-                            .onChange(of: cardNumber) { _, newValue in
+                            .onChange(of: cardNumber) { _,newValue in
                                 cardNumber = formatInput(newValue, maxLength: 19)
                                 cardNumber = formatCardNumber(cardNumber)
                             }
@@ -208,7 +213,7 @@ struct PaymentCardView: View {
                                 .cornerRadius(8)
                                 .frame(width: 150)
                                 .keyboardType(.numberPad)
-                                .onChange(of: expirationDate) { _, newValue in
+                                .onChange(of: expirationDate) { _,newValue in
                                     expirationDate = formatInput(newValue, maxLength: 5)
                                     expirationDate = formatExpirationDate(expirationDate)
                                 }
@@ -221,8 +226,10 @@ struct PaymentCardView: View {
                                 .cornerRadius(8)
                                 .frame(width: 150)
                                 .keyboardType(.numberPad)
-                                .onChange(of: cvv) { _, newValue in
+                                .onChange(of: cvv) { _,newValue in
                                     cvv = formatInput(newValue, maxLength: 3)
+                                    cvv = formatCvv(cvv)
+
                                 }
                         }
                     }
@@ -233,6 +240,12 @@ struct PaymentCardView: View {
         }
         .padding(.horizontal)
         .padding(.top, 20)
+        .onAppear {
+            dataManager.fetchUserCards()
+        }
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Missing Information"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+        }
     }
 }
 
@@ -244,15 +257,5 @@ extension String {
             let end = index(start, offsetBy: size, limitedBy: endIndex) ?? endIndex
             return String(self[start..<end])
         }
-    }
-}
-
-struct PaymentCardView_Previews: PreviewProvider {
-    @State static var selectedCard: String? = nil
-    @State static var cards: [String] = ["1234 1234 1234 1234", "5678 5678 5678 5678"]
-    
-    static var previews: some View {
-        PaymentCardView(selectedCard: $selectedCard, cards: $cards)
-            .previewLayout(.sizeThatFits)
     }
 }

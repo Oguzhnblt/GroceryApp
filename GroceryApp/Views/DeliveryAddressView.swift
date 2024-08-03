@@ -1,3 +1,11 @@
+
+//
+//  DeliveryAddressView.swift
+//  GroceryApp
+//
+//  Created by Oğuzhan Bolat on 1.08.2024.
+//
+
 //
 //  DeliveryAddressView.swift
 //  GroceryApp
@@ -7,18 +15,53 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct DeliveryAddressView: View {
     @Environment(\.presentationMode) var presentationMode
-    @Binding var selectedAddress: String?
-    @Binding var addresses: [String]
-    
+    @EnvironmentObject var dataManager: GroceryDataManager
+
+    @Binding var selectedAddress: DeliveryAddress?
+
     @State private var newAddress: String = ""
     @State private var city: String = ""
     @State private var state: String = ""
-    @State private var zipCode: String = ""
+    @State private var zip: String = ""
     @State private var isAddingNewAddress: Bool = false
+    @State private var isEditingAddress: Bool = false
+    @State private var editingAddressId: String? = nil
+    @State private var showAlert: Bool = false
+    @State private var alertMessage: String = ""
+
+    private func handleAddressAction() {
+        guard !newAddress.isEmpty, !city.isEmpty, !state.isEmpty, !zip.isEmpty else {
+            alertMessage = "All fields are required."
+            showAlert = true
+            return
+        }
+        
+        if isEditingAddress, let editingAddressId = editingAddressId {
+            // Update address logic
+            dataManager.updateAddress(addressId: editingAddressId, newAddress: newAddress, city: city, state: state, zip: zip)
+        } else {
+            // Add new address
+            let address = DeliveryAddress(
+                id: nil,
+                newAddress: newAddress,
+                city: city,
+                state: state,
+                zip: zip
+            )
+            dataManager.addAddress(address)
+        }
+        
+        // Reset form and state
+        newAddress = ""
+        city = ""
+        state = ""
+        zip = ""
+        isAddingNewAddress = false
+        isEditingAddress = false
+        editingAddressId = nil
+    }
 
     var body: some View {
         VStack(spacing: 16) {
@@ -35,11 +78,11 @@ struct DeliveryAddressView: View {
                 .foregroundColor(Color(red: 0.33, green: 0.69, blue: 0.46))
             }
             .padding(.top)
-
+            
             Divider()
-
-            // Address List or Warning
-            if addresses.isEmpty {
+            
+            // Address List
+            if dataManager.userAddresses.isEmpty {
                 VStack {
                     Image(systemName: "location.slash")
                         .font(.system(size: 30))
@@ -51,71 +94,66 @@ struct DeliveryAddressView: View {
                 }
                 .padding()
             } else {
-                ScrollView {
-                    VStack(spacing: 8) {
-                        ForEach(addresses, id: \.self) { address in
-                            HStack {
-                                if selectedAddress == address {
-                                    HStack {
-                                        Text(address)
-                                            .font(.system(size: 16))
-                                            .foregroundColor(.primary)
-                                            .padding(.vertical, 12)
-                                            .padding(.leading, 8)
-                                        Spacer()
-                                        Image(systemName: "checkmark.circle.fill")
-                                            .foregroundColor(Color(red: 0.33, green: 0.69, blue: 0.46))
-                                            .padding(.trailing)
-                                    }
-                                    .background(Color(red: 0.33, green: 0.69, blue: 0.46).opacity(0.2))
-                                    .cornerRadius(8)
-                                } else {
-                                    HStack {
-                                        Text(address)
-                                            .font(.system(size: 16))
-                                            .foregroundColor(.primary)
-                                            .padding(.vertical, 12)
-                                            .padding(.leading, 8)
-                                        Spacer()
-                                        Circle()
-                                            .stroke(Color.gray, lineWidth: 1)
-                                            .frame(width: 15, height: 15)
-                                            .padding(.trailing, 18)
-                                    }
-                                    .background(Color.white)
-                                    .cornerRadius(8)
-                                }
-                                Button(action: {
-                                    // Remove the address
-                                    if let index = addresses.firstIndex(of: address) {
-                                        addresses.remove(at: index)
-                                        // Deselect the address if it was removed
-                                        if selectedAddress == address {
-                                            selectedAddress = nil
-                                        }
-                                    }
-                                }) {
-                                    Image(systemName: "trash")
-                                        .foregroundColor(.black)
-                                        .padding(.trailing)
-                                }
+                List {
+                    ForEach(dataManager.userAddresses) { address in
+                        HStack {
+                            Text("\(address.newAddress), \(address.city), \(address.state) \(address.zip)")
+                                .font(.system(size: 16))
+                                .foregroundColor(.primary)
+                                .padding(.vertical, 12)
+                                .padding(.leading, 8)
+                            Spacer()
+                            if selectedAddress?.id == address.id {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundColor(Color(red: 0.33, green: 0.69, blue: 0.46))
+                                    .padding(.trailing)
                             }
-                            .onTapGesture {
-                                selectedAddress = address
+                        }
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            selectedAddress = address
+                        }
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button(role: .destructive) {
+                                dataManager.removeAddress(addressId: address.id!)
+                            } label: {
+                                Label("Delete", systemImage: "trash")
                             }
-                            Divider()
+                            
+                            Button {
+                                isEditingAddress = true
+                                isAddingNewAddress = true
+                                editingAddressId = address.id
+                                newAddress = address.newAddress
+                                city = address.city
+                                state = address.state
+                                zip = address.zip
+                            } label: {
+                                Label("Edit", systemImage: "pencil")
+                            }
+                            .tint(Color(red: 0.33, green: 0.69, blue: 0.46))
                         }
                     }
                 }
+                .listStyle(PlainListStyle())
             }
-
+            
             Divider()
-
-            // New Address Section
+            
+            // New/Edit Address Section
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
                     Button(action: {
-                        isAddingNewAddress.toggle()
+                        if isEditingAddress {
+                            isEditingAddress = false
+                            isAddingNewAddress = false
+                            newAddress = ""
+                            city = ""
+                            state = ""
+                            zip = ""
+                        } else {
+                            isAddingNewAddress.toggle()
+                        }
                     }) {
                         Text(isAddingNewAddress ? "Cancel" : "Add New Address")
                             .font(.system(size: 16, weight: .semibold))
@@ -126,19 +164,8 @@ struct DeliveryAddressView: View {
                     .background(Color.white)
                     
                     if isAddingNewAddress {
-                        Button(action: {
-                            if !newAddress.isEmpty && !city.isEmpty && !state.isEmpty && !zipCode.isEmpty {
-                                let fullAddress = "\(newAddress), \(city), \(state) \(zipCode)"
-                                addresses.append(fullAddress)
-                                selectedAddress = fullAddress
-                                newAddress = ""
-                                city = ""
-                                state = ""
-                                zipCode = ""
-                                isAddingNewAddress = false
-                            }
-                        }) {
-                            Text("Add Address")
+                        Button(action: handleAddressAction) {
+                            Text(isEditingAddress ? "Save Changes" : "Save Address")
                                 .font(.system(size: 16, weight: .semibold))
                                 .foregroundColor(.white)
                                 .padding()
@@ -157,19 +184,19 @@ struct DeliveryAddressView: View {
                             .padding(10)
                             .background(Color(.systemGray6))
                             .cornerRadius(8)
-
+                        
                         TextField("City", text: $city)
                             .padding(10)
                             .background(Color(.systemGray6))
                             .cornerRadius(8)
-
+                        
                         HStack(spacing: 8) {
                             TextField("State", text: $state)
                                 .padding(10)
                                 .background(Color(.systemGray6))
                                 .cornerRadius(8)
 
-                            TextField("ZIP Code", text: $zipCode)
+                            TextField("ZIP Code", text: $zip)
                                 .padding(10)
                                 .background(Color(.systemGray6))
                                 .cornerRadius(8)
@@ -182,5 +209,11 @@ struct DeliveryAddressView: View {
         }
         .padding(.horizontal)
         .padding(.top, 20)
+        .onAppear {
+            dataManager.fetchUserAddresses()
+        }
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Missing Information"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+        }
     }
 }
