@@ -23,29 +23,8 @@ struct PaymentCardView: View {
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
     
-    private func formatCardNumber(_ number: String) -> String {
-        let digits = number.filter { $0.isNumber }
-        let formatted = digits.chunked(into: 4).joined(separator: " ")
-        return formatted
-    }
-    
-    private func formatExpirationDate(_ date: String) -> String {
-        let digits = date.filter { $0.isNumber }
-        let formatted = digits.chunked(into: 2).joined(separator: "/")
-        return formatted
-    }
-    
-    private func formatCvv(_ date: String) -> String {
-        let digits = date.filter { $0.isNumber }
-        return digits
-    }
-    
-    private func formatInput(_ input: String, maxLength: Int) -> String {
-        return String(input.prefix(maxLength))
-    }
-    
     private func loadCardDetails(for card: CreditCard) {
-        cardNumber = card.cardNumber // Display full card number for editing
+        cardNumber = card.cardNumber
         cardholderName = card.cardholderName
         expirationDate = card.expirationDate
         cvv = card.cvv
@@ -58,15 +37,29 @@ struct PaymentCardView: View {
             return
         }
         
+        let digitsOnlyCardNumber = cardNumber.digitsOnly
+        guard digitsOnlyCardNumber.count == 16 else {
+            alertMessage = "Card number must be 16 digits."
+            showAlert = true
+            return
+        }
+
+        guard expirationDate.count == 5, cvv.count == 3 else {
+            alertMessage = "Invalid expiration date or CVV."
+            showAlert = true
+            return
+        }
+        
         if isEditingCard, let editingCardId = editingCardId {
-            // Update card logic
             dataManager.updateCard(cardId: editingCardId, cardNumber: cardNumber, cardholderName: cardholderName, expirationDate: expirationDate, cvv: cvv)
         } else {
-            // Add new card
             dataManager.addCard(cardNumber: cardNumber, cardholderName: cardholderName, expirationDate: expirationDate, cvv: cvv)
         }
         
-        // Reset form and state
+        resetForm()
+    }
+    
+    private func resetForm() {
         cardNumber = ""
         cardholderName = ""
         expirationDate = ""
@@ -156,12 +149,7 @@ struct PaymentCardView: View {
                 HStack {
                     Button(action: {
                         if isEditingCard {
-                            isEditingCard = false
-                            isAddingNewCard = false
-                            cardNumber = ""
-                            cardholderName = ""
-                            expirationDate = ""
-                            cvv = ""
+                            resetForm()
                         } else {
                             isAddingNewCard.toggle()
                         }
@@ -196,9 +184,10 @@ struct PaymentCardView: View {
                             .background(Color(.systemGray6))
                             .cornerRadius(8)
                             .keyboardType(.numberPad)
-                            .onChange(of: cardNumber) { _,newValue in
-                                cardNumber = formatInput(newValue, maxLength: 19)
-                                cardNumber = formatCardNumber(cardNumber)
+                            .onChange(of: cardNumber) { _, newValue in
+                                cardNumber = newValue
+                                    .limited(to: 19)
+                                    .formattedCardNumber()
                             }
                         
                         TextField("Cardholder name", text: $cardholderName)
@@ -213,9 +202,10 @@ struct PaymentCardView: View {
                                 .cornerRadius(8)
                                 .frame(width: 150)
                                 .keyboardType(.numberPad)
-                                .onChange(of: expirationDate) { _,newValue in
-                                    expirationDate = formatInput(newValue, maxLength: 5)
-                                    expirationDate = formatExpirationDate(expirationDate)
+                                .onChange(of: expirationDate) { _, newValue in
+                                    expirationDate = newValue
+                                        .limited(to: 5)
+                                        .formattedExpirationDate()
                                 }
                             
                             Spacer()
@@ -226,10 +216,9 @@ struct PaymentCardView: View {
                                 .cornerRadius(8)
                                 .frame(width: 150)
                                 .keyboardType(.numberPad)
-                                .onChange(of: cvv) { _,newValue in
-                                    cvv = formatInput(newValue, maxLength: 3)
-                                    cvv = formatCvv(cvv)
-
+                                .onChange(of: cvv) { _, newValue in
+                                    cvv = newValue
+                                        .limited(to: 3)
                                 }
                         }
                     }
@@ -245,17 +234,6 @@ struct PaymentCardView: View {
         }
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Missing Information"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
-        }
-    }
-}
-
-extension String {
-    func chunked(into size: Int) -> [String] {
-        guard size > 0 else { return [] }
-        return stride(from: 0, to: count, by: size).map {
-            let start = index(startIndex, offsetBy: $0)
-            let end = index(start, offsetBy: size, limitedBy: endIndex) ?? endIndex
-            return String(self[start..<end])
         }
     }
 }

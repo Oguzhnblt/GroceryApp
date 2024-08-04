@@ -23,6 +23,7 @@ struct GroceryCartView: View {
         dataManager.cartProducts.isEmpty
     }
     
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -50,7 +51,6 @@ struct GroceryCartView: View {
                     }
                 }
                 .onAppear {
-                    print("GroceryCartView appeared")
                     dataManager.fetchCartProducts()
                 }
 
