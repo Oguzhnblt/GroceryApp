@@ -10,12 +10,15 @@ import FirebaseFirestoreSwift
 import FirebaseAuth
 
 class GroceryDataManager: ObservableObject {
+    
     private var db = Firestore.firestore()
     
     @Published var products: [GroceryProducts] = []
     @Published var cartProducts: [GroceryProducts] = []
     @Published var userCards: [CreditCard] = []
     @Published var userAddresses: [DeliveryAddress] = []
+    @Published var orderHistory: [Order] = []
+
     
     private var userId: String? {
         Auth.auth().currentUser?.uid
@@ -119,6 +122,41 @@ class GroceryDataManager: ObservableObject {
             }
         }
     }
+    
+    func removeAllFromCart() {
+        guard let userId = userId else { return }
+        let cartRef = db.collection("Users").document(userId).collection("Cart")
+        
+        cartRef.getDocuments { [weak self] snapshot, error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                print("Error fetching cart products: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let documents = snapshot?.documents else {
+                print("No products found in cart.")
+                return
+            }
+            
+            let batch = self.db.batch() 
+            for document in documents {
+                batch.deleteDocument(document.reference)
+            }
+            
+            batch.commit { error in
+                if let error = error {
+                    print("Error removing all products from cart: \(error.localizedDescription)")
+                } else {
+                    print("All products removed from cart successfully.")
+                    self.fetchCartProducts()
+                }
+            }
+        }
+    }
+
+
     
     func updateCartProductQuantity(productId: String, newQuantity: Int) {
         guard let userId = userId else { return }
@@ -272,7 +310,43 @@ class GroceryDataManager: ObservableObject {
         }
     }
     
+    func placeOrder(products: [GroceryProducts], totalPrice: Double) {
+            guard let userId = userId else { return }
+            
+            let orderRef = db.collection("Users").document(userId).collection("Orders").document()
+            
+            let order = Order(products: products, totalPrice: totalPrice, orderDate: Date())
+            
+            do {
+                try orderRef.setData(from: order) { error in
+                    if let error = error {
+                        print("Error placing order: \(error.localizedDescription)")
+                    } else {
+                        print("Order placed successfully.")
+                        self.fetchOrderHistory()
+                    }
+                }
+            } catch {
+                print("Error encoding order: \(error.localizedDescription)")
+            }
+        }
+    
     func fetchOrderHistory() {
-        fetchProducts(from: "Orders")
-    }
+            guard let userId = userId else { return }
+            let ordersRef = db.collection("Users").document(userId).collection("Orders")
+            
+            ordersRef.getDocuments { [weak self] snapshot, error in
+                if let error = error {
+                    print("Error fetching order history: \(error.localizedDescription)")
+                    return
+                }
+                
+                let fetchedOrders = snapshot?.documents.compactMap { document in
+                    try? document.data(as: Order.self)
+                } ?? []
+                
+                self?.orderHistory = fetchedOrders
+            }
+        }
+    
 }

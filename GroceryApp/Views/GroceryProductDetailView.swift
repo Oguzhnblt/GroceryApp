@@ -176,7 +176,8 @@ struct GroceryProductDetailView: View {
                         .font(.title2)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(isProductInCart ? Color.gray : Color.green)
+                        .background(isProductInCart ? Color.gray : (Color(red: 0.33, green: 0.69, blue: 0.46))
+)
                         .cornerRadius(10)
                 }
                 .padding([.leading, .trailing], 25)

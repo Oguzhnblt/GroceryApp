@@ -9,10 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     @State private var showSignupView: Bool = false
-    @State private var isLoggedIn: Bool = false
-    
-    @StateObject private var authManager = GroceryAuthManager()
-    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var authManager: GroceryAuthManager
     
     var body: some View {
         NavigationStack {
@@ -51,14 +48,14 @@ struct LoginView: View {
                 }
                 .padding([.leading, .trailing], 25)
             }
-            .fullScreenCover(isPresented: $isLoggedIn) {
-                CustomTabView()
-                    .environmentObject(GroceryDataManager())
-            }
-            .onChange(of: authManager.isAuthenticated) { _, newValue in
+            .onChange(of: authManager.isAuthenticated) { _,newValue in
                 if newValue {
-                    isLoggedIn = true
+                    authManager.isAuthenticated = true
                 }
+            }
+            .fullScreenCover(isPresented: $authManager.isAuthenticated) {
+                CustomTabView()
+                    .environmentObject(authManager)
             }
         }
     }
@@ -102,7 +99,6 @@ struct LoginView: View {
                 .font(Font.custom("Gilroy-Medium", size: 18))
                 .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
                 .onChange(of: authManager.password) {
-                    
                     authManager.errorMessage = nil
                 }
             
@@ -127,7 +123,7 @@ struct LoginView: View {
         VStack(alignment: .center, spacing: 20) {
             Button(action: {
                 authManager.login {
-                    self.isLoggedIn = true
+                    authManager.isAuthenticated = true
                 }
             }) {
                 GroceryButton(text: "Log In")
@@ -162,6 +158,7 @@ struct LoginView: View {
             .cornerRadius(8)
     }
 }
+
 
 #Preview {
     LoginView()

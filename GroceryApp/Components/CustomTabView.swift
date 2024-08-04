@@ -19,12 +19,8 @@ struct CustomTabView: View {
                     .tag("explore")
                 GroceryCartView()
                     .tag("cart")
-                // FIXME: Düzeltilecek
-                
-                //                OrderHistoryView()
-                //                    .tag("orderHistory")
-//                                CreditCardView()
-                                    .tag("account")
+                OrderHistoryView()
+                    .tag("order_history")
             }
             .ignoresSafeArea(.all, edges: .bottom)
             
@@ -64,7 +60,7 @@ struct TabButon: View {
     }
 }
 
-var tabs = ["home", "explore", "cart", "orderHistory", "account"]
+var tabs = ["home", "explore", "cart", "order_history"]
 
 #Preview {
     CustomTabView()

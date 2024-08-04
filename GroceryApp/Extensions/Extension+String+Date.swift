@@ -40,3 +40,12 @@ extension String {
         return String(self.prefix(maxLength))
     }
 }
+
+extension DateFormatter {
+    static var shortDate: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        return formatter
+    }
+}
+

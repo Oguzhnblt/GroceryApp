@@ -36,8 +36,10 @@ struct OrderAcceptedView: View {
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
                 }
-                
-                GroceryButton(text: "Order History")
+                NavigationLink(destination: GroceryHomeView()) {
+                                        GroceryButton(text: "Order History")
+                                    }
+
             }
         }
     }

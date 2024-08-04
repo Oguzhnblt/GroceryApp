@@ -19,18 +19,27 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct GroceryApp: App {
     @State private var isSplashActive = true
-    @EnvironmentObject private var authManager: GroceryAuthManager
+    @StateObject private var authManager = GroceryAuthManager()
+    @StateObject private var dataManager = GroceryDataManager() 
+    
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some Scene {
-          WindowGroup {
-              if isSplashActive {
-                  SplashView(isSplashActive: $isSplashActive)
-              } else {
-                  LoginView()
-                      .environmentObject(GroceryAuthManager())
-              }
-          }
-      }
+        WindowGroup {
+            if authManager.isCheckingStatus {
+                SplashView(isSplashActive: $isSplashActive)
+                    .environmentObject(authManager)
+                    .environmentObject(dataManager)
+            } else if authManager.isAuthenticated {
+                CustomTabView()
+                    .environmentObject(authManager)
+                    .environmentObject(dataManager)
+            } else {
+                LoginView()
+                    .environmentObject(authManager)
+                    .environmentObject(dataManager)
+            }
+        }
+    }
 }

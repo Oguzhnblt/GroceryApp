@@ -8,21 +8,17 @@
 import SwiftUI
 
 struct CheckoutView: View {
-    
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject private var dataManager: GroceryDataManager
     
     @State private var showAddressSheet = false
     @State private var showCardSheet = false
-    
     @State private var showPaymentResult = false
     @State private var showOTPInput = false
     @State private var paymentMessage: String = ""
-    
     @State private var selectedAddress: DeliveryAddress? = nil
     @State private var selectedCard: CreditCard? = nil
-    
     @State private var otp = ["", "", "", "", "", ""]
-    
     @State private var showOrderAccepted = false
     
     var totalPrice: Double
@@ -125,7 +121,9 @@ struct CheckoutView: View {
                 .padding()
                 
                 Button(action: {
-                    startPaymentProcess()
+                    Task {
+                        await startPaymentProcess()
+                    }
                 }) {
                     GroceryButton(text: "Place Order")
                         .padding(.top, 10)
@@ -139,17 +137,12 @@ struct CheckoutView: View {
                     .edgesIgnoringSafeArea(.all)
                 
                 OTPInputView(otp: $otp) {
-                    confirmPaymentProcess()
+                    Task {
+                        await confirmPaymentProcess()
+                    }
                 }
                 .transition(.move(edge: .bottom))
                 .zIndex(1)
-            }
-            
-            // Order Accepted View
-            if showOrderAccepted {
-                OrderAcceptedView()
-                    .edgesIgnoringSafeArea(.all)
-                    .zIndex(1)
             }
         }
         .sheet(isPresented: $showAddressSheet) {
@@ -161,50 +154,62 @@ struct CheckoutView: View {
                 .presentationDetents([.fraction(0.8)])
         }
         .alert(isPresented: $showPaymentResult) {
-            Alert(title: Text("Payment Status"), message: Text(paymentMessage), dismissButton: .default(Text("OK")))
+            Alert(
+                title: Text("Payment Status"),
+                message: Text(paymentMessage),
+                dismissButton: .default(Text("OK"))
+            )
+        }
+        .sheet(isPresented: $showOrderAccepted, onDismiss: {
+            presentationMode.wrappedValue.dismiss()
+        }) {
+            OrderAcceptedView()
         }
     }
     
-    private func startPaymentProcess() {
-        guard let card = selectedCard else { return }
-        PaymentModule.shared.startPayment(cardNo: card.cardNumber, expDate: card.expirationDate, cvv: card.cvv, amount: totalPrice) { result in
-            switch result {
-            case .success:
-                withAnimation {
-                    otp = ["", "", "", "", "", ""]
-                    showOTPInput = true
-                }
-            case .failure(let error):
-                paymentMessage = error.localizedDescription
-                showPaymentResult = true
-                showOTPInput = false
+    private func startPaymentProcess() async {
+        guard selectedAddress != nil else {
+            paymentMessage = "Please select a delivery address."
+            showPaymentResult = true
+            return
+        }
+        
+        guard let card = selectedCard else {
+            paymentMessage = "Please select a payment card."
+            showPaymentResult = true
+            return
+        }
+        
+        do {
+            try await PaymentModule.shared.startPayment(cardNo: card.cardNumber, expDate: card.expirationDate, cvv: card.cvv, amount: totalPrice)
+            withAnimation {
+                otp = ["", "", "", "", "", ""]
+                showOTPInput = true
             }
+        } catch {
+            paymentMessage = error.localizedDescription
+            showPaymentResult = true
+            showOTPInput = false
         }
     }
     
-    private func confirmPaymentProcess() {
+    private func confirmPaymentProcess() async {
         let otpString = otp.joined()
-        PaymentModule.shared.confirmPayment(otp: otpString) { result in
-            switch result {
-            case .success:
-                paymentMessage = "Payment successful! Your order has been placed."
-                showPaymentResult = true
-                showOrderAccepted = true
-                clearCart()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    self.presentationMode.wrappedValue.dismiss()
-                }
-            case .failure(let error):
-                paymentMessage = error.localizedDescription
-                showPaymentResult = true
-                showOTPInput = false
-            }
+        
+        do {
+            try await PaymentModule.shared.confirmPayment(otp: otpString)
+            dataManager.placeOrder(products: dataManager.cartProducts, totalPrice: totalPrice)
+            dataManager.removeAllFromCart()
+            dismissViews()
+        } catch {
+            paymentMessage = error.localizedDescription
+            showPaymentResult = true
+            showOTPInput = false
         }
     }
-    
-    private func clearCart() {
-        // Implement your cart clearing logic here
+
+    private func dismissViews() {
+        showOTPInput = false
+        showOrderAccepted = true
     }
 }
-
-

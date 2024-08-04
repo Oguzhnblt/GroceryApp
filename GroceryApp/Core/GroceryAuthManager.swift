@@ -10,22 +10,34 @@ import FirebaseFirestore
 
 
 class GroceryAuthManager: ObservableObject {
+    
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var username: String = ""
     @Published var errorMessage: String?
     @Published var successMessage: String?
     @Published var isAuthenticated: Bool = false
+    @Published var isCheckingStatus: Bool = true 
 
-    private var db = Firestore.firestore()
-        private var userId: String? {
-            Auth.auth().currentUser?.uid
+    
+    private var db: Firestore = Firestore.firestore()
+    private var userId: String? {
+        Auth.auth().currentUser?.uid
+    }
+    
+    init() {
+        checkUserStatus()
+    }
+    
+    func checkUserStatus() {
+            Auth.auth().addStateDidChangeListener { [weak self] _, user in
+                DispatchQueue.main.async {
+                    self?.isAuthenticated = (user != nil)
+                    self?.isCheckingStatus = false
+                }
+            }
         }
-
-        init() {
-            checkUserStatus()
-        }
-
+    
     func signUp(completion: @escaping () -> Void) {
         guard !email.isEmpty, !password.isEmpty, password.count >= 6 else {
             errorMessage = "Please provide a valid email and password (at least 6 characters)."
@@ -42,7 +54,7 @@ class GroceryAuthManager: ObservableObject {
             }
         }
     }
-
+    
     func login(completion: @escaping () -> Void) {
         guard !email.isEmpty, !password.isEmpty else {
             errorMessage = "Please provide email and password."
@@ -58,7 +70,7 @@ class GroceryAuthManager: ObservableObject {
             }
         }
     }
-
+    
     func logout(completion: @escaping () -> Void) {
         do {
             try Auth.auth().signOut()
@@ -68,14 +80,4 @@ class GroceryAuthManager: ObservableObject {
             errorMessage = error.localizedDescription
         }
     }
-    
-    func checkUserStatus() {
-        if Auth.auth().currentUser != nil {
-            isAuthenticated = true
-        } else {
-            isAuthenticated = false
-        }
-    }
-    
-    
 }
