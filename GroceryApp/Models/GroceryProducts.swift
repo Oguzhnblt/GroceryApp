@@ -12,9 +12,9 @@ struct GroceryProducts: Identifiable, Codable, Equatable {
     var name: String
     var title: String
     var imageName: String?
-    var price: String
+    var price: Double
     var details: String
-    var isAdded: Bool = false
+    var isAdded: Bool 
     var quantity: Int
 
     struct NutritionInfo: Codable {

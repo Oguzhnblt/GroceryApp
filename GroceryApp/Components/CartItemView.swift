@@ -66,9 +66,9 @@ struct CartItemView: View {
                         .foregroundColor(.gray)
                         .frame(width: 14, height: 14)
                 }
-                Text("$\(String(format: "%.2f", (Double(product.price.dropFirst()) ?? 0.0) * Double(quantity)))")
+                Text("$\(String(format: "%.2f",product.price * Double(quantity)))")
                     .font(Font.custom("Gilroy-Bold", size: 18).weight(.semibold))
-                    .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
+                    .foregroundColor(AppColors.darkGreen)
             }
             .padding(.trailing, 15)
         }
@@ -96,7 +96,7 @@ struct CartItemView: View {
 struct CartItemView_Previews: PreviewProvider {
     static var previews: some View {
         CartItemView(
-            product: GroceryProducts(id: "1", name: "Sample Product", title: "Product Title", imageName: "sample_image", price: "$10.00", details: "", isAdded: true, quantity: 1, nutrition: [:], category: ""),
+            product: GroceryProducts(id: "1", name: "Sample Product", title: "Product Title", imageName: "sample_image", price: 1, details: "", isAdded: true, quantity: 1, nutrition: [:], category: ""),
             removeFromCartAction: {}
         )
         .environmentObject(GroceryDataManager())

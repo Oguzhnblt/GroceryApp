@@ -31,7 +31,7 @@ struct SignupView: View {
                     
                     Text("Get your groceries\nwith nectar")
                         .font(Font.custom("Gilroy-Medium", size: 16))
-                        .foregroundColor(Color(red: 0.01, green: 0.01, blue: 0.01))
+                        .foregroundColor(AppColors.almostBlack)
                         .padding(.bottom, 15)
                     
                     if let errorMessage = authManager.errorMessage {
@@ -66,11 +66,11 @@ struct SignupView: View {
         VStack(alignment: .leading, spacing: 15) {
             Text("Signup")
                 .font(Font.custom("Gilroy-SemiBold", size: 26))
-                .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
+                .foregroundColor(AppColors.darkGreen)
             
             Text("Enter your credentials to continue")
                 .font(Font.custom("Gilroy-Medium", size: 16))
-                .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
+                .foregroundColor(AppColors.oliveGreen)
         }
     }
     
@@ -78,11 +78,11 @@ struct SignupView: View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Username")
                 .font(Font.custom("Gilroy-SemiBold", size: 16))
-                .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
+                .foregroundColor(AppColors.oliveGreen)
             
             TextField("Enter your username", text: $username)
                 .font(Font.custom("Gilroy-SemiBold", size: 16))
-                .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
+                .foregroundColor(AppColors.oliveGreen)
             
             Divider()
         }
@@ -92,11 +92,11 @@ struct SignupView: View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Email")
                 .font(Font.custom("Gilroy-SemiBold", size: 16))
-                .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
+                .foregroundColor(AppColors.oliveGreen)
             
             TextField("Enter your email", text: $authManager.email)
                 .font(Font.custom("Gilroy-SemiBold", size: 16))
-                .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
+                .foregroundColor(AppColors.oliveGreen)
                 .onChange(of: authManager.email) {
                     authManager.errorMessage = nil
                 }
@@ -109,11 +109,11 @@ struct SignupView: View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Password")
                 .font(Font.custom("Gilroy-SemiBold", size: 16))
-                .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
+                .foregroundColor(AppColors.oliveGreen)
             
             SecureField("Password", text: $authManager.password)
                 .font(Font.custom("Gilroy-Medium", size: 18))
-                .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
+                .foregroundColor(AppColors.darkGreen)
                 .onChange(of: authManager.password) {
                     authManager.errorMessage = nil
                 }
@@ -127,11 +127,11 @@ struct SignupView: View {
             HStack {
                 Text("By signing up, you agree to our")
                     .font(Font.custom("Gilroy-Medium", size: 14))
-                    .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
+                    .foregroundColor(AppColors.oliveGreen)
                 
                 Text("Terms & Conditions")
                     .font(Font.custom("Gilroy-Medium", size: 14))
-                    .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
+                    .foregroundColor(AppColors.darkGreen)
             }
         }
     }
@@ -139,7 +139,7 @@ struct SignupView: View {
     private var actionButtons: some View {
         VStack(alignment: .center, spacing: 20) {
             Button(action: {
-                authManager.signUp {
+                authManager.signUp {_ in 
                     if authManager.isAuthenticated {
                         alertMessage = authManager.successMessage!
                         showAlert = true
@@ -154,14 +154,14 @@ struct SignupView: View {
             HStack {
                 Text("Already have an account?")
                     .font(Font.custom("Gilroy", size: 14).weight(.semibold))
-                    .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
+                    .foregroundColor(AppColors.darkGreen)
                 
                 Button(action: {
                     presentationMode.wrappedValue.dismiss()
                 }) {
                     Text("Log In")
                         .font(Font.custom("Gilroy", size: 14).weight(.semibold))
-                        .foregroundColor(Color(red: 0.33, green: 0.69, blue: 0.46))
+                        .foregroundColor(AppColors.appleGreen)
                 }
             }
         }

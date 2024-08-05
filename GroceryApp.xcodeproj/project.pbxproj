@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1210DE462C603CAC00EEEBF6 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1210DE452C603CAC00EEEBF6 /* AccountView.swift */; };
+		1210DE482C604A2500EEEBF6 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1210DE472C604A2500EEEBF6 /* AboutView.swift */; };
+		1210DE4A2C604D3700EEEBF6 /* AccountInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1210DE492C604D3700EEEBF6 /* AccountInfoView.swift */; };
 		1230D1862C5D1C79000D33B0 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1230D1852C5D1C79000D33B0 /* SplashView.swift */; };
 		1230D1882C5D33E4000D33B0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1230D1872C5D33E4000D33B0 /* LoginView.swift */; };
 		1230D18A2C5D3E05000D33B0 /* GroceryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1230D1892C5D3E05000D33B0 /* GroceryButton.swift */; };
@@ -57,8 +60,6 @@
 		12A37D932C5EEB4F00EAF1C3 /* Extension+String+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A37D922C5EEB4F00EAF1C3 /* Extension+String+Date.swift */; };
 		12B1ABB92C5F93B000F3262D /* OTPInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1ABB82C5F93B000F3262D /* OTPInputView.swift */; };
 		12B1ABBB2C5FB05600F3262D /* OrderAcceptedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1ABBA2C5FB05600F3262D /* OrderAcceptedView.swift */; };
-		12B1ABC32C5FE63500F3262D /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1ABC22C5FE63500F3262D /* Order.swift */; };
-		12B1ABC52C5FE69800F3262D /* OrderHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1ABC42C5FE69800F3262D /* OrderHistoryView.swift */; };
 		12B1E8112C58D4B900E24323 /* CartItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E8102C58D4B900E24323 /* CartItemView.swift */; };
 		12B1E8132C58F3CC00E24323 /* ItemCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E8122C58F3CC00E24323 /* ItemCounter.swift */; };
 		12B1E81D2C59392700E24323 /* GroceryCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E81C2C59392700E24323 /* GroceryCartView.swift */; };
@@ -86,9 +87,15 @@
 		12D17EC32C56E5A1001C3978 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D17EC22C56E5A1001C3978 /* SearchField.swift */; };
 		12D17EC52C56E5F6001C3978 /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D17EC42C56E5F6001C3978 /* ExploreView.swift */; };
 		12D17EC72C56E633001C3978 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D17EC62C56E633001C3978 /* CategoryCell.swift */; };
+		12D6E3F12C5FFE4300104F98 /* OrderHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D6E3F02C5FFE4300104F98 /* OrderHistoryView.swift */; };
+		12D6E3F32C60060C00104F98 /* OrderHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D6E3F22C60060C00104F98 /* OrderHistory.swift */; };
+		12D6E3F52C60296C00104F98 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D6E3F42C60296C00104F98 /* AppColors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1210DE452C603CAC00EEEBF6 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		1210DE472C604A2500EEEBF6 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		1210DE492C604D3700EEEBF6 /* AccountInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfoView.swift; sourceTree = "<group>"; };
 		1230D1852C5D1C79000D33B0 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		1230D1872C5D33E4000D33B0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1230D1892C5D3E05000D33B0 /* GroceryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryButton.swift; sourceTree = "<group>"; };
@@ -119,8 +126,6 @@
 		12A37D922C5EEB4F00EAF1C3 /* Extension+String+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+String+Date.swift"; sourceTree = "<group>"; };
 		12B1ABB82C5F93B000F3262D /* OTPInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPInputView.swift; sourceTree = "<group>"; };
 		12B1ABBA2C5FB05600F3262D /* OrderAcceptedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAcceptedView.swift; sourceTree = "<group>"; };
-		12B1ABC22C5FE63500F3262D /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
-		12B1ABC42C5FE69800F3262D /* OrderHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryView.swift; sourceTree = "<group>"; };
 		12B1E8102C58D4B900E24323 /* CartItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartItemView.swift; sourceTree = "<group>"; };
 		12B1E8122C58F3CC00E24323 /* ItemCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCounter.swift; sourceTree = "<group>"; };
 		12B1E81C2C59392700E24323 /* GroceryCartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryCartView.swift; sourceTree = "<group>"; };
@@ -149,6 +154,9 @@
 		12D17EC22C56E5A1001C3978 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		12D17EC42C56E5F6001C3978 /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		12D17EC62C56E633001C3978 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		12D6E3F02C5FFE4300104F98 /* OrderHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryView.swift; sourceTree = "<group>"; };
+		12D6E3F22C60060C00104F98 /* OrderHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistory.swift; sourceTree = "<group>"; };
+		12D6E3F42C60296C00104F98 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,7 +197,7 @@
 				1236C2D02C578A4400226525 /* GroceryProducts.swift */,
 				12433ACE2C5DA3BB00E49ED4 /* CreditCard.swift */,
 				12433AD02C5DA3FD00E49ED4 /* DeliveryAddress.swift */,
-				12B1ABC22C5FE63500F3262D /* Order.swift */,
+				12D6E3F22C60060C00104F98 /* OrderHistory.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -227,7 +235,10 @@
 				1230D1852C5D1C79000D33B0 /* SplashView.swift */,
 				1230D1872C5D33E4000D33B0 /* LoginView.swift */,
 				1230D1912C5D5C80000D33B0 /* SignupView.swift */,
-				12B1ABC42C5FE69800F3262D /* OrderHistoryView.swift */,
+				12D6E3F02C5FFE4300104F98 /* OrderHistoryView.swift */,
+				1210DE452C603CAC00EEEBF6 /* AccountView.swift */,
+				1210DE472C604A2500EEEBF6 /* AboutView.swift */,
+				1210DE492C604D3700EEEBF6 /* AccountInfoView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -325,6 +336,7 @@
 				1230D1892C5D3E05000D33B0 /* GroceryButton.swift */,
 				12B1ABB82C5F93B000F3262D /* OTPInputView.swift */,
 				12B1ABBA2C5FB05600F3262D /* OrderAcceptedView.swift */,
+				12D6E3F42C60296C00104F98 /* AppColors.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -452,23 +464,27 @@
 				12B1E81D2C59392700E24323 /* GroceryCartView.swift in Sources */,
 				12B1E8112C58D4B900E24323 /* CartItemView.swift in Sources */,
 				12433ACF2C5DA3BB00E49ED4 /* CreditCard.swift in Sources */,
-				12B1ABC32C5FE63500F3262D /* Order.swift in Sources */,
 				1236C3242C58011E00226525 /* CustomTabView.swift in Sources */,
 				1236C2CE2C5789FA00226525 /* SectionHeaderView.swift in Sources */,
 				1250E8532C5C158C00F23B64 /* DeliveryAddressView.swift in Sources */,
+				12D6E3F52C60296C00104F98 /* AppColors.swift in Sources */,
 				1236C3292C5846C700226525 /* GroceryCategoryDetailView.swift in Sources */,
 				1230D1882C5D33E4000D33B0 /* LoginView.swift in Sources */,
 				12B1ABB92C5F93B000F3262D /* OTPInputView.swift in Sources */,
 				1230D18A2C5D3E05000D33B0 /* GroceryButton.swift in Sources */,
 				12D17EC32C56E5A1001C3978 /* SearchField.swift in Sources */,
 				1236C3172C57A75000226525 /* GroceryDataManager.swift in Sources */,
+				1210DE482C604A2500EEEBF6 /* AboutView.swift in Sources */,
+				1210DE4A2C604D3700EEEBF6 /* AccountInfoView.swift in Sources */,
+				1210DE462C603CAC00EEEBF6 /* AccountView.swift in Sources */,
 				12B1E81F2C59994500E24323 /* EmptyCardView.swift in Sources */,
 				12433ACD2C5D74B300E49ED4 /* GroceryAuthManager.swift in Sources */,
 				1250E8512C5BEC8200F23B64 /* CheckoutView.swift in Sources */,
 				12A37D902C5E988100EAF1C3 /* PaymentModule.swift in Sources */,
 				127217732C56D8470036D420 /* GroceryHomeView.swift in Sources */,
+				12D6E3F32C60060C00104F98 /* OrderHistory.swift in Sources */,
 				1236C2D12C578A4400226525 /* GroceryProducts.swift in Sources */,
-				12B1ABC52C5FE69800F3262D /* OrderHistoryView.swift in Sources */,
+				12D6E3F12C5FFE4300104F98 /* OrderHistoryView.swift in Sources */,
 				12B1E8132C58F3CC00E24323 /* ItemCounter.swift in Sources */,
 				1250E8552C5C2BCC00F23B64 /* PaymentCardView.swift in Sources */,
 				1236C31A2C57D91100226525 /* FetchImageHelper.swift in Sources */,

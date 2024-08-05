@@ -26,7 +26,7 @@ struct LoginView: View {
                         
                         Text("Get your groceries\nwith nectar")
                             .font(Font.custom("Gilroy-Medium", size: 16))
-                            .foregroundColor(Color(red: 0.01, green: 0.01, blue: 0.01))
+                            .foregroundColor(AppColors.almostBlack)
                             .padding(.bottom, 15)
                         
                         if let errorMessage = authManager.errorMessage {
@@ -48,12 +48,20 @@ struct LoginView: View {
                 }
                 .padding([.leading, .trailing], 25)
             }
-            .onChange(of: authManager.isAuthenticated) { _,newValue in
-                if newValue {
+            .onAppear {
+                if authManager.isAuthenticated {
+                    // Navigate to the main view if already authenticated
                     authManager.isAuthenticated = true
                 }
             }
-            .fullScreenCover(isPresented: $authManager.isAuthenticated) {
+            .fullScreenCover(isPresented: Binding<Bool>(
+                get: { authManager.isAuthenticated },
+                set: { newValue in
+                    if !newValue {
+                        authManager.isAuthenticated = false
+                    }
+                }
+            )) {
                 CustomTabView()
                     .environmentObject(authManager)
             }
@@ -64,11 +72,11 @@ struct LoginView: View {
         VStack(alignment: .leading, spacing: 15) {
             Text("Login")
                 .font(Font.custom("Gilroy-SemiBold", size: 26))
-                .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
+                .foregroundColor(AppColors.darkGreen)
             
             Text("Enter your email and password")
                 .font(Font.custom("Gilroy-Medium", size: 16))
-                .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
+                .foregroundColor(AppColors.oliveGreen)
         }
     }
     
@@ -76,11 +84,11 @@ struct LoginView: View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Email")
                 .font(Font.custom("Gilroy-SemiBold", size: 16))
-                .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
+                .foregroundColor(AppColors.oliveGreen)
             
             TextField("Enter your email", text: $authManager.email)
                 .font(Font.custom("Gilroy-SemiBold", size: 16))
-                .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
+                .foregroundColor(AppColors.oliveGreen)
                 .onChange(of: authManager.email) {
                     authManager.errorMessage = nil
                 }
@@ -93,11 +101,11 @@ struct LoginView: View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Password")
                 .font(Font.custom("Gilroy-SemiBold", size: 16))
-                .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
+                .foregroundColor(AppColors.oliveGreen)
             
             SecureField("Password", text: $authManager.password)
                 .font(Font.custom("Gilroy-Medium", size: 18))
-                .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
+                .foregroundColor(AppColors.darkGreen)
                 .onChange(of: authManager.password) {
                     authManager.errorMessage = nil
                 }
@@ -114,7 +122,7 @@ struct LoginView: View {
             }) {
                 Text("Forgot Password?")
                     .font(Font.custom("Gilroy-Medium", size: 14))
-                    .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
+                    .foregroundColor(AppColors.darkGreen)
             }
         }
     }
@@ -122,8 +130,24 @@ struct LoginView: View {
     private var actionButtons: some View {
         VStack(alignment: .center, spacing: 20) {
             Button(action: {
-                authManager.login {
-                    authManager.isAuthenticated = true
+                authManager.login { result in
+                    switch result {
+                    case .success:
+                        if !authManager.isEmailVerified {
+                            authManager.sendVerificationEmail { result in
+                                switch result {
+                                case .success:
+                                    authManager.errorMessage = "Please verify your email before logging in."
+                                case .failure(let error):
+                                    authManager.errorMessage = error.localizedDescription
+                                }
+                            }
+                        } else {
+                            authManager.isAuthenticated = true
+                        }
+                    case .failure(let error):
+                        authManager.errorMessage = error.localizedDescription
+                    }
                 }
             }) {
                 GroceryButton(text: "Log In")
@@ -132,14 +156,14 @@ struct LoginView: View {
             HStack {
                 Text("Don’t have an account?")
                     .font(Font.custom("Gilroy", size: 14).weight(.semibold))
-                    .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
+                    .foregroundColor(AppColors.darkGreen)
                 
                 Button(action: {
                     self.showSignupView = true
                 }) {
                     Text("Signup")
                         .font(Font.custom("Gilroy", size: 14).weight(.semibold))
-                        .foregroundColor(Color(red: 0.33, green: 0.69, blue: 0.46))
+                        .foregroundColor(AppColors.appleGreen)
                 }
                 .sheet(isPresented: $showSignupView) {
                     SignupView()
@@ -155,12 +179,14 @@ struct LoginView: View {
             .font(Font.custom("Gilroy-Medium", size: 14))
             .foregroundColor(.red)
             .padding()
+            .background(Color.white)
             .cornerRadius(8)
+            .shadow(radius: 2)
     }
 }
-
 
 #Preview {
     LoginView()
         .environmentObject(GroceryAuthManager())
 }
+

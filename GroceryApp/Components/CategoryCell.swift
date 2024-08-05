@@ -39,12 +39,12 @@ struct CategoryCell: View {
                     .font(Font.custom("Gilroy-Bold", size: 16))
                     .tracking(0.10)
                     .lineSpacing(22)
-                    .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
+                    .foregroundColor(AppColors.darkGreen)
             }
         }
     }
 }
 
 #Preview {
-    CategoryCell(imageName: "vegfruit", title: "Fresh Fruits\n& Vegetables", backgroundColor: Color(red: 0.33, green: 0.69, blue: 0.46), borderColor: Color(red: 0.33, green: 0.69, blue: 0.46))
+    CategoryCell(imageName: "vegfruit", title: "Fresh Fruits\n& Vegetables", backgroundColor: AppColors.appleGreen, borderColor: AppColors.appleGreen)
 }

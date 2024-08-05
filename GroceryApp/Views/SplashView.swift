@@ -13,7 +13,7 @@ struct SplashView: View {
     
     var body: some View {
         ZStack {
-            Color(red: 0.33, green: 0.69, blue: 0.46)
+            AppColors.appleGreen
                 .ignoresSafeArea(.all)
             HStack {
                 Image("splash_icon")

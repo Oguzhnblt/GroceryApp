@@ -17,8 +17,9 @@ class GroceryDataManager: ObservableObject {
     @Published var cartProducts: [GroceryProducts] = []
     @Published var userCards: [CreditCard] = []
     @Published var userAddresses: [DeliveryAddress] = []
-    @Published var orderHistory: [Order] = []
-
+    @Published var orderHistory: [OrderHistory] = []
+    
+    
     
     private var userId: String? {
         Auth.auth().currentUser?.uid
@@ -57,7 +58,7 @@ class GroceryDataManager: ObservableObject {
             }
         }
     }
-
+    
     func fetchCartProducts() {
         guard let userId = userId else { return }
         
@@ -76,11 +77,11 @@ class GroceryDataManager: ObservableObject {
             self?.cartProducts = fetchedCartProducts
         }
     }
-
+    
     func fetchAllProducts() {
         fetchProducts(from: "GroceryProducts")
     }
-
+    
     
     func fetchProducts(forCategory category: String) {
         fetchProducts(from: "GroceryProducts", withField: "category", equalTo: category)
@@ -140,7 +141,7 @@ class GroceryDataManager: ObservableObject {
                 return
             }
             
-            let batch = self.db.batch() 
+            let batch = self.db.batch()
             for document in documents {
                 batch.deleteDocument(document.reference)
             }
@@ -155,8 +156,8 @@ class GroceryDataManager: ObservableObject {
             }
         }
     }
-
-
+    
+    
     
     func updateCartProductQuantity(productId: String, newQuantity: Int) {
         guard let userId = userId else { return }
@@ -310,43 +311,43 @@ class GroceryDataManager: ObservableObject {
         }
     }
     
-    func placeOrder(products: [GroceryProducts], totalPrice: Double) {
-            guard let userId = userId else { return }
-            
-            let orderRef = db.collection("Users").document(userId).collection("Orders").document()
-            
-            let order = Order(products: products, totalPrice: totalPrice, orderDate: Date())
-            
-            do {
-                try orderRef.setData(from: order) { error in
-                    if let error = error {
-                        print("Error placing order: \(error.localizedDescription)")
-                    } else {
-                        print("Order placed successfully.")
-                        self.fetchOrderHistory()
-                    }
-                }
-            } catch {
-                print("Error encoding order: \(error.localizedDescription)")
-            }
-        }
-    
     func fetchOrderHistory() {
-            guard let userId = userId else { return }
-            let ordersRef = db.collection("Users").document(userId).collection("Orders")
-            
-            ordersRef.getDocuments { [weak self] snapshot, error in
-                if let error = error {
-                    print("Error fetching order history: \(error.localizedDescription)")
-                    return
-                }
-                
-                let fetchedOrders = snapshot?.documents.compactMap { document in
-                    try? document.data(as: Order.self)
-                } ?? []
-                
-                self?.orderHistory = fetchedOrders
+        guard let userId = userId else { return }
+        let ordersRef = db.collection("Users").document(userId).collection("OrderHistory")
+        
+        ordersRef.order(by: "date", descending: true).getDocuments { [weak self] snapshot, error in
+            if let error = error {
+                print("Error fetching order history: \(error.localizedDescription)")
+                return
             }
+            
+            self?.orderHistory = snapshot?.documents.compactMap { document in
+                try? document.data(as: OrderHistory.self)
+            } ?? []
         }
+    }
     
+    func saveOrderHistory(cartProducts: [GroceryProducts], totalPrice: Double) async {
+        guard let userId = userId else { return }
+        let ordersRef = db.collection("Users").document(userId).collection("OrderHistory")
+        
+        let products = cartProducts.map { OrderHistory.OrderProduct(name: $0.name, quantity: $0.quantity, price: Double($0.price)) }
+        
+        let orderHistory = OrderHistory(
+            date: Date(),
+            products: products,
+            totalPrice: totalPrice
+        )
+        
+        do {
+            _ = try await ordersRef.addDocument(data: [
+                "date": Timestamp(date: orderHistory.date),
+                "products": products.map { ["name": $0.name, "quantity": $0.quantity, "price": $0.price]},
+                "totalPrice": orderHistory.totalPrice
+            ])
+            print("Order history saved successfully.")
+        } catch {
+            print("Error saving order history: \(error.localizedDescription)")
+        }
+    }
 }

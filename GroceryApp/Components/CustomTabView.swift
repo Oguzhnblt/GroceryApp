@@ -20,7 +20,9 @@ struct CustomTabView: View {
                 GroceryCartView()
                     .tag("cart")
                 OrderHistoryView()
-                    .tag("order_history")
+                    .tag("orders")
+                AccountView()
+                    .tag("account")
             }
             .ignoresSafeArea(.all, edges: .bottom)
             
@@ -60,7 +62,7 @@ struct TabButon: View {
     }
 }
 
-var tabs = ["home", "explore", "cart", "order_history"]
+var tabs = ["home", "explore", "cart", "orders","account"]
 
 #Preview {
     CustomTabView()

@@ -81,7 +81,7 @@ struct PaymentCardView: View {
                     presentationMode.wrappedValue.dismiss()
                 }
                 .font(.system(size: 16, weight: .semibold))
-                .foregroundColor(Color(red: 0.33, green: 0.69, blue: 0.46))
+                .foregroundColor(AppColors.appleGreen)
             }
             .padding(.top)
             
@@ -112,7 +112,7 @@ struct PaymentCardView: View {
                             Spacer()
                             if selectedCard?.id == card.id {
                                 Image(systemName: "checkmark.circle.fill")
-                                    .foregroundColor(Color(red: 0.33, green: 0.69, blue: 0.46))
+                                    .foregroundColor(AppColors.appleGreen)
                                     .padding(.trailing)
                             }
                         }
@@ -135,7 +135,7 @@ struct PaymentCardView: View {
                             } label: {
                                 Label("Edit", systemImage: "pencil")
                             }
-                            .tint(Color(red: 0.33, green: 0.69, blue: 0.46))
+                            .tint(AppColors.appleGreen)
                         }
                     }
                 }
@@ -156,7 +156,7 @@ struct PaymentCardView: View {
                     }) {
                         Text(isAddingNewCard ? "Cancel" : "Add New Card")
                             .font(.system(size: 16, weight: .semibold))
-                            .foregroundColor(Color(red: 0.33, green: 0.69, blue: 0.46))
+                            .foregroundColor(AppColors.appleGreen)
                             .padding()
                             .frame(maxWidth: .infinity)
                     }
@@ -169,7 +169,7 @@ struct PaymentCardView: View {
                                 .foregroundColor(.white)
                                 .padding()
                                 .frame(maxWidth: .infinity)
-                                .background(Color(red: 0.33, green: 0.69, blue: 0.46))
+                                .background(AppColors.appleGreen)
                                 .cornerRadius(8)
                         }
                         .padding(.top, 8)

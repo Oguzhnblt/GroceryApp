@@ -5,6 +5,7 @@
 //  Created by Oğuzhan Bolat on 28.07.2024.
 //
 
+// GroceryProductDetailView.swift
 import SwiftUI
 import FirebaseStorage
 
@@ -21,7 +22,7 @@ struct GroceryProductDetailView: View {
     
     init(product: GroceryProducts) {
         self.product = product
-        self.pricePerUnit = Double(product.price.dropFirst()) ?? 0.0
+        self.pricePerUnit = Double(product.price)
     }
     
     var body: some View {
@@ -39,7 +40,7 @@ struct GroceryProductDetailView: View {
                                     Rectangle()
                                         .foregroundColor(.clear)
                                         .frame(width: 413.60, height: 371.44)
-                                        .background(Color(red: 0.95, green: 0.95, blue: 0.95))
+                                        .background(AppColors.lightGrayGreen)
                                         .cornerRadius(25)
                                     image
                                         .resizable()
@@ -64,7 +65,7 @@ struct GroceryProductDetailView: View {
                     } else {
                         ProgressView()
                             .frame(width: 413.60, height: 371.44)
-                            .background(Color(red: 0.95, green: 0.95, blue: 0.95))
+                            .background(AppColors.lightGreen)
                             .cornerRadius(25)
                             .onAppear {
                                 if !isImageLoaded {
@@ -80,11 +81,11 @@ struct GroceryProductDetailView: View {
                             .font(Font.custom("Gilroy-Bold", size: 24))
                             .tracking(0.10)
                             .lineSpacing(18)
-                            .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
+                            .foregroundColor(AppColors.darkGreen)
                         
                         Text(product.title)
                             .font(Font.custom("Gilroy-Medium", size: 16).weight(.semibold))
-                            .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
+                            .foregroundColor(AppColors.oliveGreen)
                     }
                     
                     HStack {
@@ -106,7 +107,7 @@ struct GroceryProductDetailView: View {
                         Text("$\(String(format: "%.2f", pricePerUnit * Double(quantity)))")
                             .font(.title)
                             .fontWeight(.bold)
-                            .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
+                            .foregroundColor(AppColors.darkGreen)
                     }
                 }
                 .padding([.leading, .trailing, .top], 25)
@@ -119,14 +120,14 @@ struct GroceryProductDetailView: View {
                             .padding(.top, 5)
                             .font(.body)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
+                            .foregroundColor(AppColors.oliveGreen)
                         
                         
                         
                     } label: {
                         Text("Product Detail")
                             .font(.headline)
-                            .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
+                            .foregroundColor(AppColors.darkGreen)
                     }
                     
                     Divider()
@@ -147,13 +148,13 @@ struct GroceryProductDetailView: View {
                         HStack {
                             Text("Nutritions")
                                 .font(.headline)
-                                .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
+                                .foregroundColor(AppColors.darkGreen)
                             Spacer()
                             Text("100gr")
                                 .font(.footnote)
                                 .foregroundColor(Color.gray)
                                 .padding(5)
-                                .background(Color(red: 0.95, green: 0.95, blue: 0.95))
+                                .background(AppColors.lightGrayGreen)
                                 .cornerRadius(5)
                         }
                     }
@@ -166,7 +167,6 @@ struct GroceryProductDetailView: View {
                 
                 Button(action: {
                     if !isProductInCart {
-                        // Sepete ekleme işlemi
                         dataManager.addToCart(product: product, quantity: quantity)
                         isProductInCart = true
                     }
@@ -176,13 +176,12 @@ struct GroceryProductDetailView: View {
                         .font(.title2)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(isProductInCart ? Color.gray : (Color(red: 0.33, green: 0.69, blue: 0.46))
-)
+                        .background(isProductInCart ? Color.gray : AppColors.appleGreen)
                         .cornerRadius(10)
                 }
                 .padding([.leading, .trailing], 25)
                 .padding(.bottom, 35)
-                .disabled(isProductInCart) 
+                .disabled(isProductInCart)
             }
             .padding([.leading, .trailing])
         }
@@ -231,8 +230,9 @@ struct GroceryProductDetailView_Previews: PreviewProvider {
             id: "1",
             name: "Sample Product",
             title: "This is a sample product description",
-            imageName: "sample_image", price: "$9.99",
-            details: "This is a detailed description of the sample product.",
+            imageName: "sample_image",
+            price: 9.99,
+            details: "This is a detailed description of the sample product.", isAdded: true,
             quantity: 12, nutrition: [
                 "Calories": "200 kcal",
                 "Protein": "10 g",

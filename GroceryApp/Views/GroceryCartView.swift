@@ -13,8 +13,7 @@ struct GroceryCartView: View {
     
     private var totalPrice: Double {
         dataManager.cartProducts.reduce(0) { total, product in
-            let priceString = product.price.dropFirst()
-            let price = Double(priceString) ?? 0.0
+            let price = product.price
             return total + (price * Double(product.quantity))
         }
     }
@@ -75,13 +74,13 @@ struct GroceryCartView: View {
                 Rectangle()
                     .foregroundColor(.clear)
                     .frame(width: 364, height: 67)
-                    .background(isCartEmpty ? Color.gray.opacity(0.5) : Color(red: 0.33, green: 0.69, blue: 0.46))
+                    .background(isCartEmpty ? Color.gray.opacity(0.5) : AppColors.appleGreen)
                     .cornerRadius(19)
                 
                 HStack {
                     Text("Go to Checkout")
                         .font(Font.custom("Gilroy-SemiBold", size: 18))
-                        .foregroundColor(Color(red: 0.99, green: 0.99, blue: 0.99))
+                        .foregroundColor(AppColors.extraLightGray)
                     Spacer()
                     
                     Text("$\(String(format: "%.2f", totalPrice))")

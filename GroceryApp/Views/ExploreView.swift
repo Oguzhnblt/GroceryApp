@@ -16,36 +16,48 @@ struct ExploreView: View {
         ("meat", "Meat & Fish", Color(red: 0.97, green: 0.65, blue: 0.58)),
         ("beverages", "Beverages", Color(red: 0.72, green: 0.87, blue: 0.96))
     ]
-    
+  
+    var filteredCategories: [(String, String, Color)] {
+        if searchText.isEmpty {
+            return categories
+        } else {
+            return categories.filter { $0.1.lowercased().contains(searchText.lowercased()) }
+        }
+    }
+   
     var body: some View {
         NavigationView {
             ScrollView {
                 SearchField(searchText: $searchText, placeholder: "Search categories")
+                
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
-                    ForEach(categories, id: \.0) { category in
-                        NavigationLink(destination: GroceryCategoryDetailView(category: category)) {
-                            CategoryCell(
-                                imageName: category.0,
-                                title: category.1,
-                                backgroundColor: category.2,
-                                borderColor: category.2
-                            )
+                    if !filteredCategories.isEmpty {
+                        Section(header: Text("Categories")) {
+                            ForEach(filteredCategories, id: \.0) { category in
+                                NavigationLink(destination: GroceryCategoryDetailView(category: category)) {
+                                    CategoryCell(
+                                        imageName: category.0,
+                                        title: category.1,
+                                        backgroundColor: category.2,
+                                        borderColor: category.2
+                                    )
+                                }
+                            }
                         }
                     }
                 }
+                .padding()
                 .toolbar {
                     ToolbarItem(placement: .principal) {
                         Text("Explore")
                             .font(.custom("Gilroy-SemiBold", size: 20))
                     }
                 }
-                .padding()
             }
             .scrollIndicators(.hidden)
         }
     }
 }
-
 
 #Preview {
     ExploreView()

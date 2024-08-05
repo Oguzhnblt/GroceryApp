@@ -198,7 +198,7 @@ struct CheckoutView: View {
         
         do {
             try await PaymentModule.shared.confirmPayment(otp: otpString)
-            dataManager.placeOrder(products: dataManager.cartProducts, totalPrice: totalPrice)
+            await dataManager.saveOrderHistory(cartProducts: dataManager.cartProducts, totalPrice: totalPrice)
             dataManager.removeAllFromCart()
             dismissViews()
         } catch {
@@ -207,7 +207,7 @@ struct CheckoutView: View {
             showOTPInput = false
         }
     }
-
+    
     private func dismissViews() {
         showOTPInput = false
         showOrderAccepted = true
