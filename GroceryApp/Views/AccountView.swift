@@ -34,7 +34,7 @@ struct AccountView: View {
                         Image("login_icon")
                         
                         Text("Get your groceries\nwith nectar")
-                            .font(Font.custom("Gilroy-Medium", size: 16))
+                            .font(Font.custom("Gilroy-Medium", size: 18))
                             .foregroundColor(AppColors.almostBlack)
                             .padding(.bottom, 15)
                     }
@@ -51,7 +51,7 @@ struct AccountView: View {
                                 Image(systemName: "person")
                                     .foregroundStyle(.black).bold()
                                 Text("Account Info")
-                                    .font(.system(size: 16, weight: .semibold))
+                                    .font(.system(size: 14, weight: .semibold))
                                     .foregroundColor(AppColors.darkGreen)
                                     .lineLimit(1)
                                 Spacer()
@@ -69,7 +69,7 @@ struct AccountView: View {
                             HStack {
                                 Image("delivery_address")
                                 Text("Delivery Address")
-                                    .font(.system(size: 16, weight: .semibold))
+                                    .font(.system(size: 14, weight: .semibold))
                                     .foregroundColor(AppColors.darkGreen)
                                     .lineLimit(1)
                                 Spacer()
@@ -87,7 +87,7 @@ struct AccountView: View {
                             HStack {
                                 Image("payment")
                                 Text("Credit Card Info")
-                                    .font(.system(size: 16, weight: .semibold))
+                                    .font(.system(size: 14, weight: .semibold))
                                     .foregroundColor(AppColors.darkGreen)
                                     .lineLimit(1)
                                 Spacer()
@@ -105,7 +105,7 @@ struct AccountView: View {
                             HStack {
                                 Image("about")
                                 Text("About")
-                                    .font(.system(size: 16, weight: .semibold))
+                                    .font(.system(size: 14, weight: .semibold))
                                     .foregroundColor(AppColors.darkGreen)
                                     .lineLimit(1)
                                 Spacer()
@@ -164,7 +164,6 @@ struct AccountView: View {
             .fullScreenCover(isPresented: $showLoginView) {
                 LoginView()
                     .environmentObject(authManager)
-                    .animation(.easeInOut, value: showLoginView)
             }
             .sheet(isPresented: $showDeliveryAddressView) {
                 DeliveryAddressView(selectedAddress: $selectedAddress)
@@ -176,7 +175,6 @@ struct AccountView: View {
             }
             .sheet(isPresented: $showAboutView) {
                 AboutView()
-                    .presentationDetents([.fraction(0.5)])
             }
             .sheet(isPresented: $showAccountInfoView) {
                 AccountInfoView()

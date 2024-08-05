@@ -9,13 +9,15 @@ import SwiftUI
 
 struct GroceryButton: View {
     var text: String
+    var backgroundColor: Color? = AppColors.appleGreen
+
 
     var body: some View {
         ZStack {
             Rectangle()
                 .foregroundColor(.clear)
                 .frame(width: 353, height: 67)
-                .background(Color(red: 0.33, green: 0.69, blue: 0.46))
+                .background(backgroundColor)
                 .cornerRadius(19)
             Text(text)
                 .font(Font.custom("Gilroy-SemiBold", size: 18))

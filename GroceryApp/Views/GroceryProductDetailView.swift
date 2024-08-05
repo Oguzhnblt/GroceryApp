@@ -5,7 +5,6 @@
 //  Created by Oğuzhan Bolat on 28.07.2024.
 //
 
-// GroceryProductDetailView.swift
 import SwiftUI
 import FirebaseStorage
 
@@ -17,6 +16,7 @@ struct GroceryProductDetailView: View {
     private var pricePerUnit: Double
     
     @EnvironmentObject private var dataManager: GroceryDataManager
+    @Environment(\.isTabBarHidden) private var isTabBarHidden
     
     @State private var isProductInCart: Bool = false
     
@@ -34,39 +34,28 @@ struct GroceryProductDetailView: View {
                             switch phase {
                             case .empty:
                                 ProgressView()
-                                    .frame(width: 414, height: 371)
+                                    .frame(height: 250)
                             case .success(let image):
-                                ZStack {
-                                    Rectangle()
-                                        .foregroundColor(.clear)
-                                        .frame(width: 413.60, height: 371.44)
-                                        .background(AppColors.lightGrayGreen)
-                                        .cornerRadius(25)
-                                    image
-                                        .resizable()
-                                        .foregroundStyle(.clear)
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 330, height: 200)
-                                    
-                                }
-                                
+                                image
+                                    .resizable()
+                                    .foregroundStyle(.clear)
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(height: 250)
+                                    .frame(maxWidth: .infinity)
                             case .failure:
                                 Image(systemName: "photo")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 414, height: 371)
-                                    .cornerRadius(25)
+                                    .frame(height: 250)
+                                    .cornerRadius(15)
                             @unknown default:
                                 EmptyView()
                             }
                         }
-                        .frame(width: 413.60, height: 371.44)
-                        .cornerRadius(25)
                     } else {
                         ProgressView()
-                            .frame(width: 413.60, height: 371.44)
-                            .background(AppColors.lightGreen)
-                            .cornerRadius(25)
+                            .frame(height: 250)
+                            .cornerRadius(15)
                             .onAppear {
                                 if !isImageLoaded {
                                     fetchImageURL(imageName: product.imageName!)
@@ -84,24 +73,24 @@ struct GroceryProductDetailView: View {
                             .foregroundColor(AppColors.darkGreen)
                         
                         Text(product.title)
-                            .font(Font.custom("Gilroy-Medium", size: 16).weight(.semibold))
+                            .font(Font.custom("Gilroy-Medium", size: 16))
                             .foregroundColor(AppColors.oliveGreen)
                     }
                     
                     HStack {
                         ItemCounter(quantity: $quantity, minQuantity: 1, maxQuantity: 5)
                             .onAppear() {
-                                if let cartProduct = dataManager.cartProducts.first(where: {$0.id == product.id}) {
+                                if let cartProduct = dataManager.cartProducts.first(where: { $0.id == product.id }) {
                                     quantity = cartProduct.quantity
                                     isProductInCart = true
                                 } else {
                                     isProductInCart = false
                                 }
                             }
-                            .onChange(of: quantity) { _,newQuantity in
+                            .onChange(of: quantity) { _, newQuantity in
                                 dataManager.updateCartProductQuantity(productId: product.id!, newQuantity: newQuantity)
                             }
-
+                        
                         Spacer()
                         
                         Text("$\(String(format: "%.2f", pricePerUnit * Double(quantity)))")
@@ -110,7 +99,7 @@ struct GroceryProductDetailView: View {
                             .foregroundColor(AppColors.darkGreen)
                     }
                 }
-                .padding([.leading, .trailing, .top], 25)
+                .padding(.top)
                 
                 VStack(alignment: .leading, spacing: 20) {
                     Divider()
@@ -121,8 +110,6 @@ struct GroceryProductDetailView: View {
                             .font(.body)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .foregroundColor(AppColors.oliveGreen)
-                        
-                        
                         
                     } label: {
                         Text("Product Detail")
@@ -141,7 +128,7 @@ struct GroceryProductDetailView: View {
                             }
                             .padding(.top, 10)
                         } else {
-                            Text("Besin değerleri bulunamadı")
+                            Text("Nutrition information not available")
                         }
                         
                     } label: {
@@ -159,10 +146,8 @@ struct GroceryProductDetailView: View {
                         }
                     }
                 }
-                .padding([.leading, .trailing], 25)
                 
                 Divider()
-                    .padding([.leading, .trailing], 20)
                     .padding(.bottom)
                 
                 Button(action: {
@@ -171,19 +156,16 @@ struct GroceryProductDetailView: View {
                         isProductInCart = true
                     }
                 }) {
-                    Text(isProductInCart ? "Added To Cart" : "Add To Cart")
-                        .foregroundColor(.white)
-                        .font(.title2)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(isProductInCart ? Color.gray : AppColors.appleGreen)
-                        .cornerRadius(10)
+                    GroceryButton(
+                            text: isProductInCart ? "Added To Cart" : "Add To Cart",
+                            backgroundColor: isProductInCart ? AppColors.lightGrayGreen : AppColors.appleGreen
+                        )
                 }
-                .padding([.leading, .trailing], 25)
-                .padding(.bottom, 35)
+                .padding(.bottom, 25)
                 .disabled(isProductInCart)
             }
             .padding([.leading, .trailing])
+            .ignoresSafeArea(.all, edges: .bottom)
         }
     }
     

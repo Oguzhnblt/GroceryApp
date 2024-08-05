@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CustomTabView: View {
     @State var selectedTab = "home"
+    @State private var isTabBarHidden: Bool = false
+    
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)) {
             
@@ -25,26 +27,40 @@ struct CustomTabView: View {
                     .tag("account")
             }
             .ignoresSafeArea(.all, edges: .bottom)
+            .environment(\.isTabBarHidden, $isTabBarHidden)
             
-            HStack(spacing: 0) {
-                ForEach(tabs, id: \.self) { image in
-                    
-                    TabButon(image: image, selectedTab: $selectedTab)
-                    if image != tabs.last {
-                        Spacer(minLength: 0)
+            if !isTabBarHidden {
+                HStack(spacing: 0) {
+                    ForEach(tabs, id: \.self) { image in
+                        
+                        TabButon(image: image, selectedTab: $selectedTab)
+                        if image != tabs.last {
+                            Spacer(minLength: 0)
+                        }
                     }
                 }
+                .padding(.horizontal, 25)
+                .padding(.vertical, 5)
+                .background(.white)
+                .clipShape(Capsule())
+                .shadow(color: Color.black.opacity(0.15), radius: 2, x: 2, y: 2)
+                .shadow(color: Color.black.opacity(0.15), radius: 2, x: -2, y: -2)
+                .padding(.horizontal)
             }
-            .padding(.horizontal, 25)
-            .padding(.vertical, 5)
-            .background(.white)
-            .clipShape(Capsule())
-            .shadow(color: Color.black.opacity(0.15), radius: 2, x: 2, y: 2)
-            .shadow(color: Color.black.opacity(0.15), radius: 2, x: -2, y: -2)
-            .padding(.horizontal)
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
     }
+}
+
+extension EnvironmentValues {
+    var isTabBarHidden: Binding<Bool> {
+        get { self[TabBarHiddenKey.self] }
+        set { self[TabBarHiddenKey.self] = newValue }
+    }
+}
+
+private struct TabBarHiddenKey: EnvironmentKey {
+    static let defaultValue: Binding<Bool> = .constant(false)
 }
 
 struct TabButon: View {
@@ -52,17 +68,16 @@ struct TabButon: View {
     @Binding var selectedTab: String
     
     var body: some View {
-        Button(action: {selectedTab = image}) {
+        Button(action: { selectedTab = image }) {
             Image(image)
                 .renderingMode(.template)
-                .foregroundStyle(selectedTab == image ? (Color(red: 0.33, green: 0.69, blue: 0.46))
-                                 : Color.black.opacity(0.4))
+                .foregroundStyle(selectedTab == image ? Color(red: 0.33, green: 0.69, blue: 0.46) : Color.black.opacity(0.4))
                 .padding()
         }
     }
 }
 
-var tabs = ["home", "explore", "cart", "orders","account"]
+var tabs = ["home", "explore", "cart", "orders", "account"]
 
 #Preview {
     CustomTabView()

@@ -81,7 +81,6 @@ struct GroceryHomeView: View {
                 dataManager.fetchAllProducts()
             }
         }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
     
     private func updateProduct(_ updatedProduct: GroceryProducts) {

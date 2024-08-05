@@ -20,39 +20,34 @@ struct AccountInfoView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack {
-                    ZStack(alignment: .top) {
-                        Rectangle()
-                            .foregroundColor(.clear)
-                            .background(Image("blur").ignoresSafeArea(.all))
-                            .opacity(0.06)
-                            .frame(height: 5)
+                VStack(alignment: .leading, spacing: 20) {
+                    headerSection
+                    userInfoSection
+                    usernameUpdateSection
+                    currentPasswordSection
+                    passwordSection
+                    confirmPasswordSection
+                    
+                    if showError {
+                        errorMessageView(message: alertMessage)
+                            .padding(.top, 10)
+                            .transition(.opacity)
+                            .animation(.easeInOut(duration: 0.5), value: showError)
                     }
                     
-                    VStack(alignment: .leading, spacing: 20) {
-                        headerSection
-                        
-                        userInfoSection
-                        
-                        usernameUpdateSection
-                        
-                        currentPasswordSection
-                        
-                        passwordSection
-                        
-                        confirmPasswordSection
-                        
-                        if showError {
-                            errorMessageView(message: alertMessage)
-                                .padding(.top, 20)
-                        }
-                        
-                        updateButton
-                    }
-                    .padding([.leading, .trailing], 20)
+                    updateButton
                 }
-                .navigationTitle("Account Info")
-                .navigationBarTitleDisplayMode(.inline)
+                .padding([.leading, .trailing], 20)
+                .padding(.top, 30)
+            }
+            .onChange(of: alertMessage) {
+                if !alertMessage.isEmpty {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        withAnimation {
+                            showError = false
+                        }
+                    }
+                }
             }
         }
     }
@@ -60,7 +55,7 @@ struct AccountInfoView: View {
     private var headerSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Account Information")
-                .font(Font.custom("Gilroy-SemiBold", size: 22))
+                .font(Font.custom("Gilroy-SemiBold", size: 24))
                 .foregroundColor(AppColors.darkGreen)
             
             Text("Update your account details below.")
@@ -70,31 +65,31 @@ struct AccountInfoView: View {
     }
     
     private var userInfoSection: some View {
-        VStack(alignment: .leading, spacing: 15) {
-            Text("Username")
+            HStack(spacing: 10) {
+                infoCard(title: "Username", content: authManager.username)
+                infoCard(title: "Email", content: authManager.currentUser()?.email ?? "No email")
+            }
+        .padding(.vertical, 10)
+    }
+    
+    private func infoCard(title: String, content: String) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(title)
                 .font(Font.custom("Gilroy-SemiBold", size: 14))
                 .foregroundColor(AppColors.oliveGreen)
             
-            Text(authManager.username)
+            Text(content)
                 .font(Font.custom("Gilroy-Medium", size: 14))
                 .foregroundColor(AppColors.darkGreen)
                 .padding()
                 .background(Color.white)
-                .cornerRadius(8)
-                .shadow(radius: 2)
-            
-            Text("Email")
-                .font(Font.custom("Gilroy-SemiBold", size: 14))
-                .foregroundColor(AppColors.oliveGreen)
-            
-            Text(authManager.currentUser()?.email ?? "No email")
-                .font(Font.custom("Gilroy-Medium", size: 14))
-                .foregroundColor(AppColors.darkGreen)
-                .padding()
-                .background(Color.white)
-                .cornerRadius(8)
-                .shadow(radius: 2)
+                .cornerRadius(10)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(AppColors.oliveGreen, lineWidth: 1)
+                )
         }
+        .padding(.bottom, 10)
     }
     
     private var usernameUpdateSection: some View {
@@ -105,11 +100,14 @@ struct AccountInfoView: View {
             
             TextField("Enter new username", text: $newUsername)
                 .font(Font.custom("Gilroy-Medium", size: 14))
-                .foregroundColor(AppColors.oliveGreen)
+                .foregroundColor(AppColors.darkGreen)
                 .padding()
                 .background(Color.white)
-                .cornerRadius(8)
-                .shadow(radius: 2)
+                .cornerRadius(10)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(AppColors.oliveGreen, lineWidth: 1)
+                )
                 .onChange(of: newUsername) {
                     alertMessage = ""
                     showError = false
@@ -125,11 +123,14 @@ struct AccountInfoView: View {
             
             SecureField("Enter current password", text: $currentPassword)
                 .font(Font.custom("Gilroy-Medium", size: 14))
-                .foregroundColor(AppColors.oliveGreen)
+                .foregroundColor(AppColors.darkGreen)
                 .padding()
                 .background(Color.white)
-                .cornerRadius(8)
-                .shadow(radius: 2)
+                .cornerRadius(10)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(AppColors.oliveGreen, lineWidth: 1)
+                )
                 .onChange(of: currentPassword) {
                     alertMessage = ""
                     showError = false
@@ -145,11 +146,14 @@ struct AccountInfoView: View {
             
             SecureField("Enter new password", text: $newPassword)
                 .font(Font.custom("Gilroy-Medium", size: 14))
-                .foregroundColor(AppColors.oliveGreen)
+                .foregroundColor(AppColors.darkGreen)
                 .padding()
                 .background(Color.white)
-                .cornerRadius(8)
-                .shadow(radius: 2)
+                .cornerRadius(10)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(AppColors.oliveGreen, lineWidth: 1)
+                )
                 .onChange(of: newPassword) {
                     alertMessage = ""
                     showError = false
@@ -165,11 +169,14 @@ struct AccountInfoView: View {
             
             SecureField("Confirm new password", text: $confirmPassword)
                 .font(Font.custom("Gilroy-Medium", size: 14))
-                .foregroundColor(AppColors.oliveGreen)
+                .foregroundColor(AppColors.darkGreen)
                 .padding()
                 .background(Color.white)
-                .cornerRadius(8)
-                .shadow(radius: 2)
+                .cornerRadius(10)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(AppColors.oliveGreen, lineWidth: 1)
+                )
                 .onChange(of: confirmPassword) {
                     alertMessage = ""
                     showError = false
@@ -181,7 +188,7 @@ struct AccountInfoView: View {
         Button(action: handleUpdateInfo) {
             GroceryButton(text: "Update Info")
         }
-        .padding(.top, 20)
+        .padding(.top, 25)
     }
     
     private func handleUpdateInfo() {
@@ -198,7 +205,7 @@ struct AccountInfoView: View {
                 switch result {
                 case .success:
                     alertMessage = "Username updated successfully."
-                    showError = false
+                    showError = true
                     hasChanges = true
                 case .failure(let error):
                     alertMessage = error.localizedDescription
@@ -212,7 +219,7 @@ struct AccountInfoView: View {
                 switch result {
                 case .success:
                     alertMessage = "Password updated successfully."
-                    showError = false
+                    showError = true
                     hasChanges = true
                 case .failure(let error):
                     alertMessage = error.localizedDescription
@@ -231,10 +238,8 @@ struct AccountInfoView: View {
         Text(message)
             .font(Font.custom("Gilroy-Medium", size: 14))
             .foregroundColor(.red)
-            .multilineTextAlignment(.center)
             .padding()
             .background(Color.white)
             .cornerRadius(8)
-            .shadow(radius: 2)
     }
 }
