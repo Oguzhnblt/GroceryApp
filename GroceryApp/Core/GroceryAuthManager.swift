@@ -124,39 +124,8 @@ class GroceryAuthManager: ObservableObject {
             }
         }
     }
+   
     
-    func updateEmail(newEmail: String, currentPassword: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        guard let currentUser = Auth.auth().currentUser else {
-            completion(.failure(NSError(domain: "GroceryAuthManager", code: -1, userInfo: [NSLocalizedDescriptionKey: "No user is logged in."])))
-            return
-        }
-        
-        let credential = EmailAuthProvider.credential(withEmail: currentUser.email ?? "", password: currentPassword)
-
-        currentUser.reauthenticate(with: credential) { [weak self] result, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-
-            currentUser.updateEmail(to: newEmail) { error in
-                if let error = error {
-                    completion(.failure(error))
-                    return
-                }
-
-                currentUser.sendEmailVerification { error in
-                    if let error = error {
-                        completion(.failure(error))
-                    } else {
-                        self?.isEmailVerified = false
-                        completion(.success(()))
-                    }
-                }
-            }
-        }
-    }
-
     func updatePassword(newPassword: String, currentPassword: String, completion: @escaping (AuthResult) -> Void) {
         guard let currentUser = Auth.auth().currentUser else {
             completion(.failure(NSError(domain: "GroceryAuthManager", code: -1, userInfo: [NSLocalizedDescriptionKey: "No user is logged in."])))

@@ -43,7 +43,7 @@ struct PaymentCardView: View {
             showAlert = true
             return
         }
-
+        
         guard expirationDate.count == 5, cvv.count == 3 else {
             alertMessage = "Invalid expiration date or CVV."
             showAlert = true
@@ -71,23 +71,40 @@ struct PaymentCardView: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            // Header
-            HStack {
-                Text("Card Information")
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundColor(.primary)
-                Spacer()
-                Button("Done") {
-                    presentationMode.wrappedValue.dismiss()
-                }
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundColor(AppColors.appleGreen)
-            }
-            .padding(.top)
-            
+            headerView
             Divider()
-            
-            // Card List
+            cardListView
+            Divider()
+            newEditCardSection
+            Spacer()
+        }
+        .padding(.horizontal)
+        .padding(.top, 20)
+        .onAppear {
+            dataManager.fetchUserCards()
+        }
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Missing Information"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+        }
+    }
+    
+    private var headerView: some View {
+        HStack {
+            Text("Card Information")
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundColor(.primary)
+            Spacer()
+            Button("Done") {
+                presentationMode.wrappedValue.dismiss()
+            }
+            .font(AppFonts.gilroySemiBold(size: 16))
+            .foregroundColor(AppColors.appleGreen)
+        }
+        .padding(.top)
+    }
+    
+    private var cardListView: some View {
+        Group {
             if dataManager.userCards.isEmpty {
                 VStack {
                     Image(systemName: "creditcard.trianglebadge.exclamationmark")
@@ -141,99 +158,96 @@ struct PaymentCardView: View {
                 }
                 .listStyle(PlainListStyle())
             }
-            
-            Divider()
-            
-            // New/Edit Card Section
-            VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Button(action: {
-                        if isEditingCard {
-                            resetForm()
-                        } else {
-                            isAddingNewCard.toggle()
-                        }
-                    }) {
-                        Text(isAddingNewCard ? "Cancel" : "Add New Card")
-                            .font(.system(size: 16, weight: .semibold))
-                            .foregroundColor(AppColors.appleGreen)
+        }
+    }
+    
+    private var newEditCardSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Button(action: {
+                    if isEditingCard {
+                        resetForm()
+                    } else {
+                        isAddingNewCard.toggle()
+                    }
+                }) {
+                    Text(isAddingNewCard ? "Cancel" : "Add New Card")
+                        .font(AppFonts.gilroySemiBold(size: 16))
+                        .foregroundColor(AppColors.appleGreen)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                }
+                .background(Color.white)
+                
+                if isAddingNewCard {
+                    Button(action: handleCardAction) {
+                        Text(isEditingCard ? "Save Changes" : "Save Card")
+                            .font(AppFonts.gilroySemiBold(size: 16))
+                            .foregroundColor(.white)
                             .padding()
                             .frame(maxWidth: .infinity)
+                            .background(AppColors.appleGreen)
+                            .cornerRadius(8)
                     }
-                    .background(Color.white)
-                    
-                    if isAddingNewCard {
-                        Button(action: handleCardAction) {
-                            Text(isEditingCard ? "Save Changes" : "Save Card")
-                                .font(.system(size: 16, weight: .semibold))
-                                .foregroundColor(.white)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(AppColors.appleGreen)
-                                .cornerRadius(8)
+                    .padding(.top, 8)
+                }
+            }
+            .padding(.horizontal)
+            
+            if isAddingNewCard {
+                VStack(alignment: .leading, spacing: 8) {
+                    TextField("Card number", text: $cardNumber)
+                        .padding(10)
+                        .background(Color(.systemGray6))
+                        .cornerRadius(8)
+                        .keyboardType(.numberPad)
+                        .onChange(of: cardNumber) { _,newValue in
+                            cardNumber = newValue
+                                .limited(to: 19)
+                                .formattedCardNumber()
                         }
-                        .padding(.top, 8)
+                    
+                    TextField("Cardholder name", text: $cardholderName)
+                        .padding(10)
+                        .background(Color(.systemGray6))
+                        .cornerRadius(8)
+                    
+                    HStack(spacing: 8) {
+                        TextField("MM/YY", text: $expirationDate)
+                            .padding(10)
+                            .background(Color(.systemGray6))
+                            .cornerRadius(8)
+                            .frame(width: 150)
+                            .keyboardType(.numberPad)
+                            .onChange(of: expirationDate) { _,newValue in
+                                expirationDate = newValue
+                                    .limited(to: 5)
+                                    .formattedExpirationDate()
+                            }
+                        
+                        Spacer()
+                        
+                        TextField("CVV", text: $cvv)
+                            .padding(10)
+                            .background(Color(.systemGray6))
+                            .cornerRadius(8)
+                            .frame(width: 150)
+                            .keyboardType(.numberPad)
+                            .onChange(of: cvv) { _,newValue in
+                                cvv = newValue
+                                    .limited(to: 3)
+                            }
                     }
                 }
                 .padding(.horizontal)
-                
-                if isAddingNewCard {
-                    VStack(alignment: .leading, spacing: 8) {
-                        TextField("Card number", text: $cardNumber)
-                            .padding(10)
-                            .background(Color(.systemGray6))
-                            .cornerRadius(8)
-                            .keyboardType(.numberPad)
-                            .onChange(of: cardNumber) { _, newValue in
-                                cardNumber = newValue
-                                    .limited(to: 19)
-                                    .formattedCardNumber()
-                            }
-                        
-                        TextField("Cardholder name", text: $cardholderName)
-                            .padding(10)
-                            .background(Color(.systemGray6))
-                            .cornerRadius(8)
-                        
-                        HStack(spacing: 8) {
-                            TextField("MM/YY", text: $expirationDate)
-                                .padding(10)
-                                .background(Color(.systemGray6))
-                                .cornerRadius(8)
-                                .frame(width: 150)
-                                .keyboardType(.numberPad)
-                                .onChange(of: expirationDate) { _, newValue in
-                                    expirationDate = newValue
-                                        .limited(to: 5)
-                                        .formattedExpirationDate()
-                                }
-                            
-                            Spacer()
-                            
-                            TextField("CVV", text: $cvv)
-                                .padding(10)
-                                .background(Color(.systemGray6))
-                                .cornerRadius(8)
-                                .frame(width: 150)
-                                .keyboardType(.numberPad)
-                                .onChange(of: cvv) { _, newValue in
-                                    cvv = newValue
-                                        .limited(to: 3)
-                                }
-                        }
-                    }
-                    .padding(.horizontal)
-                }
             }
-            Spacer()
         }
-        .padding(.horizontal)
-        .padding(.top, 20)
-        .onAppear {
-            dataManager.fetchUserCards()
-        }
-        .alert(isPresented: $showAlert) {
-            Alert(title: Text("Missing Information"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
-        }
+    }
+}
+
+struct PaymentCardView_Previews: PreviewProvider {
+    static var previews: some View {
+        PaymentCardView(selectedCard: .constant(nil))
+            .environmentObject(GroceryDataManager())
     }
 }

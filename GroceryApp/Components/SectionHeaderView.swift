@@ -16,7 +16,7 @@ struct SectionHeaderView: View {
                 .font(.headline)
             Spacer()
             Button {
-                // "Action in here
+                // Action in here
             } label: {
                 Text("See all")
                     .font(.subheadline)

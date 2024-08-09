@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ItemCounter: View {
     @Binding var quantity: Int
-    let minQuantity: Int
-    let maxQuantity: Int
+    let minQuantity: Int = 1
+    let maxQuantity: Int = 5
     
     var body: some View {
         HStack(spacing: 20) {
@@ -56,6 +56,6 @@ struct ItemCounter: View {
 
 #Preview {
     @State var sampleQuantity = 1
-    return ItemCounter(quantity: $sampleQuantity, minQuantity: 0, maxQuantity: 10)
+    return ItemCounter(quantity: $sampleQuantity)
 }
 

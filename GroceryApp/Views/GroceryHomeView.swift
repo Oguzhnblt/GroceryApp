@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GroceryHomeView: View {
-    @StateObject var dataManager = GroceryDataManager()
+    @EnvironmentObject var dataManager: GroceryDataManager
     @State private var searchText = ""
     
     var filteredProducts: [GroceryProducts] {
@@ -31,66 +31,62 @@ struct GroceryHomeView: View {
         NavigationView {
             ScrollView {
                 VStack(alignment: .leading) {
-                    // Search field
-                    SearchField(searchText: $searchText, placeholder: "Search products")
-                    
-                    // Banner
+                    searchField
                     CarouselView()
-                    
-                    if filteredProducts.isEmpty {
-                        EmptyCardView(
-                            title: "No Products Found",
-                            message: "Try adjusting your search or browsing our categories."
-                        )
-                    } else {
-                        if !exclusiveOfferProducts.isEmpty {
-                            SectionHeaderView(title: "Exclusive Offer")
-                            
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack {
-                                    ForEach(exclusiveOfferProducts) { product in
-                                        NavigationLink(destination: GroceryProductDetailView(product: product)) {
-                                            ProductCardView(product: product, updateProduct: self.updateProduct)
-                                        }
-                                    }
-                                }
-                                .padding(.leading)
-                            }
-                        }
-                        
-                        if !bestSellingProducts.isEmpty {
-                            SectionHeaderView(title: "Best Selling")
-                            
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack {
-                                    ForEach(bestSellingProducts) { product in
-                                        NavigationLink(destination: GroceryProductDetailView(product: product)) {
-                                            ProductCardView(product: product, updateProduct: self.updateProduct)
-                                        }
-                                    }
-                                }
-                                .padding(.leading)
-                            }
-                        }
-                    }
+                    productSections
                 }
             }
-            .padding(.bottom, 30)
-            .background(Color.clear)
+            .padding(.bottom, 25)
             .onAppear {
                 dataManager.fetchAllProducts()
             }
         }
     }
     
-    private func updateProduct(_ updatedProduct: GroceryProducts) {
-        if let index = dataManager.products.firstIndex(where: { $0.id == updatedProduct.id }) {
-            dataManager.products[index] = updatedProduct
+    private var searchField: some View {
+        SearchField(searchText: $searchText, placeholder: "Search products")
+    }
+    
+    @ViewBuilder
+    private var productSections: some View {
+        if filteredProducts.isEmpty {
+            EmptyCardView(
+                title: "No Products Found",
+                message: "Try adjusting your search or browsing our categories."
+            )
+        } else {
+            exclusiveOfferSection
+            bestSellingSection
+        }
+    }
+    
+    @ViewBuilder
+    private var exclusiveOfferSection: some View {
+        if !exclusiveOfferProducts.isEmpty {
+            SectionHeaderView(title: "Exclusive Offer")
+            horizontalProductScroll(products: exclusiveOfferProducts)
+        }
+    }
+    
+    @ViewBuilder
+    private var bestSellingSection: some View {
+        if !bestSellingProducts.isEmpty {
+            SectionHeaderView(title: "Best Selling")
+            horizontalProductScroll(products: bestSellingProducts)
+        }
+    }
+    
+    private func horizontalProductScroll(products: [GroceryProducts]) -> some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack {
+                ForEach(products) { product in
+                    NavigationLink(destination: GroceryProductDetailView(product: product)) {
+                        ProductCardView(product: product)
+                    }
+                }
+                .padding(.leading)
+            }
         }
     }
 }
 
-#Preview {
-    GroceryHomeView()
-        .ignoresSafeArea()
-}

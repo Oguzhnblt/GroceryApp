@@ -26,18 +26,18 @@ struct OrderAcceptedView: View {
                 
                 VStack(spacing: 40) {
                     Text("Your Order has been\n accepted")
-                        .font(Font.custom("Gilroy-SemiBold", size: 28))
+                        .font(AppFonts.gilroySemiBold(size: 28))
                         .foregroundColor(AppColors.darkGreen)
                         .multilineTextAlignment(.center)
                     
                     Text("Your items has been placed and is on \nit’s way to being processed")
-                        .font(Font.custom("Gilroy-Medium", size: 16))
+                        .font(AppFonts.gilroyMedium(size: 16))
                         .lineSpacing(10)
                         .multilineTextAlignment(.center)
                         .foregroundColor(AppColors.oliveGreen)
                     
                     Text("Check your order history!")
-                        .font(Font.custom("Gilroy-Medium", size: 16))
+                        .font(AppFonts.gilroyMedium(size: 16))
                         .lineSpacing(10)
                         .multilineTextAlignment(.center)
                         .foregroundColor(AppColors.oliveGreen)
