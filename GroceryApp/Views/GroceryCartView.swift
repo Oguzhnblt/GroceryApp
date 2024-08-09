@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GroceryCartView: View {
     @EnvironmentObject private var dataManager: GroceryDataManager
+    
     @State private var isCheckoutPresented = false
     
     private var totalPrice: Double {
@@ -22,42 +23,38 @@ struct GroceryCartView: View {
         dataManager.cartProducts.isEmpty
     }
     
-    
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                Divider()
-                    .padding(.top, -30)
-                VStack {
-                    if isCartEmpty {
-                        EmptyCardView(title: "Oops! Your Cart is Empty", message: "Continue searching for products to add to your cart.")
-                    } else {
-                        ForEach(dataManager.cartProducts) { product in
-                            CartItemView(product: product, removeFromCartAction: {
-                                removeFromCart(product: product)
-                            })
+        NavigationView {
+            VStack {
+                ScrollView {
+                    VStack {
+                        if isCartEmpty {
+                            EmptyCardView(title: "Oops! Your Cart is Empty", message: "Continue searching for products to add to your cart.")
+                        } else {
+                            ForEach(dataManager.cartProducts) { product in
+                                CartItemView(product: product, removeFromCartAction: {
+                                    removeFromCart(product: product)
+                                })
+                            }
                         }
                     }
+                    .padding(.bottom, 25)
                 }
+                .scrollIndicators(.hidden)
+                
+                checkoutSection
+                    .padding([.leading, .trailing], 16)
+                    .padding(.bottom, 35)
             }
-            .scrollIndicators(.hidden)
-            checkoutSection
-                .toolbar {
-                    ToolbarItem(placement: .principal) {
-                        Text("My Cart")
-                            .font(.custom("Gilroy-SemiBold", size: 20))
-                            .foregroundStyle(.black)
-                    }
-                }
-                .onAppear {
-                    dataManager.fetchCartProducts()
-                }
-
-        }
-        .sheet(isPresented: $isCheckoutPresented) {
-            CheckoutView(totalPrice: totalPrice)
-                .presentationDetents([.fraction(0.7)])
-
+            .navigationTitle("My Cart")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                dataManager.fetchCartProducts()
+            }
+            .sheet(isPresented: $isCheckoutPresented) {
+                CheckoutView(totalPrice: totalPrice)
+                    .presentationDetents([.fraction(0.7)])
+            }
         }
     }
     
@@ -72,19 +69,18 @@ struct GroceryCartView: View {
         }) {
             ZStack {
                 Rectangle()
-                    .foregroundColor(.clear)
-                    .frame(width: 364, height: 67)
-                    .background(isCartEmpty ? Color.gray.opacity(0.5) : AppColors.appleGreen)
-                    .cornerRadius(19)
+                    .foregroundColor(isCartEmpty ? Color.gray.opacity(0.5) : AppColors.appleGreen)
+                    .frame(height: 60)
+                    .cornerRadius(20)
                 
                 HStack {
                     Text("Go to Checkout")
-                        .font(Font.custom("Gilroy-SemiBold", size: 18))
-                        .foregroundColor(AppColors.extraLightGray)
+                        .font(AppFonts.gilroySemiBold(size: 18))
+                        .foregroundColor(Color.white)
                     Spacer()
                     
                     Text("$\(String(format: "%.2f", totalPrice))")
-                        .font(Font.custom("Gilroy-SemiBold", size: 14))
+                        .font(AppFonts.gilroySemiBold(size: 14))
                         .foregroundColor(Color.white)
                         .padding(EdgeInsets(top: 2, leading: 5, bottom: 2, trailing: 5))
                         .background(Color.white.opacity(0.3))
@@ -92,16 +88,14 @@ struct GroceryCartView: View {
                 }
                 .padding([.leading, .trailing], 25)
             }
-            .padding(.bottom, 35)
         }
-        .buttonStyle(PlainButtonStyle())
         .disabled(isCartEmpty)
     }
-    
-    struct GroceryCartView_Previews: PreviewProvider {
-        static var previews: some View {
-            GroceryCartView()
-                .environmentObject(GroceryDataManager())
-        }
+}
+
+struct GroceryCartView_Previews: PreviewProvider {
+    static var previews: some View {
+        GroceryCartView()
+            .environmentObject(GroceryDataManager())
     }
 }

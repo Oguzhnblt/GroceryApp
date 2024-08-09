@@ -36,7 +36,7 @@ struct CategoryCell: View {
                     .frame(width: 95, height: 95)
                 
                 Text(title)
-                    .font(Font.custom("Gilroy-Bold", size: 16))
+                    .font(AppFonts.gilroyBold(size: 16))
                     .tracking(0.10)
                     .lineSpacing(22)
                     .foregroundColor(AppColors.darkGreen)
