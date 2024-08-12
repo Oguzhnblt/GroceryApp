@@ -4,6 +4,7 @@
 //
 //  Created by Oğuzhan Bolat on 5.08.2024.
 //
+
 import SwiftUI
 
 enum AppColors {
@@ -15,10 +16,6 @@ enum AppColors {
     static let almostBlack = Color(red: 0.01, green: 0.01, blue: 0.01) // Very dark gray, almost black
     static let emeraldGreen = Color(red: 0, green: 0.70, blue: 0.44) // Bright emerald green
     static let backgroundGray = Color(red: 0.95, green: 0.95, blue: 0.95) // Light gray for backgrounds
-
-
-
-
     static let white = Color.white
     static let lightGrayGreen = Color.gray.opacity(0.3)
 }
