@@ -72,6 +72,7 @@
 		12CA178F2C6A6A760052F65F /* Gilroy-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12CA17872C6A6A760052F65F /* Gilroy-SemiBold.ttf */; };
 		12CA17902C6A6A760052F65F /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CA17892C6A6A760052F65F /* AppColors.swift */; };
 		12CA17912C6A6A760052F65F /* AppFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CA178A2C6A6A760052F65F /* AppFonts.swift */; };
+		12CA17922C6A6BD00052F65F /* SplashView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 122B46B42C6A1C2C009200C5 /* SplashView.storyboard */; };
 		12D17EC32C56E5A1001C3978 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D17EC22C56E5A1001C3978 /* SearchField.swift */; };
 		12D17EC52C56E5F6001C3978 /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D17EC42C56E5F6001C3978 /* ExploreView.swift */; };
 		12D17EC72C56E633001C3978 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D17EC62C56E633001C3978 /* CategoryCell.swift */; };
@@ -83,7 +84,7 @@
 		1210DE452C603CAC00EEEBF6 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		1210DE472C604A2500EEEBF6 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		1210DE492C604D3700EEEBF6 /* AccountInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfoView.swift; sourceTree = "<group>"; };
-		122B46B42C6A1C2C009200C5 /* SplashView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SplashView.storyboard; sourceTree = "<group>"; };
+		122B46B42C6A1C2C009200C5 /* SplashView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = SplashView.storyboard; path = ../SplashView.storyboard; sourceTree = "<group>"; };
 		1230D1872C5D33E4000D33B0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1230D1892C5D3E05000D33B0 /* GroceryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryButton.swift; sourceTree = "<group>"; };
 		1230D1912C5D5C80000D33B0 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
@@ -221,7 +222,6 @@
 			isa = PBXGroup;
 			children = (
 				127217632C56D8360036D420 /* GroceryApp */,
-				122B46B42C6A1C2C009200C5 /* SplashView.storyboard */,
 				127217622C56D8360036D420 /* Products */,
 				1236C2DB2C57A04500226525 /* Frameworks */,
 			);
@@ -238,6 +238,7 @@
 		127217632C56D8360036D420 /* GroceryApp */ = {
 			isa = PBXGroup;
 			children = (
+				122B46B42C6A1C2C009200C5 /* SplashView.storyboard */,
 				12CA178B2C6A6A760052F65F /* Theme */,
 				12A37D912C5EEB3000EAF1C3 /* Extensions */,
 				1236C3272C5846A800226525 /* Views */,
@@ -396,6 +397,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12CA17922C6A6BD00052F65F /* SplashView.storyboard in Resources */,
 				1272176C2C56D8370036D420 /* Preview Assets.xcassets in Resources */,
 				12CA178E2C6A6A760052F65F /* Gilroy-Regular.ttf in Resources */,
 				127217692C56D8370036D420 /* Assets.xcassets in Resources */,
@@ -583,6 +585,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"GroceryApp/Preview Content\"";
@@ -615,6 +618,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"GroceryApp/Preview Content\"";
