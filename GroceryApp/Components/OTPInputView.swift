@@ -16,15 +16,15 @@ struct OTPInputView: View {
     var body: some View {
         VStack(spacing: 15) {
             Text("Enter OTP")
-                .font(Font.custom("Gilroy-SemiBold", size: 20))
+                .font(AppFonts.gilroySemiBold(size: 20))
                 .tracking(0.10)
-                .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
+                .foregroundColor(AppColors.darkGreen)
             
             HStack(spacing: 10) {
                 ForEach(0..<6) { index in
                     TextField("", text: $otp[index])
                         .frame(width: 40, height: 40)
-                        .font(Font.custom("Gilroy-SemiBold", size: 14))
+                        .font(AppFonts.gilroySemiBold(size: 14))
                         .multilineTextAlignment(.center)
                         .keyboardType(.numberPad)
                         .focused($focusedField, equals: index)
@@ -32,13 +32,12 @@ struct OTPInputView: View {
                         .overlay(RoundedRectangle(cornerRadius: 5)
                             .stroke(Color.gray, lineWidth: 1))
                         .onChange(of: otp[index]) { _,newValue in
-                            if newValue.count > 1 {
-                                otp[index] = String(newValue.last!)
-                            }
-                            if newValue.count == 1 {
-                                focusedField = index < 5 ? index + 1 : nil
-                            } else if newValue.isEmpty && index > 0 {
+                            let cleanedValue = String(newValue.prefix(1))
+                            otp[index] = cleanedValue
+                            if cleanedValue.isEmpty && index > 0 {
                                 focusedField = index - 1
+                            } else if !cleanedValue.isEmpty && index < 5 {
+                                focusedField = index + 1
                             }
                         }
                 }
@@ -57,6 +56,14 @@ struct OTPInputView: View {
         .shadow(radius: 10)
         .onAppear {
             focusedField = 0
+        }
+    }
+}
+
+struct OTPInputView_Previews: PreviewProvider {
+    static var previews: some View {
+        OTPInputView(otp: .constant(["", "", "", "", "", ""])) {
+            // Action when OTP is confirmed
         }
     }
 }

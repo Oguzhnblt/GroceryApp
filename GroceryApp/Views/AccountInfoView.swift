@@ -55,11 +55,11 @@ struct AccountInfoView: View {
     private var headerSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Account Information")
-                .font(Font.custom("Gilroy-SemiBold", size: 24))
+                .font(AppFonts.gilroySemiBold(size: 24))
                 .foregroundColor(AppColors.darkGreen)
             
             Text("Update your account details below.")
-                .font(Font.custom("Gilroy-Medium", size: 14))
+                .font(AppFonts.gilroyMedium(size: 14))
                 .foregroundColor(AppColors.oliveGreen)
         }
     }
@@ -75,11 +75,11 @@ struct AccountInfoView: View {
     private func infoCard(title: String, content: String) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(title)
-                .font(Font.custom("Gilroy-SemiBold", size: 14))
+                .font(AppFonts.gilroySemiBold(size: 14))
                 .foregroundColor(AppColors.oliveGreen)
             
             Text(content)
-                .font(Font.custom("Gilroy-Medium", size: 14))
+                .font(AppFonts.gilroyMedium(size: 14))
                 .foregroundColor(AppColors.darkGreen)
                 .padding()
                 .background(Color.white)
@@ -95,11 +95,11 @@ struct AccountInfoView: View {
     private var usernameUpdateSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Update Username")
-                .font(Font.custom("Gilroy-SemiBold", size: 14))
+                .font(AppFonts.gilroySemiBold(size: 14))
                 .foregroundColor(AppColors.oliveGreen)
             
             TextField("Enter new username", text: $newUsername)
-                .font(Font.custom("Gilroy-Medium", size: 14))
+                .font(AppFonts.gilroyMedium(size: 14))
                 .foregroundColor(AppColors.darkGreen)
                 .padding()
                 .background(Color.white)
@@ -118,11 +118,11 @@ struct AccountInfoView: View {
     private var currentPasswordSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Current Password")
-                .font(Font.custom("Gilroy-SemiBold", size: 14))
+                .font(AppFonts.gilroySemiBold(size: 14))
                 .foregroundColor(AppColors.oliveGreen)
             
             SecureField("Enter current password", text: $currentPassword)
-                .font(Font.custom("Gilroy-Medium", size: 14))
+                .font(AppFonts.gilroyMedium(size: 14))
                 .foregroundColor(AppColors.darkGreen)
                 .padding()
                 .background(Color.white)
@@ -141,11 +141,11 @@ struct AccountInfoView: View {
     private var passwordSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("New Password")
-                .font(Font.custom("Gilroy-SemiBold", size: 14))
+                .font(AppFonts.gilroySemiBold(size: 14))
                 .foregroundColor(AppColors.oliveGreen)
             
             SecureField("Enter new password", text: $newPassword)
-                .font(Font.custom("Gilroy-Medium", size: 14))
+                .font(AppFonts.gilroyMedium(size: 14))
                 .foregroundColor(AppColors.darkGreen)
                 .padding()
                 .background(Color.white)
@@ -164,11 +164,11 @@ struct AccountInfoView: View {
     private var confirmPasswordSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Confirm New Password")
-                .font(Font.custom("Gilroy-SemiBold", size: 14))
+                .font(AppFonts.gilroySemiBold(size: 14))
                 .foregroundColor(AppColors.oliveGreen)
             
             SecureField("Confirm new password", text: $confirmPassword)
-                .font(Font.custom("Gilroy-Medium", size: 14))
+                .font(AppFonts.gilroyMedium(size: 14))
                 .foregroundColor(AppColors.darkGreen)
                 .padding()
                 .background(Color.white)

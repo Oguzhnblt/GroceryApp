@@ -11,7 +11,6 @@ import SwiftUI
 struct AccountView: View {
     @EnvironmentObject private var authManager: GroceryAuthManager
     @EnvironmentObject private var dataManager: GroceryDataManager
-    @State private var isLogoutInProgress = false
     @State private var showLoginView = false
     @State private var showAddCreditCardView = false
     @State private var showDeliveryAddressView = false
@@ -19,6 +18,7 @@ struct AccountView: View {
     @State private var showAboutView = false
     @State private var selectedAddress: DeliveryAddress? = nil
     @State private var selectedCard: CreditCard? = nil
+    @State private var showLogoutConfirmation = false
     
     var body: some View {
         NavigationView {
@@ -34,7 +34,7 @@ struct AccountView: View {
                         Image("login_icon")
                         
                         Text("Get your groceries\nwith nectar")
-                            .font(Font.custom("Gilroy-Medium", size: 18))
+                            .font(AppFonts.gilroyMedium(size: 18))
                             .foregroundColor(AppColors.almostBlack)
                             .padding(.bottom, 15)
                     }
@@ -44,14 +44,13 @@ struct AccountView: View {
                     
                     HStack {
                         Button(action: {
-                            // Show Account Info View
                             showAccountInfoView.toggle()
                         }) {
                             HStack {
                                 Image(systemName: "person")
                                     .foregroundStyle(.black).bold()
                                 Text("Account Info")
-                                    .font(.system(size: 14, weight: .semibold))
+                                    .font(AppFonts.gilroySemiBold(size: 14))
                                     .foregroundColor(AppColors.darkGreen)
                                     .lineLimit(1)
                                 Spacer()
@@ -69,7 +68,7 @@ struct AccountView: View {
                             HStack {
                                 Image("delivery_address")
                                 Text("Delivery Address")
-                                    .font(.system(size: 14, weight: .semibold))
+                                    .font(AppFonts.gilroySemiBold(size: 14))
                                     .foregroundColor(AppColors.darkGreen)
                                     .lineLimit(1)
                                 Spacer()
@@ -87,7 +86,7 @@ struct AccountView: View {
                             HStack {
                                 Image("payment")
                                 Text("Credit Card Info")
-                                    .font(.system(size: 14, weight: .semibold))
+                                    .font(AppFonts.gilroySemiBold(size: 14))
                                     .foregroundColor(AppColors.darkGreen)
                                     .lineLimit(1)
                                 Spacer()
@@ -105,7 +104,7 @@ struct AccountView: View {
                             HStack {
                                 Image("about")
                                 Text("About")
-                                    .font(.system(size: 14, weight: .semibold))
+                                    .font(AppFonts.gilroySemiBold(size: 14))
                                     .foregroundColor(AppColors.darkGreen)
                                     .lineLimit(1)
                                 Spacer()
@@ -117,13 +116,7 @@ struct AccountView: View {
                     Divider()
                     
                     Button {
-                        isLogoutInProgress = true
-                        withAnimation {
-                            authManager.logout {_ in 
-                                isLogoutInProgress = false
-                                showLoginView = true
-                            }
-                        }
+                        showLogoutConfirmation = true
                     } label: {
                         ZStack {
                             Rectangle()
@@ -134,31 +127,26 @@ struct AccountView: View {
                             HStack(spacing: 100) {
                                 Image("logout")
                                 Text("Log Out")
-                                    .font(Font.custom("Gilroy", size: 18).weight(.semibold))
+                                    .font(AppFonts.gilroySemiBold(size: 18))
                                     .foregroundColor(AppColors.appleGreen)
                                     .padding(.trailing, 100)
                             }
                         }
                         .frame(width: 350, height: 60)
                     }
-                    .disabled(isLogoutInProgress)
-                    .opacity(isLogoutInProgress ? 0.6 : 1.0)
-                    .overlay(
-                        Group {
-                            if isLogoutInProgress {
-                                ZStack {
-                                    Color.black.opacity(0.4)
-                                        .edgesIgnoringSafeArea(.all)
-                                    ProgressView()
-                                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                                        .scaleEffect(1.5)
+                    .alert(isPresented: $showLogoutConfirmation) {
+                        Alert(
+                            title: Text("Log Out"),
+                            message: Text("Are you sure you want to logout?"),
+                            primaryButton: .destructive(Text("Log Out")) {
+                                authManager.logout { _ in
+                                    showLoginView = true
                                 }
-                                .transition(.opacity)
-                            }
-                        }
-                    )
+                            },
+                            secondaryButton: .cancel()
+                        )
+                    }
                 }
-                .opacity(isLogoutInProgress ? 0.5 : 1.0)
             }
             .padding([.leading, .trailing], 25)
             .fullScreenCover(isPresented: $showLoginView) {

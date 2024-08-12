@@ -11,55 +11,30 @@ import FirebaseStorage
 struct GroceryProductDetailView: View {
     var product: GroceryProducts
     @State private var quantity = 1
+    
     @State private var imageURL: URL?
     @State private var isImageLoaded = false
-    private var pricePerUnit: Double
+    
     
     @EnvironmentObject private var dataManager: GroceryDataManager
-    @Environment(\.isTabBarHidden) private var isTabBarHidden
     
     @State private var isProductInCart: Bool = false
-    
-    init(product: GroceryProducts) {
-        self.product = product
-        self.pricePerUnit = Double(product.price)
-    }
     
     var body: some View {
         ScrollView {
             VStack(spacing: 10) {
                 Group {
                     if let imageURL = imageURL {
-                        AsyncImage(url: imageURL) { phase in
-                            switch phase {
-                            case .empty:
-                                ProgressView()
-                                    .frame(height: 250)
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .foregroundStyle(.clear)
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(height: 250)
-                                    .frame(maxWidth: .infinity)
-                            case .failure:
-                                Image(systemName: "photo")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(height: 250)
-                                    .cornerRadius(15)
-                            @unknown default:
-                                EmptyView()
-                            }
-                        }
+                        AsyncImageView(url: imageURL, placeholder: Image(systemName: "photo"))
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 250)
+                            .foregroundStyle(.green)
                     } else {
                         ProgressView()
+                            .frame(maxWidth: .infinity)
                             .frame(height: 250)
-                            .cornerRadius(15)
                             .onAppear {
-                                if !isImageLoaded {
-                                    fetchImageURL(imageName: product.imageName!)
-                                }
+                                fetchImageURL(imageName: product.imageName ?? "")
                             }
                     }
                 }
@@ -67,18 +42,18 @@ struct GroceryProductDetailView: View {
                 VStack(alignment: .leading, spacing: 25) {
                     VStack(alignment: .leading, spacing: 10) {
                         Text(product.name)
-                            .font(Font.custom("Gilroy-Bold", size: 24))
+                            .font(AppFonts.gilroyBold(size: 24))
                             .tracking(0.10)
                             .lineSpacing(18)
                             .foregroundColor(AppColors.darkGreen)
                         
                         Text(product.title)
-                            .font(Font.custom("Gilroy-Medium", size: 16))
+                            .font(AppFonts.gilroyMedium(size: 16))
                             .foregroundColor(AppColors.oliveGreen)
                     }
                     
                     HStack {
-                        ItemCounter(quantity: $quantity, minQuantity: 1, maxQuantity: 5)
+                        ItemCounter(quantity: $quantity)
                             .onAppear() {
                                 if let cartProduct = dataManager.cartProducts.first(where: { $0.id == product.id }) {
                                     quantity = cartProduct.quantity
@@ -93,7 +68,7 @@ struct GroceryProductDetailView: View {
                         
                         Spacer()
                         
-                        Text("$\(String(format: "%.2f", pricePerUnit * Double(quantity)))")
+                        Text("$\(String(format: "%.2f", product.price * Double(quantity)))")
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(AppColors.darkGreen)
@@ -157,13 +132,15 @@ struct GroceryProductDetailView: View {
                     }
                 }) {
                     GroceryButton(
-                            text: isProductInCart ? "Added To Cart" : "Add To Cart",
-                            backgroundColor: isProductInCart ? AppColors.lightGrayGreen : AppColors.appleGreen
-                        )
+                        text: isProductInCart ? "Added To Cart" : "Add To Cart",
+                        backgroundColor: isProductInCart ? AppColors.lightGrayGreen : AppColors.appleGreen
+                    )
                 }
                 .padding(.bottom, 25)
                 .disabled(isProductInCart)
             }
+            .navigationBarBackButtonHidden(true)
+            .customBackButton()
             .padding([.leading, .trailing])
             .ignoresSafeArea(.all, edges: .bottom)
         }
@@ -203,31 +180,5 @@ struct NutritionRow: View {
             Text(value)
         }
         Divider()
-    }
-}
-
-struct GroceryProductDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        let sampleProduct = GroceryProducts(
-            id: "1",
-            name: "Sample Product",
-            title: "This is a sample product description",
-            imageName: "sample_image",
-            price: 9.99,
-            details: "This is a detailed description of the sample product.", isAdded: true,
-            quantity: 12, nutrition: [
-                "Calories": "200 kcal",
-                "Protein": "10 g",
-                "Fat": "5 g",
-                "Carbohydrates": "30 g"
-            ],
-            category: "fresh"
-        )
-        
-        GroceryProductDetailView(product: sampleProduct)
-            .previewLayout(.sizeThatFits)
-            .padding()
-            .ignoresSafeArea()
-            .environmentObject(GroceryDataManager())
     }
 }

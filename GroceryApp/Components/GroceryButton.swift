@@ -20,7 +20,7 @@ struct GroceryButton: View {
                 .background(backgroundColor)
                 .cornerRadius(19)
             Text(text)
-                .font(Font.custom("Gilroy-SemiBold", size: 18))
+                .font(AppFonts.gilroySemiBold(size: 18))
                 .lineSpacing(18)
                 .foregroundColor(Color(red: 1, green: 0.98, blue: 1))
         }

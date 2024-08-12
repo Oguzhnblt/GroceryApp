@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CheckoutView: View {
     @Environment(\.presentationMode) var presentationMode
+    
     @EnvironmentObject private var dataManager: GroceryDataManager
     
     @State private var showAddressSheet = false
@@ -34,8 +35,8 @@ struct CheckoutView: View {
         ZStack {
             VStack(alignment: .leading) {
                 Text("Checkout")
-                    .font(.custom("Gilroy-SemiBold", size: 24))
-                    .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
+                    .font(AppFonts.gilroySemiBold(size: 24))
+                    .foregroundColor(AppColors.darkGreen)
                     .padding([.leading, .bottom])
                 
                 Divider()
@@ -47,12 +48,12 @@ struct CheckoutView: View {
                     }) {
                         HStack {
                             Text("Delivery Address")
-                                .font(.system(size: 18, weight: .semibold))
-                                .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
+                                .font(AppFonts.gilroySemiBold(size: 18))
+                                .foregroundColor(AppColors.oliveGreen)
                             Spacer()
                             Text(selectedAddress?.newAddress ?? "Select address")
-                                .font(.system(size: 16, weight: .semibold))
-                                .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
+                                .font(AppFonts.gilroySemiBold(size: 16))
+                                .foregroundColor(AppColors.darkGreen)
                                 .lineLimit(1)
                             Image(systemName: "chevron.right")
                                 .foregroundColor(.black)
@@ -70,12 +71,12 @@ struct CheckoutView: View {
                     }) {
                         HStack {
                             Text("Payment")
-                                .font(.system(size: 18, weight: .semibold))
-                                .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
+                                .font(AppFonts.gilroySemiBold(size: 18))
+                                .foregroundColor(AppColors.oliveGreen)
                             Spacer()
                             Text(formattedCardNumber)
-                                .font(.system(size: 16, weight: .semibold))
-                                .foregroundColor(Color(red: 0.09, green: 0.09, blue: 0.15))
+                                .font(AppFonts.gilroySemiBold(size: 16))
+                                .foregroundColor(AppColors.darkGreen)
                                 .lineLimit(1)
                             Image("card")
                             Image(systemName: "chevron.right")
@@ -94,8 +95,8 @@ struct CheckoutView: View {
                     }) {
                         HStack {
                             Text("Promo Code")
-                                .font(.system(size: 18, weight: .semibold))
-                                .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
+                                .font(AppFonts.gilroySemiBold(size: 18))
+                                .foregroundColor(AppColors.oliveGreen)
                             Spacer()
                             Image(systemName: "barcode")
                                 .foregroundColor(.black)
@@ -111,12 +112,12 @@ struct CheckoutView: View {
                 // Total Cost Section
                 HStack {
                     Text("Total Cost")
-                        .font(.system(size: 18, weight: .semibold))
-                        .foregroundColor(Color(red: 0.49, green: 0.49, blue: 0.49))
+                        .font(AppFonts.gilroySemiBold(size: 18))
+                        .foregroundColor(AppColors.oliveGreen)
                     Spacer()
                     Text("$\(String(format: "%.2f", totalPrice))")
-                        .font(.system(size: 18, weight: .semibold))
-                        .foregroundColor(Color(red: 0.33, green: 0.69, blue: 0.46))
+                        .font(AppFonts.gilroySemiBold(size: 18))
+                        .foregroundColor(AppColors.appleGreen)
                 }
                 .padding()
                 
@@ -211,5 +212,12 @@ struct CheckoutView: View {
     private func dismissViews() {
         showOTPInput = false
         showOrderAccepted = true
+    }
+}
+
+
+struct CheckoutView_Previews: PreviewProvider {
+    static var previews: some View {
+        return CheckoutView(totalPrice: 99.99)
     }
 }

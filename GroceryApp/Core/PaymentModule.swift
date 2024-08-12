@@ -5,12 +5,6 @@
 //  Created by Oğuzhan Bolat on 3.08.2024.
 //
 
-// PaymentSDK.swift
-// GroceryApp
-//
-// Created by Oğuzhan Bolat on 3.08.2024.
-//
-
 import Foundation
 
 public class PaymentModule {

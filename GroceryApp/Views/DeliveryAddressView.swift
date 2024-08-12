@@ -17,7 +17,8 @@ import SwiftUI
 
 struct DeliveryAddressView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var dataManager: GroceryDataManager
+    
+    @EnvironmentObject private var dataManager: GroceryDataManager
 
     @Binding var selectedAddress: DeliveryAddress?
 
@@ -68,14 +69,14 @@ struct DeliveryAddressView: View {
             // Header
             HStack {
                 Text("Delivery Address")
-                    .font(.system(size: 18, weight: .semibold))
+                    .font(AppFonts.gilroySemiBold(size: 18))
                     .foregroundColor(.primary)
                 Spacer()
                 Button("Done") {
                     presentationMode.wrappedValue.dismiss()
                 }
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundColor(Color(red: 0.33, green: 0.69, blue: 0.46))
+                .font(AppFonts.gilroySemiBold(size: 16))
+                .foregroundColor(AppColors.appleGreen)
             }
             .padding(.top)
             
@@ -88,7 +89,7 @@ struct DeliveryAddressView: View {
                         .font(.system(size: 30))
                         .foregroundColor(.gray)
                     Text("No addresses available")
-                        .font(.system(size: 16, weight: .semibold))
+                        .font(AppFonts.gilroySemiBold(size: 16))
                         .foregroundColor(.gray)
                         .padding(.top, 8)
                 }
@@ -131,7 +132,7 @@ struct DeliveryAddressView: View {
                             } label: {
                                 Label("Edit", systemImage: "pencil")
                             }
-                            .tint(Color(red: 0.33, green: 0.69, blue: 0.46))
+                            .tint(AppColors.appleGreen)
                         }
                     }
                 }
@@ -157,7 +158,7 @@ struct DeliveryAddressView: View {
                     }) {
                         Text(isAddingNewAddress ? "Cancel" : "Add New Address")
                             .font(.system(size: 16, weight: .semibold))
-                            .foregroundColor(Color(red: 0.33, green: 0.69, blue: 0.46))
+                            .foregroundColor(AppColors.appleGreen)
                             .padding()
                             .frame(maxWidth: .infinity)
                     }
@@ -170,7 +171,7 @@ struct DeliveryAddressView: View {
                                 .foregroundColor(.white)
                                 .padding()
                                 .frame(maxWidth: .infinity)
-                                .background(Color(red: 0.33, green: 0.69, blue: 0.46))
+                                .background(AppColors.appleGreen)
                                 .cornerRadius(8)
                         }
                         .padding(.top, 8)

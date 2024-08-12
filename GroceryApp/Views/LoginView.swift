@@ -25,7 +25,7 @@ struct LoginView: View {
                         Image("login_icon")
                         
                         Text("Get your groceries\nwith nectar")
-                            .font(Font.custom("Gilroy-Medium", size: 16))
+                            .font(AppFonts.gilroyMedium(size: 16))
                             .foregroundColor(AppColors.almostBlack)
                             .padding(.bottom, 15)
                         
@@ -50,18 +50,10 @@ struct LoginView: View {
             }
             .onAppear {
                 if authManager.isAuthenticated {
-                    // Navigate to the main view if already authenticated
                     authManager.isAuthenticated = true
                 }
             }
-            .fullScreenCover(isPresented: Binding<Bool>(
-                get: { authManager.isAuthenticated },
-                set: { newValue in
-                    if !newValue {
-                        authManager.isAuthenticated = false
-                    }
-                }
-            )) {
+            .fullScreenCover(isPresented: $authManager.isAuthenticated) {
                 CustomTabView()
                     .environmentObject(authManager)
             }
@@ -71,11 +63,11 @@ struct LoginView: View {
     private var headerSection: some View {
         VStack(alignment: .leading, spacing: 15) {
             Text("Login")
-                .font(Font.custom("Gilroy-SemiBold", size: 26))
+                .font(AppFonts.gilroySemiBold(size: 26))
                 .foregroundColor(AppColors.darkGreen)
             
             Text("Enter your email and password")
-                .font(Font.custom("Gilroy-Medium", size: 16))
+                .font(AppFonts.gilroyMedium(size: 16))
                 .foregroundColor(AppColors.oliveGreen)
         }
     }
@@ -83,11 +75,11 @@ struct LoginView: View {
     private var emailSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Email")
-                .font(Font.custom("Gilroy-SemiBold", size: 16))
+                .font(AppFonts.gilroySemiBold(size: 16))
                 .foregroundColor(AppColors.oliveGreen)
             
             TextField("Enter your email", text: $authManager.email)
-                .font(Font.custom("Gilroy-SemiBold", size: 16))
+                .font(AppFonts.gilroySemiBold(size: 16))
                 .foregroundColor(AppColors.oliveGreen)
                 .onChange(of: authManager.email) {
                     authManager.errorMessage = nil
@@ -100,7 +92,7 @@ struct LoginView: View {
     private var passwordSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Password")
-                .font(Font.custom("Gilroy-SemiBold", size: 16))
+                .font(AppFonts.gilroySemiBold(size: 16))
                 .foregroundColor(AppColors.oliveGreen)
             
             SecureField("Password", text: $authManager.password)
@@ -121,7 +113,7 @@ struct LoginView: View {
                 // Forgot password action
             }) {
                 Text("Forgot Password?")
-                    .font(Font.custom("Gilroy-Medium", size: 14))
+                    .font(AppFonts.gilroyMedium(size: 14))
                     .foregroundColor(AppColors.darkGreen)
             }
         }
@@ -155,14 +147,14 @@ struct LoginView: View {
             
             HStack {
                 Text("Don’t have an account?")
-                    .font(Font.custom("Gilroy", size: 14).weight(.semibold))
+                    .font(AppFonts.gilroySemiBold(size: 14))
                     .foregroundColor(AppColors.darkGreen)
                 
                 Button(action: {
                     self.showSignupView = true
                 }) {
                     Text("Signup")
-                        .font(Font.custom("Gilroy", size: 14).weight(.semibold))
+                        .font(AppFonts.gilroySemiBold(size: 14))
                         .foregroundColor(AppColors.appleGreen)
                 }
                 .sheet(isPresented: $showSignupView) {

@@ -10,7 +10,6 @@
 		1210DE462C603CAC00EEEBF6 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1210DE452C603CAC00EEEBF6 /* AccountView.swift */; };
 		1210DE482C604A2500EEEBF6 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1210DE472C604A2500EEEBF6 /* AboutView.swift */; };
 		1210DE4A2C604D3700EEEBF6 /* AccountInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1210DE492C604D3700EEEBF6 /* AccountInfoView.swift */; };
-		1230D1862C5D1C79000D33B0 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1230D1852C5D1C79000D33B0 /* SplashView.swift */; };
 		1230D1882C5D33E4000D33B0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1230D1872C5D33E4000D33B0 /* LoginView.swift */; };
 		1230D18A2C5D3E05000D33B0 /* GroceryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1230D1892C5D3E05000D33B0 /* GroceryButton.swift */; };
 		1230D1922C5D5C80000D33B0 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1230D1912C5D5C80000D33B0 /* SignupView.swift */; };
@@ -47,6 +46,16 @@
 		12433ACD2C5D74B300E49ED4 /* GroceryAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12433ACC2C5D74B300E49ED4 /* GroceryAuthManager.swift */; };
 		12433ACF2C5DA3BB00E49ED4 /* CreditCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12433ACE2C5DA3BB00E49ED4 /* CreditCard.swift */; };
 		12433AD12C5DA3FD00E49ED4 /* DeliveryAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12433AD02C5DA3FD00E49ED4 /* DeliveryAddress.swift */; };
+		1249EB392C6A16B100397F99 /* OrderAcceptedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1249EB382C6A16B100397F99 /* OrderAcceptedView.swift */; };
+		1249EB3B2C6A16E500397F99 /* OTPInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1249EB3A2C6A16E500397F99 /* OTPInputView.swift */; };
+		1249EB5B2C6A17CC00397F99 /* Gilroy-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1249EB532C6A17CC00397F99 /* Gilroy-Bold.ttf */; };
+		1249EB5C2C6A17CC00397F99 /* Gilroy-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1249EB542C6A17CC00397F99 /* Gilroy-Medium.ttf */; };
+		1249EB5D2C6A17CC00397F99 /* Gilroy-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1249EB552C6A17CC00397F99 /* Gilroy-Regular.ttf */; };
+		1249EB5E2C6A17CC00397F99 /* Gilroy-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1249EB562C6A17CC00397F99 /* Gilroy-SemiBold.ttf */; };
+		1249EB5F2C6A17CC00397F99 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1249EB582C6A17CC00397F99 /* AppColors.swift */; };
+		1249EB602C6A17CC00397F99 /* AppFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1249EB592C6A17CC00397F99 /* AppFonts.swift */; };
+		1249EB622C6A180500397F99 /* AsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1249EB612C6A180500397F99 /* AsyncImageView.swift */; };
+		1249EB642C6A183E00397F99 /* GroceryBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1249EB632C6A183E00397F99 /* GroceryBackButton.swift */; };
 		1250E8512C5BEC8200F23B64 /* CheckoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1250E8502C5BEC8200F23B64 /* CheckoutView.swift */; };
 		1250E8532C5C158C00F23B64 /* DeliveryAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1250E8522C5C158C00F23B64 /* DeliveryAddressView.swift */; };
 		1250E8552C5C2BCC00F23B64 /* PaymentCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1250E8542C5C2BCC00F23B64 /* PaymentCardView.swift */; };
@@ -55,48 +64,23 @@
 		1272176C2C56D8370036D420 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1272176B2C56D8370036D420 /* Preview Assets.xcassets */; };
 		127217732C56D8470036D420 /* GroceryHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127217722C56D8470036D420 /* GroceryHomeView.swift */; };
 		127217752C56DC020036D420 /* GroceryProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127217742C56DC020036D420 /* GroceryProductDetailView.swift */; };
-		129797262C5AAB9F0061EC92 /* CustomBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129797252C5AAB9F0061EC92 /* CustomBackButton.swift */; };
 		12A37D902C5E988100EAF1C3 /* PaymentModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A37D8F2C5E988100EAF1C3 /* PaymentModule.swift */; };
 		12A37D932C5EEB4F00EAF1C3 /* Extension+String+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A37D922C5EEB4F00EAF1C3 /* Extension+String+Date.swift */; };
-		12B1ABB92C5F93B000F3262D /* OTPInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1ABB82C5F93B000F3262D /* OTPInputView.swift */; };
-		12B1ABBB2C5FB05600F3262D /* OrderAcceptedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1ABBA2C5FB05600F3262D /* OrderAcceptedView.swift */; };
 		12B1E8112C58D4B900E24323 /* CartItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E8102C58D4B900E24323 /* CartItemView.swift */; };
 		12B1E8132C58F3CC00E24323 /* ItemCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E8122C58F3CC00E24323 /* ItemCounter.swift */; };
 		12B1E81D2C59392700E24323 /* GroceryCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E81C2C59392700E24323 /* GroceryCartView.swift */; };
 		12B1E81F2C59994500E24323 /* EmptyCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E81E2C59994500E24323 /* EmptyCardView.swift */; };
-		12D17EAC2C56E4D7001C3978 /* Gilroy-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17E982C56E4D6001C3978 /* Gilroy-ExtraBoldItalic.ttf */; };
-		12D17EAD2C56E4D7001C3978 /* Gilroy-HeavyItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17E992C56E4D6001C3978 /* Gilroy-HeavyItalic.ttf */; };
-		12D17EAE2C56E4D7001C3978 /* Gilroy-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17E9A2C56E4D6001C3978 /* Gilroy-Thin.ttf */; };
-		12D17EAF2C56E4D7001C3978 /* Gilroy-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17E9B2C56E4D6001C3978 /* Gilroy-Medium.ttf */; };
-		12D17EB02C56E4D7001C3978 /* Gilroy-UltraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17E9C2C56E4D6001C3978 /* Gilroy-UltraLightItalic.ttf */; };
-		12D17EB12C56E4D7001C3978 /* Gilroy-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17E9D2C56E4D6001C3978 /* Gilroy-Light.ttf */; };
-		12D17EB22C56E4D7001C3978 /* Gilroy-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17E9E2C56E4D6001C3978 /* Gilroy-ThinItalic.ttf */; };
-		12D17EB32C56E4D7001C3978 /* Gilroy-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17E9F2C56E4D6001C3978 /* Gilroy-RegularItalic.ttf */; };
-		12D17EB42C56E4D7001C3978 /* Gilroy-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17EA02C56E4D6001C3978 /* Gilroy-SemiBoldItalic.ttf */; };
-		12D17EB52C56E4D7001C3978 /* Gilroy-UltraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17EA12C56E4D6001C3978 /* Gilroy-UltraLight.ttf */; };
-		12D17EB62C56E4D7001C3978 /* Gilroy-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17EA22C56E4D6001C3978 /* Gilroy-SemiBold.ttf */; };
-		12D17EB72C56E4D7001C3978 /* Gilroy-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17EA32C56E4D6001C3978 /* Gilroy-Black.ttf */; };
-		12D17EB82C56E4D7001C3978 /* Gilroy-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17EA42C56E4D6001C3978 /* Gilroy-BoldItalic.ttf */; };
-		12D17EB92C56E4D7001C3978 /* Gilroy-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17EA52C56E4D6001C3978 /* Gilroy-BlackItalic.ttf */; };
-		12D17EBA2C56E4D7001C3978 /* Gilroy-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17EA62C56E4D7001C3978 /* Gilroy-LightItalic.ttf */; };
-		12D17EBB2C56E4D7001C3978 /* Gilroy-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17EA72C56E4D7001C3978 /* Gilroy-Regular.ttf */; };
-		12D17EBC2C56E4D7001C3978 /* Gilroy-Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17EA82C56E4D7001C3978 /* Gilroy-Heavy.ttf */; };
-		12D17EBD2C56E4D7001C3978 /* Gilroy-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17EA92C56E4D7001C3978 /* Gilroy-MediumItalic.ttf */; };
-		12D17EBE2C56E4D7001C3978 /* Gilroy-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17EAA2C56E4D7001C3978 /* Gilroy-ExtraBold.ttf */; };
-		12D17EBF2C56E4D7001C3978 /* Gilroy-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12D17EAB2C56E4D7001C3978 /* Gilroy-Bold.ttf */; };
 		12D17EC32C56E5A1001C3978 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D17EC22C56E5A1001C3978 /* SearchField.swift */; };
 		12D17EC52C56E5F6001C3978 /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D17EC42C56E5F6001C3978 /* ExploreView.swift */; };
 		12D17EC72C56E633001C3978 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D17EC62C56E633001C3978 /* CategoryCell.swift */; };
 		12D6E3F12C5FFE4300104F98 /* OrderHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D6E3F02C5FFE4300104F98 /* OrderHistoryView.swift */; };
 		12D6E3F32C60060C00104F98 /* OrderHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D6E3F22C60060C00104F98 /* OrderHistory.swift */; };
-		12D6E3F52C60296C00104F98 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D6E3F42C60296C00104F98 /* AppColors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1210DE452C603CAC00EEEBF6 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		1210DE472C604A2500EEEBF6 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		1210DE492C604D3700EEEBF6 /* AccountInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfoView.swift; sourceTree = "<group>"; };
-		1230D1852C5D1C79000D33B0 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		1230D1872C5D33E4000D33B0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1230D1892C5D3E05000D33B0 /* GroceryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryButton.swift; sourceTree = "<group>"; };
 		1230D1912C5D5C80000D33B0 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
@@ -112,6 +96,16 @@
 		12433ACC2C5D74B300E49ED4 /* GroceryAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryAuthManager.swift; sourceTree = "<group>"; };
 		12433ACE2C5DA3BB00E49ED4 /* CreditCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCard.swift; sourceTree = "<group>"; };
 		12433AD02C5DA3FD00E49ED4 /* DeliveryAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryAddress.swift; sourceTree = "<group>"; };
+		1249EB382C6A16B100397F99 /* OrderAcceptedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAcceptedView.swift; sourceTree = "<group>"; };
+		1249EB3A2C6A16E500397F99 /* OTPInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPInputView.swift; sourceTree = "<group>"; };
+		1249EB532C6A17CC00397F99 /* Gilroy-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Bold.ttf"; sourceTree = "<group>"; };
+		1249EB542C6A17CC00397F99 /* Gilroy-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Medium.ttf"; sourceTree = "<group>"; };
+		1249EB552C6A17CC00397F99 /* Gilroy-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Regular.ttf"; sourceTree = "<group>"; };
+		1249EB562C6A17CC00397F99 /* Gilroy-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-SemiBold.ttf"; sourceTree = "<group>"; };
+		1249EB582C6A17CC00397F99 /* AppColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
+		1249EB592C6A17CC00397F99 /* AppFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFonts.swift; sourceTree = "<group>"; };
+		1249EB612C6A180500397F99 /* AsyncImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AsyncImageView.swift; path = "../../../../.Trash/GroceryApp-main 2/GroceryApp/Components/AsyncImageView.swift"; sourceTree = "<group>"; };
+		1249EB632C6A183E00397F99 /* GroceryBackButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroceryBackButton.swift; path = "../../../../.Trash/GroceryApp-main 2/GroceryApp/Components/GroceryBackButton.swift"; sourceTree = "<group>"; };
 		1250E8502C5BEC8200F23B64 /* CheckoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutView.swift; sourceTree = "<group>"; };
 		1250E8522C5C158C00F23B64 /* DeliveryAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryAddressView.swift; sourceTree = "<group>"; };
 		1250E8542C5C2BCC00F23B64 /* PaymentCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardView.swift; sourceTree = "<group>"; };
@@ -121,42 +115,18 @@
 		1272176B2C56D8370036D420 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		127217722C56D8470036D420 /* GroceryHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryHomeView.swift; sourceTree = "<group>"; };
 		127217742C56DC020036D420 /* GroceryProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryProductDetailView.swift; sourceTree = "<group>"; };
-		129797252C5AAB9F0061EC92 /* CustomBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBackButton.swift; sourceTree = "<group>"; };
 		12A37D8F2C5E988100EAF1C3 /* PaymentModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentModule.swift; sourceTree = "<group>"; };
 		12A37D922C5EEB4F00EAF1C3 /* Extension+String+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+String+Date.swift"; sourceTree = "<group>"; };
-		12B1ABB82C5F93B000F3262D /* OTPInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPInputView.swift; sourceTree = "<group>"; };
-		12B1ABBA2C5FB05600F3262D /* OrderAcceptedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAcceptedView.swift; sourceTree = "<group>"; };
 		12B1E8102C58D4B900E24323 /* CartItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartItemView.swift; sourceTree = "<group>"; };
 		12B1E8122C58F3CC00E24323 /* ItemCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCounter.swift; sourceTree = "<group>"; };
 		12B1E81C2C59392700E24323 /* GroceryCartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryCartView.swift; sourceTree = "<group>"; };
 		12B1E81E2C59994500E24323 /* EmptyCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCardView.swift; sourceTree = "<group>"; };
-		12D17E982C56E4D6001C3978 /* Gilroy-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
-		12D17E992C56E4D6001C3978 /* Gilroy-HeavyItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-HeavyItalic.ttf"; sourceTree = "<group>"; };
-		12D17E9A2C56E4D6001C3978 /* Gilroy-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Thin.ttf"; sourceTree = "<group>"; };
-		12D17E9B2C56E4D6001C3978 /* Gilroy-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Medium.ttf"; sourceTree = "<group>"; };
-		12D17E9C2C56E4D6001C3978 /* Gilroy-UltraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-UltraLightItalic.ttf"; sourceTree = "<group>"; };
-		12D17E9D2C56E4D6001C3978 /* Gilroy-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Light.ttf"; sourceTree = "<group>"; };
-		12D17E9E2C56E4D6001C3978 /* Gilroy-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-ThinItalic.ttf"; sourceTree = "<group>"; };
-		12D17E9F2C56E4D6001C3978 /* Gilroy-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-RegularItalic.ttf"; sourceTree = "<group>"; };
-		12D17EA02C56E4D6001C3978 /* Gilroy-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
-		12D17EA12C56E4D6001C3978 /* Gilroy-UltraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-UltraLight.ttf"; sourceTree = "<group>"; };
-		12D17EA22C56E4D6001C3978 /* Gilroy-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-SemiBold.ttf"; sourceTree = "<group>"; };
-		12D17EA32C56E4D6001C3978 /* Gilroy-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Black.ttf"; sourceTree = "<group>"; };
-		12D17EA42C56E4D6001C3978 /* Gilroy-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-BoldItalic.ttf"; sourceTree = "<group>"; };
-		12D17EA52C56E4D6001C3978 /* Gilroy-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-BlackItalic.ttf"; sourceTree = "<group>"; };
-		12D17EA62C56E4D7001C3978 /* Gilroy-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-LightItalic.ttf"; sourceTree = "<group>"; };
-		12D17EA72C56E4D7001C3978 /* Gilroy-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Regular.ttf"; sourceTree = "<group>"; };
-		12D17EA82C56E4D7001C3978 /* Gilroy-Heavy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Heavy.ttf"; sourceTree = "<group>"; };
-		12D17EA92C56E4D7001C3978 /* Gilroy-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-MediumItalic.ttf"; sourceTree = "<group>"; };
-		12D17EAA2C56E4D7001C3978 /* Gilroy-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-ExtraBold.ttf"; sourceTree = "<group>"; };
-		12D17EAB2C56E4D7001C3978 /* Gilroy-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Bold.ttf"; sourceTree = "<group>"; };
 		12D17EC02C56E4EB001C3978 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		12D17EC22C56E5A1001C3978 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		12D17EC42C56E5F6001C3978 /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		12D17EC62C56E633001C3978 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		12D6E3F02C5FFE4300104F98 /* OrderHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryView.swift; sourceTree = "<group>"; };
 		12D6E3F22C60060C00104F98 /* OrderHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistory.swift; sourceTree = "<group>"; };
-		12D6E3F42C60296C00104F98 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,7 +202,6 @@
 				1236C3282C5846C700226525 /* GroceryCategoryDetailView.swift */,
 				12B1E81C2C59392700E24323 /* GroceryCartView.swift */,
 				1250E8542C5C2BCC00F23B64 /* PaymentCardView.swift */,
-				1230D1852C5D1C79000D33B0 /* SplashView.swift */,
 				1230D1872C5D33E4000D33B0 /* LoginView.swift */,
 				1230D1912C5D5C80000D33B0 /* SignupView.swift */,
 				12D6E3F02C5FFE4300104F98 /* OrderHistoryView.swift */,
@@ -241,6 +210,28 @@
 				1210DE492C604D3700EEEBF6 /* AccountInfoView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		1249EB572C6A17CC00397F99 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				1249EB532C6A17CC00397F99 /* Gilroy-Bold.ttf */,
+				1249EB542C6A17CC00397F99 /* Gilroy-Medium.ttf */,
+				1249EB552C6A17CC00397F99 /* Gilroy-Regular.ttf */,
+				1249EB562C6A17CC00397F99 /* Gilroy-SemiBold.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		1249EB5A2C6A17CC00397F99 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				1249EB572C6A17CC00397F99 /* Fonts */,
+				1249EB582C6A17CC00397F99 /* AppColors.swift */,
+				1249EB592C6A17CC00397F99 /* AppFonts.swift */,
+			);
+			name = Theme;
+			path = "../../../.Trash/GroceryApp-main 2/GroceryApp/Theme";
 			sourceTree = "<group>";
 		};
 		127217582C56D8360036D420 = {
@@ -263,9 +254,9 @@
 		127217632C56D8360036D420 /* GroceryApp */ = {
 			isa = PBXGroup;
 			children = (
+				1249EB5A2C6A17CC00397F99 /* Theme */,
 				12A37D912C5EEB3000EAF1C3 /* Extensions */,
 				1236C3272C5846A800226525 /* Views */,
-				12D17E972C56E4C2001C3978 /* Fonts */,
 				1236C3182C57C2A500226525 /* Core */,
 				1236C2CF2C578A3400226525 /* Models */,
 				12D17EC12C56E590001C3978 /* Components */,
@@ -293,36 +284,11 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		12D17E972C56E4C2001C3978 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				12D17EA32C56E4D6001C3978 /* Gilroy-Black.ttf */,
-				12D17EA52C56E4D6001C3978 /* Gilroy-BlackItalic.ttf */,
-				12D17EAB2C56E4D7001C3978 /* Gilroy-Bold.ttf */,
-				12D17EA42C56E4D6001C3978 /* Gilroy-BoldItalic.ttf */,
-				12D17EAA2C56E4D7001C3978 /* Gilroy-ExtraBold.ttf */,
-				12D17E982C56E4D6001C3978 /* Gilroy-ExtraBoldItalic.ttf */,
-				12D17EA82C56E4D7001C3978 /* Gilroy-Heavy.ttf */,
-				12D17E992C56E4D6001C3978 /* Gilroy-HeavyItalic.ttf */,
-				12D17E9D2C56E4D6001C3978 /* Gilroy-Light.ttf */,
-				12D17EA62C56E4D7001C3978 /* Gilroy-LightItalic.ttf */,
-				12D17E9B2C56E4D6001C3978 /* Gilroy-Medium.ttf */,
-				12D17EA92C56E4D7001C3978 /* Gilroy-MediumItalic.ttf */,
-				12D17EA72C56E4D7001C3978 /* Gilroy-Regular.ttf */,
-				12D17E9F2C56E4D6001C3978 /* Gilroy-RegularItalic.ttf */,
-				12D17EA22C56E4D6001C3978 /* Gilroy-SemiBold.ttf */,
-				12D17EA02C56E4D6001C3978 /* Gilroy-SemiBoldItalic.ttf */,
-				12D17E9A2C56E4D6001C3978 /* Gilroy-Thin.ttf */,
-				12D17E9E2C56E4D6001C3978 /* Gilroy-ThinItalic.ttf */,
-				12D17EA12C56E4D6001C3978 /* Gilroy-UltraLight.ttf */,
-				12D17E9C2C56E4D6001C3978 /* Gilroy-UltraLightItalic.ttf */,
-			);
-			path = Fonts;
-			sourceTree = "<group>";
-		};
 		12D17EC12C56E590001C3978 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				1249EB632C6A183E00397F99 /* GroceryBackButton.swift */,
+				1249EB612C6A180500397F99 /* AsyncImageView.swift */,
 				12D17EC22C56E5A1001C3978 /* SearchField.swift */,
 				12D17EC62C56E633001C3978 /* CategoryCell.swift */,
 				1236C2CD2C5789FA00226525 /* SectionHeaderView.swift */,
@@ -332,11 +298,9 @@
 				12B1E8102C58D4B900E24323 /* CartItemView.swift */,
 				12B1E8122C58F3CC00E24323 /* ItemCounter.swift */,
 				12B1E81E2C59994500E24323 /* EmptyCardView.swift */,
-				129797252C5AAB9F0061EC92 /* CustomBackButton.swift */,
 				1230D1892C5D3E05000D33B0 /* GroceryButton.swift */,
-				12B1ABB82C5F93B000F3262D /* OTPInputView.swift */,
-				12B1ABBA2C5FB05600F3262D /* OrderAcceptedView.swift */,
-				12D6E3F42C60296C00104F98 /* AppColors.swift */,
+				1249EB382C6A16B100397F99 /* OrderAcceptedView.swift */,
+				1249EB3A2C6A16E500397F99 /* OTPInputView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -425,29 +389,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12D17EAD2C56E4D7001C3978 /* Gilroy-HeavyItalic.ttf in Resources */,
-				12D17EBB2C56E4D7001C3978 /* Gilroy-Regular.ttf in Resources */,
-				12D17EBC2C56E4D7001C3978 /* Gilroy-Heavy.ttf in Resources */,
-				12D17EBF2C56E4D7001C3978 /* Gilroy-Bold.ttf in Resources */,
-				12D17EBE2C56E4D7001C3978 /* Gilroy-ExtraBold.ttf in Resources */,
-				12D17EAF2C56E4D7001C3978 /* Gilroy-Medium.ttf in Resources */,
 				1272176C2C56D8370036D420 /* Preview Assets.xcassets in Resources */,
-				12D17EBD2C56E4D7001C3978 /* Gilroy-MediumItalic.ttf in Resources */,
-				12D17EB32C56E4D7001C3978 /* Gilroy-RegularItalic.ttf in Resources */,
-				12D17EB02C56E4D7001C3978 /* Gilroy-UltraLightItalic.ttf in Resources */,
-				12D17EB42C56E4D7001C3978 /* Gilroy-SemiBoldItalic.ttf in Resources */,
+				1249EB5D2C6A17CC00397F99 /* Gilroy-Regular.ttf in Resources */,
 				127217692C56D8370036D420 /* Assets.xcassets in Resources */,
-				12D17EBA2C56E4D7001C3978 /* Gilroy-LightItalic.ttf in Resources */,
-				12D17EB22C56E4D7001C3978 /* Gilroy-ThinItalic.ttf in Resources */,
-				12D17EB92C56E4D7001C3978 /* Gilroy-BlackItalic.ttf in Resources */,
-				12D17EB82C56E4D7001C3978 /* Gilroy-BoldItalic.ttf in Resources */,
-				12D17EB52C56E4D7001C3978 /* Gilroy-UltraLight.ttf in Resources */,
-				12D17EAE2C56E4D7001C3978 /* Gilroy-Thin.ttf in Resources */,
-				12D17EB62C56E4D7001C3978 /* Gilroy-SemiBold.ttf in Resources */,
+				1249EB5C2C6A17CC00397F99 /* Gilroy-Medium.ttf in Resources */,
+				1249EB5E2C6A17CC00397F99 /* Gilroy-SemiBold.ttf in Resources */,
 				1236C2D92C579E2A00226525 /* GoogleService-Info.plist in Resources */,
-				12D17EAC2C56E4D7001C3978 /* Gilroy-ExtraBoldItalic.ttf in Resources */,
-				12D17EB72C56E4D7001C3978 /* Gilroy-Black.ttf in Resources */,
-				12D17EB12C56E4D7001C3978 /* Gilroy-Light.ttf in Resources */,
+				1249EB5B2C6A17CC00397F99 /* Gilroy-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,25 +406,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1249EB392C6A16B100397F99 /* OrderAcceptedView.swift in Sources */,
 				1236C2D32C578A6500226525 /* CarouselView.swift in Sources */,
 				127217652C56D8360036D420 /* GroceryApp.swift in Sources */,
+				1249EB622C6A180500397F99 /* AsyncImageView.swift in Sources */,
 				127217752C56DC020036D420 /* GroceryProductDetailView.swift in Sources */,
 				12B1E81D2C59392700E24323 /* GroceryCartView.swift in Sources */,
 				12B1E8112C58D4B900E24323 /* CartItemView.swift in Sources */,
 				12433ACF2C5DA3BB00E49ED4 /* CreditCard.swift in Sources */,
+				1249EB642C6A183E00397F99 /* GroceryBackButton.swift in Sources */,
 				1236C3242C58011E00226525 /* CustomTabView.swift in Sources */,
 				1236C2CE2C5789FA00226525 /* SectionHeaderView.swift in Sources */,
+				1249EB602C6A17CC00397F99 /* AppFonts.swift in Sources */,
 				1250E8532C5C158C00F23B64 /* DeliveryAddressView.swift in Sources */,
-				12D6E3F52C60296C00104F98 /* AppColors.swift in Sources */,
 				1236C3292C5846C700226525 /* GroceryCategoryDetailView.swift in Sources */,
 				1230D1882C5D33E4000D33B0 /* LoginView.swift in Sources */,
-				12B1ABB92C5F93B000F3262D /* OTPInputView.swift in Sources */,
 				1230D18A2C5D3E05000D33B0 /* GroceryButton.swift in Sources */,
 				12D17EC32C56E5A1001C3978 /* SearchField.swift in Sources */,
 				1236C3172C57A75000226525 /* GroceryDataManager.swift in Sources */,
 				1210DE482C604A2500EEEBF6 /* AboutView.swift in Sources */,
 				1210DE4A2C604D3700EEEBF6 /* AccountInfoView.swift in Sources */,
 				1210DE462C603CAC00EEEBF6 /* AccountView.swift in Sources */,
+				1249EB3B2C6A16E500397F99 /* OTPInputView.swift in Sources */,
 				12B1E81F2C59994500E24323 /* EmptyCardView.swift in Sources */,
 				12433ACD2C5D74B300E49ED4 /* GroceryAuthManager.swift in Sources */,
 				1250E8512C5BEC8200F23B64 /* CheckoutView.swift in Sources */,
@@ -484,17 +435,15 @@
 				127217732C56D8470036D420 /* GroceryHomeView.swift in Sources */,
 				12D6E3F32C60060C00104F98 /* OrderHistory.swift in Sources */,
 				1236C2D12C578A4400226525 /* GroceryProducts.swift in Sources */,
+				1249EB5F2C6A17CC00397F99 /* AppColors.swift in Sources */,
 				12D6E3F12C5FFE4300104F98 /* OrderHistoryView.swift in Sources */,
 				12B1E8132C58F3CC00E24323 /* ItemCounter.swift in Sources */,
 				1250E8552C5C2BCC00F23B64 /* PaymentCardView.swift in Sources */,
 				1236C31A2C57D91100226525 /* FetchImageHelper.swift in Sources */,
 				12433AD12C5DA3FD00E49ED4 /* DeliveryAddress.swift in Sources */,
-				1230D1862C5D1C79000D33B0 /* SplashView.swift in Sources */,
 				1230D1922C5D5C80000D33B0 /* SignupView.swift in Sources */,
 				12D17EC52C56E5F6001C3978 /* ExploreView.swift in Sources */,
-				129797262C5AAB9F0061EC92 /* CustomBackButton.swift in Sources */,
 				1236C2D52C578F2600226525 /* ProductCardView.swift in Sources */,
-				12B1ABBB2C5FB05600F3262D /* OrderAcceptedView.swift in Sources */,
 				12D17EC72C56E633001C3978 /* CategoryCell.swift in Sources */,
 				12A37D932C5EEB4F00EAF1C3 /* Extension+String+Date.swift in Sources */,
 			);

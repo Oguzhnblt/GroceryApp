@@ -11,20 +11,22 @@ struct CustomTabView: View {
     @State var selectedTab = "home"
     @State private var isTabBarHidden: Bool = false
     
+    var tabs = ["home", "explore", "cart", "orders", "account"]
+
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)) {
             
             TabView(selection: $selectedTab) {
                 GroceryHomeView()
-                    .tag("home")
+                    .tag(tabs[0])
                 ExploreView()
-                    .tag("explore")
+                    .tag(tabs[1])
                 GroceryCartView()
-                    .tag("cart")
+                    .tag(tabs[2])
                 OrderHistoryView()
-                    .tag("orders")
+                    .tag(tabs[3])
                 AccountView()
-                    .tag("account")
+                    .tag(tabs[4])
             }
             .ignoresSafeArea(.all, edges: .bottom)
             .environment(\.isTabBarHidden, $isTabBarHidden)
@@ -71,13 +73,12 @@ struct TabButon: View {
         Button(action: { selectedTab = image }) {
             Image(image)
                 .renderingMode(.template)
-                .foregroundStyle(selectedTab == image ? Color(red: 0.33, green: 0.69, blue: 0.46) : Color.black.opacity(0.4))
+                .foregroundStyle(selectedTab == image ? AppColors.appleGreen : Color.black.opacity(0.4))
                 .padding()
         }
     }
 }
 
-var tabs = ["home", "explore", "cart", "orders", "account"]
 
 #Preview {
     CustomTabView()
